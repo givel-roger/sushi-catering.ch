@@ -27,7 +27,7 @@ export default function Impressum() {
               Luzern, Schweiz
             </p>
             <p className="mt-3">
-              Telefon: <a href="tel:+41412449910" className="text-foreground underline">041 244 99 10</a><br />
+              Telefon: <a href="tel:+41412409999" className="text-foreground underline">041 240 99 99</a><br />
               E-Mail: <a href="mailto:info@sushi-catering.ch" className="text-foreground underline">info@sushi-catering.ch</a><br />
               Web: <a href="https://www.kaiten.ch" target="_blank" rel="noopener noreferrer" className="text-foreground underline">www.kaiten.ch</a>
             </p>

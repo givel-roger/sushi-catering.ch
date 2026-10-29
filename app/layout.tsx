@@ -68,7 +68,7 @@ export default function RootLayout({
               description:
                 "Premium Sushi Catering für Events, Firmenanlässe und private Feiern in der ganzen Schweiz.",
               url: "https://www.sushi-catering.ch",
-              telephone: "+41412449910",
+              telephone: "+41412409999",
               email: "info@sushi-catering.ch",
               address: {
                 "@type": "PostalAddress",

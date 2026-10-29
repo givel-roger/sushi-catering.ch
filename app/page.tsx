@@ -121,7 +121,7 @@ export default function Home() {
             Anfrage senden
           </a>
           <div className="mt-auto pb-10 text-sm text-muted">
-            <p><a href="tel:+41412449910">041 244 99 10</a></p>
+            <p><a href="tel:+41412409999">041 240 99 99</a></p>
             <p>info@sushi-catering.ch</p>
           </div>
         </div>
@@ -137,11 +137,11 @@ export default function Home() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30" />
         </div>
 
         <div className="relative max-w-[1400px] mx-auto px-5 sm:px-10 w-full">
-          <p className="text-white/60 text-sm tracking-[0.35em] uppercase mb-8">
+          <p className="text-white/80 text-sm tracking-[0.35em] uppercase mb-8">
             Kaiten Sushi · Luzern · Kriens · Sursee
           </p>
 
@@ -149,16 +149,16 @@ export default function Home() {
             <span className="block text-[clamp(3.5rem,11vw,10rem)] text-white">
               Frisch
             </span>
-            <span className="block text-[clamp(3.5rem,11vw,10rem)] text-white/20" style={{ WebkitTextStroke: '2px white' }}>
+            <span className="block text-[clamp(3.5rem,11vw,10rem)] text-white/30" style={{ WebkitTextStroke: '2.5px white' }}>
               gerollt,
             </span>
-            <span className="block text-[clamp(2.2rem,5.5vw,4.5rem)] text-white/60 font-sans font-light mt-3">
+            <span className="block text-[clamp(2.2rem,5.5vw,4.5rem)] text-white/80 font-sans font-light mt-3">
               direkt zu Ihnen.
             </span>
           </h1>
 
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-10 mt-14">
-            <p className="max-w-lg text-base text-white/70 leading-relaxed">
+            <p className="max-w-lg text-base text-white/85 leading-relaxed">
               Sushi Catering für die Schweiz — Firmenevents, Hochzeiten, Privatanlässe.
               Mit Live-Koch oder als fertige Platten. Ab 8 Personen.
             </p>
@@ -389,7 +389,7 @@ export default function Home() {
               </p>
             </div>
             <div className="text-sm text-muted space-y-2 sm:text-right">
-              <p>info@sushi-catering.ch · <a href="tel:+41412449910" className="hover:text-foreground transition-colors">041 244 99 10</a></p>
+              <p>info@sushi-catering.ch · <a href="tel:+41412409999" className="hover:text-foreground transition-colors">041 240 99 99</a></p>
               <p>Luzern · Kriens · Sursee</p>
             </div>
           </div>
