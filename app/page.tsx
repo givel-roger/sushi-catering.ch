@@ -394,7 +394,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-            <p>© {new Date().getFullYear()} Kaiten by Yorokobi</p>
+            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.0.0</span></p>
             <div className="flex gap-6">
               <Link href="/impressum" className="hover:text-foreground transition-colors">Impressum</Link>
               <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>

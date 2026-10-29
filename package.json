@@ -1,6 +1,6 @@
 {
-  "name": "holzpellets-preisvergleich.ch",
-  "version": "0.1.0",
+  "name": "sushi-catering.ch",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
