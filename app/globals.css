@@ -2,13 +2,13 @@
 
 @theme inline {
   --color-background: #ffffff;
-  --color-foreground: #1a1a1a;
+  --color-foreground: #111111;
   --color-accent: #c41e2a;
   --color-accent-hover: #a8171f;
   --color-warm: #faf7f4;
-  --color-muted: #777;
-  --color-surface: #f5f3f0;
-  --color-border: #e5e2de;
+  --color-muted: #666;
+  --color-surface: #f7f5f2;
+  --color-border: #e8e5e0;
   --font-sans: var(--font-geist-sans);
 }
 
