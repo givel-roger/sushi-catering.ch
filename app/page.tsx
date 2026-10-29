@@ -189,8 +189,8 @@ export default function Home() {
               </p>
               <ul className="space-y-3 text-sm text-muted">
                 <li>— Sushikoch-Pauschale CHF 700 (3 Std.)</li>
-                <li>— Plus Pauschale pro Person nach Paket</li>
-                <li>— Apéro CHF 12 · Lunch CHF 32 · Dinner CHF 48</li>
+                <li>— Plus pro Person nach Paket</li>
+                <li>— Apéro CHF 15 · Lunch CHF 39 · Dinner CHF 58</li>
               </ul>
             </FadeIn>
             <div className="relative min-h-[350px] md:min-h-[500px]">
@@ -213,9 +213,9 @@ export default function Home() {
                 Inside-Out und Spezialitäten — kein Koch nötig, einfach geniessen.
               </p>
               <ul className="space-y-3 text-sm text-muted">
-                <li>— Apéro (4 Stk.) CHF 12 · Apéro Riche (8 Stk.) CHF 23</li>
-                <li>— Lunch (12 Stk.) CHF 32 · Dinner (18 Stk.) CHF 48</li>
-                <li>— Lieferung & Geschirr nach Absprache</li>
+                <li>— Apéro (4 Stk.) CHF 15 · Apéro Riche (8 Stk.) CHF 28</li>
+                <li>— Lunch (12 Stk.) CHF 39 · Dinner (18 Stk.) CHF 58</li>
+                <li>— Lieferpauschale ab CHF 80</li>
               </ul>
             </FadeIn>
           </div>
@@ -232,9 +232,9 @@ export default function Home() {
                 unseres Sushi-Meisters, selbst zu rollen — und isst das Ergebnis.
               </p>
               <ul className="space-y-3 text-sm text-muted">
-                <li>— Alle Zutaten & Utensilien gestellt</li>
-                <li>— Perfekt für Teams & Gruppen</li>
-                <li>— Ab 8 Personen · ab CHF 95/Pers.</li>
+                <li>— Pauschale CHF 500 (inkl. Material)</li>
+                <li>— Plus CHF 115 pro Person</li>
+                <li>— Ab 8 Personen</li>
               </ul>
             </FadeIn>
             <div className="relative min-h-[350px] md:min-h-[500px]">
@@ -394,7 +394,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.0.0</span></p>
+            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.1.0</span></p>
             <div className="flex gap-6">
               <Link href="/impressum" className="hover:text-foreground transition-colors">Impressum</Link>
               <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>
