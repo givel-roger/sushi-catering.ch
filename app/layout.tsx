@@ -79,7 +79,7 @@ export default function RootLayout({
                 "@type": "Country",
                 name: "Schweiz",
               },
-              priceRange: "CHF 45-95 pro Person",
+              priceRange: "CHF 12-48 pro Person",
               sameAs: ["https://www.kaiten.ch"],
             }),
           }}

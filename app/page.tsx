@@ -188,9 +188,9 @@ export default function Home() {
                 vor Ihren Gästen. Ein Show-Element, das jeden Event aufwertet.
               </p>
               <ul className="space-y-3 text-sm text-muted">
-                <li>— Koch & Equipment inklusive</li>
-                <li>— Individuelle Menügestaltung</li>
-                <li>— Ab 20 Personen · ab CHF 75/Pers.</li>
+                <li>— Sushikoch-Pauschale CHF 700 (3 Std.)</li>
+                <li>— Plus Pauschale pro Person nach Paket</li>
+                <li>— Apéro CHF 12 · Lunch CHF 32 · Dinner CHF 48</li>
               </ul>
             </FadeIn>
             <div className="relative min-h-[350px] md:min-h-[500px]">
@@ -213,9 +213,9 @@ export default function Home() {
                 Inside-Out und Spezialitäten — kein Koch nötig, einfach geniessen.
               </p>
               <ul className="space-y-3 text-sm text-muted">
-                <li>— Lieferung in der ganzen Deutschschweiz</li>
-                <li>— Inkl. Sojasauce, Wasabi, Ingwer</li>
-                <li>— Ab 10 Personen · ab CHF 45/Pers.</li>
+                <li>— Apéro (4 Stk.) CHF 12 · Apéro Riche (8 Stk.) CHF 23</li>
+                <li>— Lunch (12 Stk.) CHF 32 · Dinner (18 Stk.) CHF 48</li>
+                <li>— Lieferung & Geschirr nach Absprache</li>
               </ul>
             </FadeIn>
           </div>
