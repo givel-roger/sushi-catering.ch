@@ -22,7 +22,7 @@ export default function Impressum() {
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">Kontaktadresse</h2>
             <p>
-              yorokobi ag<br />
+              Yorokobi AG<br />
               Habsburgerstrasse 48<br />
               6003 Luzern
             </p>
@@ -36,7 +36,7 @@ export default function Impressum() {
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">Handelsregister und Mehrwertsteuer</h2>
             <p>
-              yorokobi ag, Aktiengesellschaft mit Sitz in Luzern<br />
+              Yorokobi AG, Aktiengesellschaft mit Sitz in Luzern<br />
               UID und MWST-Nummer: CHE-348.228.951 MWST<br />
               CH-ID: CH-100.3824140-2
             </p>
@@ -45,7 +45,7 @@ export default function Impressum() {
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">Betriebe</h2>
             <p>
-              Der Japaner by yorokobi<br />
+              Der Japaner by Yorokobi<br />
               Luzernerstrasse 73, 6010 Kriens, 041 244 99 10
             </p>
             <p className="mt-3">
@@ -76,7 +76,7 @@ export default function Impressum() {
             <h2 className="text-lg font-semibold text-foreground mb-3">Urheberrechte</h2>
             <p>
               Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen
-              Dateien auf dieser Website gehören ausschliesslich der Yorokobi GmbH oder den
+              Dateien auf dieser Website gehören ausschliesslich der Yorokobi AG oder den
               speziell genannten Rechteinhabern. Für die Reproduktion jeglicher Elemente ist
               die schriftliche Zustimmung der Urheberrechtsträger im Voraus einzuholen.
             </p>
@@ -86,7 +86,7 @@ export default function Impressum() {
 
       <footer className="border-t border-border py-10">
         <div className="max-w-[1400px] mx-auto px-5 sm:px-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-          <p>© {new Date().getFullYear()} yorokobi ag</p>
+          <p>© {new Date().getFullYear()} Yorokobi AG</p>
           <div className="flex gap-6">
             <Link href="/impressum" className="text-foreground">Impressum</Link>
             <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>

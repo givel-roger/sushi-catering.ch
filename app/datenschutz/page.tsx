@@ -22,10 +22,10 @@ export default function Datenschutz() {
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">Verantwortliche Stelle</h2>
             <p>
-              Yorokobi GmbH<br />
-              Sushi Catering by Kaiten<br />
-              Luzern, Schweiz<br />
-              E-Mail: <a href="mailto:info@sushi-catering.ch" className="text-foreground underline">info@sushi-catering.ch</a>
+              Yorokobi AG<br />
+              Habsburgerstrasse 48<br />
+              6003 Luzern<br />
+              E-Mail: <a href="mailto:info@yorokobi.ch" className="text-foreground underline">info@yorokobi.ch</a>
             </p>
           </section>
 
@@ -96,7 +96,7 @@ export default function Datenschutz() {
 
       <footer className="border-t border-border py-10">
         <div className="max-w-[1400px] mx-auto px-5 sm:px-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-          <p>© {new Date().getFullYear()} Kaiten by Yorokobi</p>
+          <p>© {new Date().getFullYear()} Yorokobi AG</p>
           <div className="flex gap-6">
             <Link href="/impressum" className="hover:text-foreground transition-colors">Impressum</Link>
             <Link href="/datenschutz" className="text-foreground">Datenschutz</Link>

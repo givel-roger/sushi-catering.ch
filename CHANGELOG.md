@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.2
+- Überall "Yorokobi AG" korrekt geschrieben (Impressum, Datenschutz, Footer)
+- Datenschutz-Seite: Adresse und E-Mail aktualisiert
+
 ## v1.4.1
 - Impressum komplett von kaiten.ch übernommen (yorokobi ag, Adresse, UID, Betriebe)
 - Telefonnummer korrigiert: 041 244 99 99
