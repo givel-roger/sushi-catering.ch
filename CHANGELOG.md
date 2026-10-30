@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.1
+- Impressum komplett von kaiten.ch übernommen (yorokobi ag, Adresse, UID, Betriebe)
+- Telefonnummer korrigiert: 041 244 99 99
+- E-Mail korrigiert: info@yorokobi.ch
+- Footer und Structured Data aktualisiert
+
 ## v1.4.0
 - Alle Bilder komprimiert (~12 MB → ~3 MB, 75% kleiner)
 - Dropdown-Select mit Chevron-Pfeil gestylt

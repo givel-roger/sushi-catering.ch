@@ -20,22 +20,42 @@ export default function Impressum() {
 
         <div className="space-y-8 text-base text-muted leading-relaxed">
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3">Kontakt</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3">Kontaktadresse</h2>
             <p>
-              Yorokobi GmbH<br />
-              Sushi Catering by Kaiten<br />
-              Luzern, Schweiz
+              yorokobi ag<br />
+              Habsburgerstrasse 48<br />
+              6003 Luzern
             </p>
             <p className="mt-3">
-              Telefon: <a href="tel:+41412409999" className="text-foreground underline">041 240 99 99</a><br />
-              E-Mail: <a href="mailto:info@sushi-catering.ch" className="text-foreground underline">info@sushi-catering.ch</a><br />
+              Telefon: <a href="tel:+41412449999" className="text-foreground underline">041 244 99 99</a><br />
+              E-Mail: <a href="mailto:info@yorokobi.ch" className="text-foreground underline">info@yorokobi.ch</a><br />
               Web: <a href="https://www.kaiten.ch" target="_blank" rel="noopener noreferrer" className="text-foreground underline">www.kaiten.ch</a>
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3">Vertretungsberechtigte Person</h2>
-            <p>Geschäftsführung der Yorokobi GmbH</p>
+            <h2 className="text-lg font-semibold text-foreground mb-3">Handelsregister und Mehrwertsteuer</h2>
+            <p>
+              yorokobi ag, Aktiengesellschaft mit Sitz in Luzern<br />
+              UID und MWST-Nummer: CHE-348.228.951 MWST<br />
+              CH-ID: CH-100.3824140-2
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-foreground mb-3">Betriebe</h2>
+            <p>
+              Der Japaner by yorokobi<br />
+              Luzernerstrasse 73, 6010 Kriens, 041 244 99 10
+            </p>
+            <p className="mt-3">
+              Kaiten Sushibar Luzern<br />
+              Kauffmannweg 16, 6003 Luzern, 041 244 99 20
+            </p>
+            <p className="mt-3">
+              Kaiten Sushibar Sursee<br />
+              Mühleplatz 6, 6210 Sursee, 041 244 99 40
+            </p>
           </section>
 
           <section>
@@ -66,7 +86,7 @@ export default function Impressum() {
 
       <footer className="border-t border-border py-10">
         <div className="max-w-[1400px] mx-auto px-5 sm:px-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-          <p>© {new Date().getFullYear()} Kaiten by Yorokobi</p>
+          <p>© {new Date().getFullYear()} yorokobi ag</p>
           <div className="flex gap-6">
             <Link href="/impressum" className="text-foreground">Impressum</Link>
             <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>

@@ -68,8 +68,8 @@ export default function RootLayout({
               description:
                 "Premium Sushi Catering für Events, Firmenanlässe und private Feiern in der ganzen Schweiz.",
               url: "https://www.sushi-catering.ch",
-              telephone: "+41412409999",
-              email: "info@sushi-catering.ch",
+              telephone: "+41412449999",
+              email: "info@yorokobi.ch",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Luzern",

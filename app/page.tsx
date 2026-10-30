@@ -121,8 +121,8 @@ export default function Home() {
             Anfrage senden
           </a>
           <div className="mt-auto pb-10 text-sm text-muted">
-            <p><a href="tel:+41412409999">041 240 99 99</a></p>
-            <p>info@sushi-catering.ch</p>
+            <p><a href="tel:+41412449999">041 244 99 99</a></p>
+            <p>info@yorokobi.ch</p>
           </div>
         </div>
       )}
@@ -417,12 +417,12 @@ export default function Home() {
               </p>
             </div>
             <div className="text-sm text-muted space-y-2 sm:text-right">
-              <p>info@sushi-catering.ch · <a href="tel:+41412409999" className="hover:text-foreground transition-colors">041 240 99 99</a></p>
+              <p>info@yorokobi.ch · <a href="tel:+41412449999" className="hover:text-foreground transition-colors">041 244 99 99</a></p>
               <p>Luzern · Kriens · Sursee</p>
             </div>
           </div>
           <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.4.0</span></p>
+            <p>© {new Date().getFullYear()} yorokobi ag · <span className="text-muted/30">v1.4.1</span></p>
             <div className="flex gap-6">
               <Link href="/impressum" className="hover:text-foreground transition-colors">Impressum</Link>
               <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>
