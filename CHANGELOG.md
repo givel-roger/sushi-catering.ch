@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.3.1
+- Option "Catering (ohne Koch)" im Anfrageformular ergänzt
+
 ## v1.3.0
 - Anfrageformular an Yorokobi-Portal angebunden (POST /personal/api/extern/anfrage)
 - Anfragen landen direkt im Yorokobi-System unter Rubrik CATERING

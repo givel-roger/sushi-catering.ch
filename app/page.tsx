@@ -381,6 +381,7 @@ export default function Home() {
                 <select value={formData.typ} onChange={(e) => setFormData({ ...formData, typ: e.target.value })}
                   className="bg-white border-b-2 border-border px-0 py-4 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full appearance-none">
                   <option value="live">Live Catering (mit Koch)</option>
+                  <option value="catering">Catering (ohne Koch)</option>
                   <option value="platte">Sushi Platten (ohne Koch)</option>
                   <option value="workshop">Sushi Workshop</option>
                   <option value="beratung">Weiss noch nicht — beraten Sie mich</option>
@@ -418,7 +419,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.3.0</span></p>
+            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.3.1</span></p>
             <div className="flex gap-6">
               <Link href="/impressum" className="hover:text-foreground transition-colors">Impressum</Link>
               <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>

@@ -13,6 +13,7 @@ export async function POST(req: Request) {
 
     const typLabels: Record<string, string> = {
       live: "Catering mit Koch vor Ort",
+      catering: "Catering (ohne Koch)",
       platte: "Sushi Platten (Lieferung)",
       workshop: "Sushi Workshop",
       beratung: "Noch offen — Beratung gewünscht",
