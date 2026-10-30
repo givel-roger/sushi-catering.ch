@@ -87,7 +87,7 @@ export default function Home() {
       <nav className="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur-md border-b border-border">
         <div className="max-w-[1400px] mx-auto px-5 sm:px-10 h-20 flex items-center justify-between">
           <a href="#" className="flex items-center gap-3">
-            <Image src="/images/logo-black.png" alt="Kaiten by Yorokobi" width={200} height={44} className="h-8 w-auto" />
+            <Image src="/images/logo-black.png" alt="Kaiten by Yorokobi" width={280} height={62} className="h-12 w-auto" />
           </a>
           <div className="hidden sm:flex items-center gap-10 text-base text-muted">
             <a href="#angebot" className="hover:text-foreground transition-colors">Angebot</a>
@@ -405,7 +405,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-5 sm:px-10">
           <div className="flex flex-col sm:flex-row justify-between items-start gap-10 mb-10">
             <div>
-              <Image src="/images/logo-black.png" alt="Kaiten by Yorokobi" width={180} height={40} className="h-7 w-auto mb-4" />
+              <Image src="/images/logo-black.png" alt="Kaiten by Yorokobi" width={240} height={53} className="h-10 w-auto mb-4" />
               <p className="text-sm text-muted">
                 Sushi Catering von{" "}
                 <a href="https://www.kaiten.ch" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">
@@ -419,7 +419,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.3.1</span></p>
+            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.3.2</span></p>
             <div className="flex gap-6">
               <Link href="/impressum" className="hover:text-foreground transition-colors">Impressum</Link>
               <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>

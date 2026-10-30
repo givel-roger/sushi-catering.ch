@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.3.2
+- Logo in Navigation und Footer vergrössert
+
 ## v1.3.1
 - Option "Catering (ohne Koch)" im Anfrageformular ergänzt
 
