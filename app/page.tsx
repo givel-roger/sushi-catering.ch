@@ -378,14 +378,17 @@ export default function Home() {
                 <input type="text" placeholder="Anzahl Gäste"
                   value={formData.guests} onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
                   className="bg-white border-b-2 border-border px-0 py-4 text-foreground text-base focus:outline-none focus:border-accent transition-colors placeholder:text-muted/50 w-full" />
+                <div className="relative">
                 <select value={formData.typ} onChange={(e) => setFormData({ ...formData, typ: e.target.value })}
-                  className="bg-white border-b-2 border-border px-0 py-4 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full appearance-none">
+                  className="bg-white border-b-2 border-border px-0 py-4 pr-8 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full appearance-none cursor-pointer">
                   <option value="live">Live Catering (mit Koch)</option>
                   <option value="catering">Catering (ohne Koch)</option>
                   <option value="platte">Sushi Platten (ohne Koch)</option>
                   <option value="workshop">Sushi Workshop</option>
                   <option value="beratung">Weiss noch nicht — beraten Sie mich</option>
                 </select>
+                <svg className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                </div>
               </div>
               <textarea rows={4} placeholder="Was dürfen wir wissen?"
                 value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -419,7 +422,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.3.2</span></p>
+            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.4.0</span></p>
             <div className="flex gap-6">
               <Link href="/impressum" className="hover:text-foreground transition-colors">Impressum</Link>
               <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>

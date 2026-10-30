@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.4.0
+- Alle Bilder komprimiert (~12 MB → ~3 MB, 75% kleiner)
+- Dropdown-Select mit Chevron-Pfeil gestylt
+- Logo vergrössert (Nav + Footer)
+
 ## v1.3.2
 - Logo in Navigation und Footer vergrössert
 
