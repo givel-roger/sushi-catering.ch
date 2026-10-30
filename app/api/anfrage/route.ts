@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
+
+const YOROKOBI_API = "https://yorokobi.ch/personal/api/extern/anfrage";
 
 export async function POST(req: Request) {
   try {
@@ -11,35 +11,37 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Name und E-Mail sind Pflichtfelder." }, { status: 400 });
     }
 
-    const lead = {
-      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-      timestamp: new Date().toISOString(),
-      name,
-      email,
-      phone: phone || "",
-      date: date || "",
-      guests: guests || "",
-      typ: typ || "live",
-      message: message || "",
+    const typLabels: Record<string, string> = {
+      live: "Catering mit Koch vor Ort",
+      platte: "Sushi Platten (Lieferung)",
+      workshop: "Sushi Workshop",
+      beratung: "Noch offen — Beratung gewünscht",
     };
 
-    const leadsDir = path.join(process.cwd(), "data");
-    const leadsFile = path.join(leadsDir, "leads.json");
+    const res = await fetch(YOROKOBI_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        email,
+        phone: phone || "",
+        date: date || "",
+        guests: guests || "",
+        typ: typLabels[typ] || typ || "",
+        message: message || "",
+      }),
+    });
 
-    await fs.mkdir(leadsDir, { recursive: true });
-
-    let leads: typeof lead[] = [];
-    try {
-      const existing = await fs.readFile(leadsFile, "utf-8");
-      leads = JSON.parse(existing);
-    } catch {
-      // file doesn't exist yet
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      return NextResponse.json(
+        { error: (err as Record<string, string>).error || "Fehler beim Weiterleiten" },
+        { status: res.status },
+      );
     }
 
-    leads.push(lead);
-    await fs.writeFile(leadsFile, JSON.stringify(leads, null, 2));
-
-    return NextResponse.json({ success: true, id: lead.id });
+    const result = await res.json();
+    return NextResponse.json({ success: true, nummer: result.nummer });
   } catch {
     return NextResponse.json({ error: "Server-Fehler" }, { status: 500 });
   }

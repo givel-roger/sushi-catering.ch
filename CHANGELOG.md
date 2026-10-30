@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.3.0
+- Anfrageformular an Yorokobi-Portal angebunden (POST /personal/api/extern/anfrage)
+- Anfragen landen direkt im Yorokobi-System unter Rubrik CATERING
+- Lokale JSON-Speicherung entfernt
+
 ## v1.2.1
 - "ab" vor allen Preisangaben ergänzt (ab CHF 12, ab CHF 32, etc.)
 
