@@ -190,7 +190,7 @@ export default function Home() {
               <ul className="space-y-3 text-sm text-muted">
                 <li>— Sushikoch vor Ort: CHF 80/Std.</li>
                 <li>— Plus pro Person nach Paket</li>
-                <li>— Apéro CHF 12 · Lunch CHF 32 · Dinner CHF 48</li>
+                <li>— Apéro ab CHF 12 · Lunch ab CHF 32 · Dinner ab CHF 48</li>
               </ul>
             </FadeIn>
             <div className="relative min-h-[350px] md:min-h-[500px]">
@@ -213,8 +213,8 @@ export default function Home() {
                 Inside-Out und Spezialitäten — kein Koch nötig, einfach geniessen.
               </p>
               <ul className="space-y-3 text-sm text-muted">
-                <li>— Apéro (4 Stk.) CHF 12 · Apéro Riche (8 Stk.) CHF 23</li>
-                <li>— Lunch (12 Stk.) CHF 32 · Dinner (18 Stk.) CHF 48</li>
+                <li>— Apéro (4 Stk.) ab CHF 12 · Apéro Riche (8 Stk.) ab CHF 23</li>
+                <li>— Lunch (12 Stk.) ab CHF 32 · Dinner (18 Stk.) ab CHF 48</li>
                 <li>— Anfahrt: CHF 1.20/km</li>
               </ul>
             </FadeIn>
@@ -418,7 +418,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.2.0</span></p>
+            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.2.1</span></p>
             <div className="flex gap-6">
               <Link href="/impressum" className="hover:text-foreground transition-colors">Impressum</Link>
               <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>

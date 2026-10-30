@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.2.1
+- "ab" vor allen Preisangaben ergänzt (ab CHF 12, ab CHF 32, etc.)
+
 ## v1.2.0
 - Preise auf exakte kaiten.ch-Preise zurückgesetzt (Apéro CHF 12, Lunch CHF 32, Dinner CHF 48, Workshop CHF 125)
 - Neue Sektion "Personal & Anfahrt" mit transparenter Kostenaufstellung
