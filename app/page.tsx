@@ -188,9 +188,9 @@ export default function Home() {
                 vor Ihren Gästen. Ein Show-Element, das jeden Event aufwertet.
               </p>
               <ul className="space-y-3 text-sm text-muted">
-                <li>— Sushikoch-Pauschale CHF 700 (3 Std.)</li>
+                <li>— Sushikoch vor Ort: CHF 80/Std.</li>
                 <li>— Plus pro Person nach Paket</li>
-                <li>— Apéro CHF 15 · Lunch CHF 39 · Dinner CHF 58</li>
+                <li>— Apéro CHF 12 · Lunch CHF 32 · Dinner CHF 48</li>
               </ul>
             </FadeIn>
             <div className="relative min-h-[350px] md:min-h-[500px]">
@@ -213,9 +213,9 @@ export default function Home() {
                 Inside-Out und Spezialitäten — kein Koch nötig, einfach geniessen.
               </p>
               <ul className="space-y-3 text-sm text-muted">
-                <li>— Apéro (4 Stk.) CHF 15 · Apéro Riche (8 Stk.) CHF 28</li>
-                <li>— Lunch (12 Stk.) CHF 39 · Dinner (18 Stk.) CHF 58</li>
-                <li>— Lieferpauschale ab CHF 80</li>
+                <li>— Apéro (4 Stk.) CHF 12 · Apéro Riche (8 Stk.) CHF 23</li>
+                <li>— Lunch (12 Stk.) CHF 32 · Dinner (18 Stk.) CHF 48</li>
+                <li>— Anfahrt: CHF 1.20/km</li>
               </ul>
             </FadeIn>
           </div>
@@ -232,7 +232,7 @@ export default function Home() {
                 unseres Sushi-Meisters, selbst zu rollen — und isst das Ergebnis.
               </p>
               <ul className="space-y-3 text-sm text-muted">
-                <li>— CHF 150 pro Person · ab 17 Personen</li>
+                <li>— CHF 125 pro Person · ab 17 Personen</li>
                 <li>— Alle Zutaten & Utensilien gestellt</li>
                 <li>— Getränke nicht inbegriffen</li>
               </ul>
@@ -240,6 +240,30 @@ export default function Home() {
             <div className="relative min-h-[350px] md:min-h-[500px]">
               <Image src="/images/workshop-sushi.jpg" alt="Sushi Spezialitäten Workshop" fill className="object-cover" />
             </div>
+          </div>
+
+          {/* Personal & Anfahrt */}
+          <div className="grid md:grid-cols-2 border-b border-border">
+            <div className="relative min-h-[350px] md:min-h-[500px] order-2 md:order-1">
+              <Image src="/images/restaurant.jpg" alt="Kaiten Sushi Team" fill className="object-cover" />
+            </div>
+            <FadeIn className="p-10 sm:p-20 flex flex-col justify-center order-1 md:order-2">
+              <span className="text-accent text-sm tracking-[0.3em] uppercase mb-5 block font-medium">04</span>
+              <h2 className="font-display text-5xl sm:text-6xl text-foreground mb-5 leading-tight">
+                Personal & Anfahrt
+              </h2>
+              <p className="text-base text-muted leading-relaxed mb-8 max-w-md">
+                Transparente Kosten für Ihr Catering — Koch, Servicepersonal und Anfahrt
+                werden separat nach Aufwand berechnet.
+              </p>
+              <ul className="space-y-3 text-sm text-muted">
+                <li>— Sushikoch: CHF 80/Std.</li>
+                <li>— Servicepersonal: CHF 60/Std.</li>
+                <li>— Kurier / Lieferung: CHF 60/Std.</li>
+                <li>— Anfahrt: CHF 1.20/km</li>
+                <li>— Geschirrpauschale: ab CHF 50</li>
+              </ul>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -394,7 +418,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.1.2</span></p>
+            <p>© {new Date().getFullYear()} Kaiten by Yorokobi · <span className="text-muted/30">v1.2.0</span></p>
             <div className="flex gap-6">
               <Link href="/impressum" className="hover:text-foreground transition-colors">Impressum</Link>
               <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>
