@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.4.0
+- Hero-Banner: neues Werbebanner mit Marc Pircher (Desktop 1920x1080, Mobile 750x1334)
+- Slider durch statisches Banner ersetzt
+
 ## v2.3.6
 - E-Mail-Sender auf givel@marktindex.ch geändert (bei Brevo verifiziert, sekretariat@ war nicht verifiziert)
 

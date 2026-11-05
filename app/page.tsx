@@ -563,40 +563,18 @@ export default function Home() {
         </div>
       )}
 
-      {/* ── Hero mit Slider ── */}
-      <section className="relative h-[100svh] min-h-[600px] overflow-hidden">
-        <HeroSlider />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
-
-        <div className="relative h-full flex flex-col justify-end px-4 sm:px-8 pb-12 sm:pb-20 max-w-6xl mx-auto">
-          <div style={{ animation: "fadeIn 0.8s ease 0.2s both" }}>
-            <p className="font-script italic text-gold-bright text-2xl sm:text-4xl md:text-5xl mb-2 drop-shadow-lg">
-              Willkommen am
-            </p>
-          </div>
-          <div style={{ animation: "fadeIn 0.8s ease 0.4s both" }}>
-            <h1 className="font-display font-black text-white text-[2.4rem] sm:text-6xl md:text-7xl lg:text-8xl leading-[0.95] uppercase tracking-wide mb-4 drop-shadow-lg">
-              Lozärner
-              <br />
-              Wiehnachts&shy;märt
-            </h1>
-          </div>
-          <div style={{ animation: "fadeIn 0.8s ease 0.7s both" }}>
-            <p className="text-white/60 text-sm sm:text-base mt-2 drop-shadow-md">
-              Franziskanerplatz, Luzern &middot; 3.–21. Dezember 2026
-            </p>
-          </div>
-        </div>
-
-        <a
-          href="#info"
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/40 hover:text-white/70 transition-colors"
-          style={{ animation: "fadeIn 0.8s ease 1s both" }}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M6 9l6 6 6-6" />
-          </svg>
-        </a>
+      {/* ── Hero Banner ── */}
+      <section className="relative overflow-hidden">
+        <img
+          src="/images/hero-banner-desktop.jpg"
+          alt="Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26"
+          className="hidden sm:block w-full h-auto"
+        />
+        <img
+          src="/images/hero-banner-mobile.jpg"
+          alt="Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26"
+          className="block sm:hidden w-full h-auto"
+        />
       </section>
 
       {/* ── Datum-Leiste ── */}
@@ -1112,7 +1090,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <p className="text-center text-white/25 text-[10px] mt-8">v2.3.6</p>
+          <p className="text-center text-white/25 text-[10px] mt-8">v2.4.0</p>
         </div>
       </footer>
     </div>
