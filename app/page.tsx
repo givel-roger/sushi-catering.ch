@@ -564,14 +564,14 @@ export default function Home() {
       )}
 
       {/* ── Hero Banner ── */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden pt-16">
         <img
-          src="/images/hero-banner-desktop.jpg"
+          src="/images/hero-banner-desktop.jpg?v=2"
           alt="Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26"
           className="hidden sm:block w-full h-auto"
         />
         <img
-          src="/images/hero-banner-mobile.jpg"
+          src="/images/hero-banner-mobile.jpg?v=2"
           alt="Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26"
           className="block sm:hidden w-full h-auto"
         />
@@ -1090,7 +1090,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <p className="text-center text-white/25 text-[10px] mt-8">v2.4.1</p>
+          <p className="text-center text-white/25 text-[10px] mt-8">v2.4.2</p>
         </div>
       </footer>
     </div>

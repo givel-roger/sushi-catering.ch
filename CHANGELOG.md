@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.4.2
+- Cache-Busting für Banner-Bilder (?v=2), damit Browser das neue Mobile-Banner laden
+
 ## v2.4.1
 - Mobile-Banner: neues quadratisches Bild (1080x1080) mit Marc Pircher, QR-Code und Kinderstiftung-Tasse
 
