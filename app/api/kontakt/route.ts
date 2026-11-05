@@ -38,7 +38,7 @@ export async function POST(req: Request) {
         accept: "application/json",
       },
       body: JSON.stringify({
-        sender: { name: "Wiehnachtsmärt Kontakt", email: process.env.BREVO_SENDER ?? "sekretariat@weihnachtsmarktluzern.com" },
+        sender: { name: "Wiehnachtsmärt Kontakt", email: "givel@marktindex.ch" },
         to: [{ email: "sekretariat@weihnachtsmarktluzern.com" }, { email: "givel@marktindex.ch" }],
         replyTo: { email },
         subject: `Kontaktanfrage: ${nameVorname}`,

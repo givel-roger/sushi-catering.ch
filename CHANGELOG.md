@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.3.6
+- E-Mail-Sender auf givel@marktindex.ch geändert (bei Brevo verifiziert, sekretariat@ war nicht verifiziert)
+
 ## v2.3.4
 - Kontakt- und Anmeldeformular: E-Mails gehen jetzt an sekretariat@ UND givel@marktindex.ch
 
