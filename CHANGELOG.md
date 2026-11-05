@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.4.1
+- Mobile-Banner: neues quadratisches Bild (1080x1080) mit Marc Pircher, QR-Code und Kinderstiftung-Tasse
+
 ## v2.4.0
 - Hero-Banner: neues Werbebanner mit Marc Pircher (Desktop 1920x1080, Mobile 750x1334)
 - Slider durch statisches Banner ersetzt
