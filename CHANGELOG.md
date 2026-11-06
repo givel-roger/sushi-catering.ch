@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.5.2
+- Hero-Slider: Bilder mit Gesichtern entfernt (jetzt Rentier, Geschenke, Engel-Figur und Plakat)
+
 ## v2.5.1
 - Startseite: nur noch ein Fenster im Plakat-Format (Desktop 16:9, Mobile quadratisch)
 - Slider darin: zuerst Bilder, dann Plakat Marc Pircher, wieder Bilder, Plakat, von vorne

@@ -321,16 +321,11 @@ function Snow() {
 /* ── Hero Slider ── */
 function HeroSlider() {
   const [current, setCurrent] = useState(0);
-  const plakat = { plakat: true, alt: "Plakat: Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26, 18:00 Uhr" };
   const slides = [
-    { src: "/images/galerie-12.jpg", alt: "Lozärner Wiehnachtsmärt auf dem Franziskanerplatz am Abend" },
-    { src: "/images/galerie-7.jpg", alt: "Weihnachtsschmuck und Rentier-Dekoration" },
+    { src: "/images/galerie-7.jpg", alt: "Weihnachtsschmuck und Rentier-Dekoration am Franziskanerplatz" },
     { src: "/images/galerie-3.jpg", alt: "Geschenke und Dekoration am Märt" },
-    plakat,
-    { src: "/images/hero-markt.jpg", alt: "Besucher und Samichlaus-Figur am Lozärner Wiehnachtsmärt" },
-    { src: "/images/galerie-8.jpg", alt: "Besucher am beleuchteten Brunnen auf dem Franziskanerplatz" },
-    { src: "/images/galerie-1.jpg", alt: "Engel-Dekoration am Wiehnachtsmärt" },
-    plakat,
+    { src: "/images/galerie-4.jpg", alt: "Engel-Figur am Lozärner Wiehnachtsmärt" },
+    { plakat: true, alt: "Plakat: Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26, 18:00 Uhr" },
   ];
 
   useEffect(() => {
@@ -1095,7 +1090,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <p className="text-center text-white/25 text-[10px] mt-8">v2.5.1</p>
+          <p className="text-center text-white/25 text-[10px] mt-8">v2.5.2</p>
         </div>
       </footer>
     </div>
