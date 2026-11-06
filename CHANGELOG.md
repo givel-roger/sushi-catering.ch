@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.5.0
+- Startseite: zuerst Foto vom Franziskanerplatz, darunter der Foto-Slider
+- Plakat mit Marc Pircher nach unten verschoben (nach "Nächste Veranstaltungen")
+- Programm und Rahmenprogramm zusammengelegt: /rahmenprogramm leitet auf das Programm der Startseite weiter
+
 ## v2.4.3
 - Standplan: neuer Plan 2026 (PDF-Konvertierung, 2121x3000px)
 

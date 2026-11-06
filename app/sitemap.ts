@@ -2,7 +2,6 @@ import type { MetadataRoute } from "next";
 
 const SEITEN = [
   { pfad: "", prioritaet: 1, wechsel: "weekly" as const },
-  { pfad: "/rahmenprogramm", prioritaet: 0.9, wechsel: "weekly" as const },
   { pfad: "/teilnehmer", prioritaet: 0.9, wechsel: "weekly" as const },
   { pfad: "/standplan", prioritaet: 0.8, wechsel: "monthly" as const },
   { pfad: "/datum-und-zeit", prioritaet: 0.8, wechsel: "monthly" as const },

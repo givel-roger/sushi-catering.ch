@@ -324,7 +324,7 @@ function HeroSlider() {
   const images = [
     { src: "/images/galerie-7.jpg", alt: "Weihnachtsschmuck und Rentier-Dekoration" },
     { src: "/images/galerie-3.jpg", alt: "Geschenke und Dekoration am Märt" },
-    { src: "/images/galerie-12.jpg", alt: "Lozärner Wiehnachtsmärt auf dem Franziskanerplatz" },
+    { src: "/images/hero-markt.jpg", alt: "Besucher und Samichlaus-Figur am Lozärner Wiehnachtsmärt" },
   ];
 
   useEffect(() => {
@@ -340,7 +340,7 @@ function HeroSlider() {
           className="absolute inset-0 transition-opacity duration-[2000ms] slider-img"
           style={{ opacity: i === current ? 1 : 0 }}
         >
-          <Image src={img.src} alt={img.alt} fill className="object-cover" priority={i === 0} />
+          <Image src={img.src} alt={img.alt} fill sizes="100vw" className="object-cover" />
         </div>
       ))}
     </>
@@ -466,7 +466,6 @@ export default function Home() {
     ["Datum und Zeit", "/datum-und-zeit"],
     ["Teilnehmer", "/teilnehmer"],
     ["Stand-Plan", "/standplan"],
-    ["Rahmenprogramm", "/rahmenprogramm"],
     ["Stimmungsbilder", "/stimmungsbilder"],
     ["Weihnachtstassen", "/weihnachtstassen"],
     ["Anmeldung", "/anmeldung"],
@@ -563,18 +562,23 @@ export default function Home() {
         </div>
       )}
 
-      {/* ── Hero Banner ── */}
-      <section className="relative overflow-hidden pt-16">
-        <img
-          src="/images/hero-banner-desktop.jpg?v=2"
-          alt="Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26"
-          className="hidden sm:block w-full h-auto"
-        />
-        <img
-          src="/images/hero-banner-mobile.jpg?v=2"
-          alt="Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26"
-          className="block sm:hidden w-full h-auto"
-        />
+      {/* ── Hero-Foto ── */}
+      <section className="pt-16">
+        <div className="relative w-full aspect-[3/2] max-h-[calc(100svh-4rem)] overflow-hidden">
+          <Image
+            src="/images/galerie-12.jpg"
+            alt="Lozärner Wiehnachtsmärt auf dem Franziskanerplatz am Abend"
+            fill
+            sizes="100vw"
+            className="object-cover object-bottom"
+            priority
+          />
+        </div>
+      </section>
+
+      {/* ── Foto-Slider ── */}
+      <section className="relative w-full aspect-[3/2] max-h-[85svh] overflow-hidden" aria-label="Impressionen vom Wiehnachtsmärt">
+        <HeroSlider />
       </section>
 
       {/* ── Datum-Leiste ── */}
@@ -598,6 +602,22 @@ export default function Home() {
       </section>
 
       <TodayProgram />
+
+      {/* ── Plakat ── */}
+      <section className="bg-wine py-10 sm:py-14">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <img
+            src="/images/hero-banner-desktop.jpg?v=2"
+            alt="Plakat: Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26, 18:00 Uhr"
+            className="hidden sm:block w-full h-auto rounded-xl shadow-lg"
+          />
+          <img
+            src="/images/hero-banner-mobile.jpg?v=2"
+            alt="Plakat: Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26, 18:00 Uhr"
+            className="block sm:hidden w-full h-auto rounded-xl shadow-lg"
+          />
+        </div>
+      </section>
 
       {/* ── Video ── */}
       <section className="bg-wine-dark py-0">
@@ -1090,7 +1110,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <p className="text-center text-white/25 text-[10px] mt-8">v2.4.3</p>
+          <p className="text-center text-white/25 text-[10px] mt-8">v2.5.0</p>
         </div>
       </footer>
     </div>
