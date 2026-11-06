@@ -24,7 +24,7 @@ export default function Standplan() {
         <div className="rounded-xl overflow-hidden bg-foreground/[0.03] border border-foreground/10 mb-12">
           <img
             src="/images/standplan.jpg"
-            alt="Stand-Plan Franziskanerplatz"
+            alt="Stand-Plan Franziskanerplatz 2026 — Lozärner Wiehnachtsmärt"
             className="w-full h-auto"
           />
         </div>

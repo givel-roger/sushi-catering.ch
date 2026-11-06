@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.4.3
+- Standplan: neuer Plan 2026 (PDF-Konvertierung, 2121x3000px)
+
 ## v2.4.2
 - Cache-Busting für Banner-Bilder (?v=2), damit Browser das neue Mobile-Banner laden
 
