@@ -1,435 +1,599 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-function useInView() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold: 0.15 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-  return { ref, visible };
-}
+const AMOUNTS = [50, 100, 125, 150, 200, 250, 300];
 
-function FadeIn({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
-  const { ref, visible } = useInView();
+const MOTIFS = [
+  { id: "elegant", label: "Edel & neutral", sub: "Immer passend", bg: "#1a1a1a", accent: "#c8962e" },
+  { id: "geburtstag", label: "Geburtstag", sub: "Herzlich", bg: "#2d1b4e", accent: "#e8a0bf" },
+  { id: "weihnachten", label: "Weihnachten", sub: "Festlich", bg: "#1a2e1a", accent: "#c41e2a" },
+  { id: "danke", label: "Danke", sub: "Von Herzen", bg: "#3d2b1a", accent: "#c8962e" },
+  { id: "valentinstag", label: "Valentinstag", sub: "Amore", bg: "#3d1a1a", accent: "#e84060" },
+  { id: "genuss", label: "Genussmoment", sub: "Für Geniesser", bg: "#1a2a3d", accent: "#c8962e" },
+  { id: "gratulation", label: "Gratulation", sub: "Für grosse Momente", bg: "#1a1a2e", accent: "#c8962e" },
+];
+
+type Step = "betrag" | "motiv" | "widmung" | "bezahlen";
+const STEPS: { key: Step; label: string }[] = [
+  { key: "betrag", label: "Betrag" },
+  { key: "motiv", label: "Motiv" },
+  { key: "widmung", label: "Widmung" },
+  { key: "bezahlen", label: "Bezahlen" },
+];
+
+function MotifCard({ motif, amount }: { motif: typeof MOTIFS[0]; amount: number }) {
   return (
     <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(30px)",
-        transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
-      }}
+      className="rounded-lg overflow-hidden shadow-lg aspect-[1.6/1] relative flex flex-col justify-between p-5"
+      style={{ background: motif.bg }}
     >
-      {children}
+      <div className="flex justify-between items-start">
+        <div>
+          <p className="text-white/60 text-[10px] tracking-[0.3em] uppercase">Daniele</p>
+          <p className="text-white/40 text-[8px] tracking-[0.15em]">Restaurant & Winebar · Luzern</p>
+        </div>
+        <p className="text-white/30 text-[9px] tracking-[0.2em] uppercase">Gutschein</p>
+      </div>
+      <div>
+        <p className="text-white/50 text-[9px] tracking-[0.2em] uppercase mb-1">Guthaben</p>
+        <p className="text-white text-2xl font-display" style={{ color: motif.accent }}>
+          CHF {amount.toFixed(2)}
+        </p>
+      </div>
     </div>
   );
 }
 
 export default function Home() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    date: "",
-    guests: "",
-    typ: "live",
-    message: "",
-  });
-  const [sent, setSent] = useState(false);
+  const [step, setStep] = useState<Step>("betrag");
+  const [amount, setAmount] = useState(100);
+  const [customAmount, setCustomAmount] = useState("");
+  const [selectedMotif, setSelectedMotif] = useState("elegant");
+  const [widmung, setWidmung] = useState({ fuer: "", von: "", nachricht: "", zustellung: "selbst" as "selbst" | "direkt", empfaengerEmail: "" });
+  const [kaeufer, setKaeufer] = useState({ name: "", email: "", agb: false });
   const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+  const currentMotif = MOTIFS.find((m) => m.id === selectedMotif) || MOTIFS[0];
+  const displayAmount = customAmount ? parseFloat(customAmount) || 0 : amount;
+  const stepIndex = STEPS.findIndex((s) => s.key === step);
+
+  function goToStep(s: Step) {
+    const targetIndex = STEPS.findIndex((st) => st.key === s);
+    if (targetIndex <= stepIndex) setStep(s);
+  }
+
+  function handleCustomAmount(val: string) {
+    const num = val.replace(/[^0-9]/g, "");
+    setCustomAmount(num);
+    if (num) setAmount(0);
+  }
+
+  function selectPreset(val: number) {
+    setAmount(val);
+    setCustomAmount("");
+  }
+
+  async function handleSubmit() {
+    if (!kaeufer.name || !kaeufer.email || !kaeufer.agb) {
+      setError("Bitte fülle alle Pflichtfelder aus und akzeptiere die AGB.");
+      return;
     }
-    return () => { document.body.style.overflow = ""; };
-  }, [menuOpen]);
+    if (displayAmount < 20 || displayAmount > 1000) {
+      setError("Betrag muss zwischen CHF 20 und CHF 1000 liegen.");
+      return;
+    }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
     setSending(true);
     setError("");
+
     try {
-      const res = await fetch("/api/anfrage", {
+      const res = await fetch("/api/gutschein", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          amount: displayAmount,
+          motif: selectedMotif,
+          widmung,
+          kaeufer,
+        }),
       });
-      if (!res.ok) throw new Error("Fehler beim Senden");
-      setSent(true);
-    } catch {
-      setError("Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder rufen Sie uns an.");
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Fehler beim Erstellen des Gutscheins");
+      }
+
+      const data = await res.json();
+
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        setSent(true);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Etwas ist schiefgelaufen.");
     } finally {
       setSending(false);
     }
   }
 
+  if (sent) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <Nav />
+        <div className="flex-1 flex items-center justify-center px-5">
+          <div className="text-center max-w-md">
+            <div className="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-6">
+              <svg className="w-8 h-8 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <h1 className="font-display text-4xl text-foreground mb-4">Vielen Dank!</h1>
+            <p className="text-muted text-lg mb-2">Dein Gutschein wurde erstellt.</p>
+            <p className="text-muted">Du erhältst in Kürze eine E-Mail mit dem Gutschein als PDF.</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background flex flex-col">
+      <Nav />
 
-      {/* ── NAV ── */}
-      <nav className="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur-md border-b border-border">
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-10 h-20 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-3">
-            <Image src="/images/logo-black.png" alt="Kaiten by Yorokobi" width={280} height={62} className="h-12 w-auto" />
-          </a>
-          <div className="hidden sm:flex items-center gap-10 text-base text-muted">
-            <a href="#angebot" className="hover:text-foreground transition-colors">Angebot</a>
-            <a href="#ablauf" className="hover:text-foreground transition-colors">Ablauf</a>
-            <a href="#referenzen" className="hover:text-foreground transition-colors">Referenzen</a>
-          </div>
-          <div className="flex items-center gap-4">
-            <a href="#anfrage" className="hidden sm:inline-block bg-accent hover:bg-accent-hover text-white px-7 py-3 text-sm tracking-[0.12em] uppercase transition-colors rounded-sm">
-              Anfrage
-            </a>
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="sm:hidden flex flex-col gap-[5px] p-2 cursor-pointer"
-              aria-label="Menü"
-            >
-              <span className={`block w-6 h-[2px] bg-foreground transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
-              <span className={`block w-6 h-[2px] bg-foreground transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-              <span className={`block w-6 h-[2px] bg-foreground transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* ── MOBILE MENU ── */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-40 bg-white pt-24 px-8 flex flex-col gap-8 sm:hidden">
-          <a href="#angebot" onClick={() => setMenuOpen(false)} className="text-2xl font-display text-foreground">Angebot</a>
-          <a href="#ablauf" onClick={() => setMenuOpen(false)} className="text-2xl font-display text-foreground">Ablauf</a>
-          <a href="#referenzen" onClick={() => setMenuOpen(false)} className="text-2xl font-display text-foreground">Referenzen</a>
-          <a href="#anfrage" onClick={() => setMenuOpen(false)} className="mt-4 bg-accent text-white px-8 py-4 text-sm tracking-[0.15em] uppercase text-center rounded-sm">
-            Anfrage senden
-          </a>
-          <div className="mt-auto pb-10 text-sm text-muted">
-            <p><a href="tel:+41412449999">041 244 99 99</a></p>
-            <p>info@yorokobi.ch</p>
-          </div>
-        </div>
-      )}
-
-      {/* ── HERO ── */}
-      <section className="relative min-h-screen flex flex-col justify-end pb-20 sm:pb-28 overflow-hidden pt-20">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/hero-sushi.jpg"
-            alt="Sushi Catering Platte"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30" />
-        </div>
-
-        <div className="relative max-w-[1400px] mx-auto px-5 sm:px-10 w-full">
-          <p className="text-white/80 text-sm tracking-[0.35em] uppercase mb-8">
-            Kaiten Sushi · Luzern · Kriens · Sursee
-          </p>
-
-          <h1 className="font-display leading-[0.88] mb-10">
-            <span className="block text-[clamp(3.5rem,11vw,10rem)] text-white">
-              Frisch
-            </span>
-            <span className="block text-[clamp(3.5rem,11vw,10rem)] text-white/30" style={{ WebkitTextStroke: '2.5px white' }}>
-              gerollt,
-            </span>
-            <span className="block text-[clamp(2.2rem,5.5vw,4.5rem)] text-white/80 font-sans font-light mt-3">
-              direkt zu Ihnen.
-            </span>
-          </h1>
-
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-10 mt-14">
-            <p className="max-w-lg text-base text-white/85 leading-relaxed">
-              Sushi Catering für die Schweiz — Firmenevents, Hochzeiten, Privatanlässe.
-              Mit Live-Koch oder als fertige Platten. Ab 8 Personen.
-            </p>
-            <a
-              href="#anfrage"
-              className="shrink-0 border-2 border-white/40 hover:bg-white hover:text-foreground text-white px-10 py-5 text-sm tracking-[0.18em] uppercase transition-all"
-            >
-              Jetzt anfragen
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ── ANGEBOTE ── */}
-      <section id="angebot" className="border-t border-border">
-        <div className="max-w-[1400px] mx-auto">
-
-          {/* Live Catering */}
-          <div className="grid md:grid-cols-2 border-b border-border">
-            <FadeIn className="p-10 sm:p-20 flex flex-col justify-center">
-              <span className="text-accent text-sm tracking-[0.3em] uppercase mb-5 block font-medium">01</span>
-              <h2 className="font-display text-5xl sm:text-6xl text-foreground mb-5 leading-tight">
-                Live Catering
-              </h2>
-              <p className="text-base text-muted leading-relaxed mb-8 max-w-md">
-                Unser Sushi-Koch kommt zu Ihnen und rollt frisches Sushi direkt
-                vor Ihren Gästen. Ein Show-Element, das jeden Event aufwertet.
-              </p>
-              <ul className="space-y-3 text-sm text-muted">
-                <li>— Sushikoch vor Ort: CHF 80/Std.</li>
-                <li>— Plus pro Person nach Paket</li>
-                <li>— Apéro ab CHF 12 · Lunch ab CHF 32 · Dinner ab CHF 48</li>
-              </ul>
-            </FadeIn>
-            <div className="relative min-h-[350px] md:min-h-[500px]">
-              <Image src="/images/live-catering.jpg" alt="Frisch gerolltes Sushi auf dem Teller" fill className="object-cover" />
-            </div>
-          </div>
-
-          {/* Sushi Platten */}
-          <div className="grid md:grid-cols-2 border-b border-border">
-            <div className="relative min-h-[350px] md:min-h-[500px] order-2 md:order-1">
-              <Image src="/images/sushi-platten.jpg" alt="Grosse Sushi Catering Platten" fill className="object-cover" />
-            </div>
-            <FadeIn className="p-10 sm:p-20 flex flex-col justify-center order-1 md:order-2">
-              <span className="text-accent text-sm tracking-[0.3em] uppercase mb-5 block font-medium">02</span>
-              <h2 className="font-display text-5xl sm:text-6xl text-foreground mb-5 leading-tight">
-                Sushi Platten
-              </h2>
-              <p className="text-base text-muted leading-relaxed mb-8 max-w-md">
-                Wunderschön angerichtete Platten, fertig geliefert. Maki, Nigiri,
-                Inside-Out und Spezialitäten — kein Koch nötig, einfach geniessen.
-              </p>
-              <ul className="space-y-3 text-sm text-muted">
-                <li>— Apéro (4 Stk.) ab CHF 12 · Apéro Riche (8 Stk.) ab CHF 23</li>
-                <li>— Lunch (12 Stk.) ab CHF 32 · Dinner (18 Stk.) ab CHF 48</li>
-                <li>— Anfahrt: CHF 1.20/km</li>
-              </ul>
-            </FadeIn>
-          </div>
-
-          {/* Workshop */}
-          <div className="grid md:grid-cols-2 border-b border-border">
-            <FadeIn className="p-10 sm:p-20 flex flex-col justify-center">
-              <span className="text-accent text-sm tracking-[0.3em] uppercase mb-5 block font-medium">03</span>
-              <h2 className="font-display text-5xl sm:text-6xl text-foreground mb-5 leading-tight">
-                Sushi Workshop
-              </h2>
-              <p className="text-base text-muted leading-relaxed mb-8 max-w-md">
-                Teambuilding der besonderen Art. Ihre Gruppe lernt unter Anleitung
-                unseres Sushi-Meisters, selbst zu rollen — und isst das Ergebnis.
-              </p>
-              <ul className="space-y-3 text-sm text-muted">
-                <li>— CHF 125 pro Person · ab 17 Personen</li>
-                <li>— Alle Zutaten & Utensilien gestellt</li>
-                <li>— Getränke nicht inbegriffen</li>
-              </ul>
-            </FadeIn>
-            <div className="relative min-h-[350px] md:min-h-[500px]">
-              <Image src="/images/workshop-sushi.jpg" alt="Sushi Spezialitäten Workshop" fill className="object-cover" />
-            </div>
-          </div>
-
-          {/* Personal & Anfahrt */}
-          <div className="grid md:grid-cols-2 border-b border-border">
-            <div className="relative min-h-[350px] md:min-h-[500px] order-2 md:order-1">
-              <Image src="/images/restaurant.jpg" alt="Kaiten Sushi Team" fill className="object-cover" />
-            </div>
-            <FadeIn className="p-10 sm:p-20 flex flex-col justify-center order-1 md:order-2">
-              <span className="text-accent text-sm tracking-[0.3em] uppercase mb-5 block font-medium">04</span>
-              <h2 className="font-display text-5xl sm:text-6xl text-foreground mb-5 leading-tight">
-                Personal & Anfahrt
-              </h2>
-              <p className="text-base text-muted leading-relaxed mb-8 max-w-md">
-                Transparente Kosten für Ihr Catering — Koch, Servicepersonal und Anfahrt
-                werden separat nach Aufwand berechnet.
-              </p>
-              <ul className="space-y-3 text-sm text-muted">
-                <li>— Sushikoch: CHF 80/Std.</li>
-                <li>— Servicepersonal: CHF 60/Std.</li>
-                <li>— Kurier / Lieferung: CHF 60/Std.</li>
-                <li>— Anfahrt: CHF 1.20/km</li>
-                <li>— Geschirrpauschale: ab CHF 50</li>
-              </ul>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      {/* ── ABLAUF ── */}
-      <section id="ablauf" className="py-28 sm:py-36">
+      {/* Hero */}
+      <section className="bg-foreground text-white pt-24 pb-14 sm:pt-28 sm:pb-16">
         <div className="max-w-[1100px] mx-auto px-5 sm:px-10">
-          <FadeIn>
-            <p className="text-accent text-sm tracking-[0.3em] uppercase mb-5 font-medium">So gehts</p>
-            <h2 className="font-display text-5xl sm:text-6xl text-foreground mb-20 leading-tight">
-              In vier Schritten<br />zum Sushi-Erlebnis.
-            </h2>
-          </FadeIn>
+          <div className="flex items-center gap-3 mb-6">
+            <Image src="/images/daniele-logo-schwarz.png" alt="Daniele" width={160} height={49} className="h-8 w-auto invert" />
+          </div>
+          <h1 className="font-display text-4xl sm:text-5xl text-white mb-4 leading-tight">
+            Genuss verschenken.
+          </h1>
+          <p className="text-white/70 text-lg max-w-xl leading-relaxed">
+            Italienische Küche, erlesene Weine und unvergessliche Abende verschenken.
+            In wenigen Minuten gekauft, sofort per Mail, ohne Verfalldatum.
+          </p>
+          <div className="flex flex-wrap gap-x-8 gap-y-2 mt-6 text-sm text-white/50">
+            <span>Daniele Restaurant & Winebar</span>
+            <span>Kauffmannweg 16, Luzern</span>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid sm:grid-cols-2 gap-x-20 gap-y-16">
-            {[
-              { n: "01", t: "Anfrage senden", d: "Erzählen Sie uns von Ihrem Event — Datum, Gästeanzahl und Ihre Wünsche." },
-              { n: "02", t: "Offerte erhalten", d: "Innerhalb von 24 Stunden erhalten Sie ein massgeschneidertes Angebot." },
-              { n: "03", t: "Details klären", d: "Wir besprechen Menü, Allergien, Aufbau und alle Details persönlich." },
-              { n: "04", t: "Geniessen", d: "Wir liefern, bauen auf und sorgen für ein unvergessliches Erlebnis." },
-            ].map((s, i) => (
-              <FadeIn key={s.n} delay={i * 0.1}>
-                <div className="flex gap-7">
-                  <span className="font-display text-5xl text-accent/15 shrink-0">{s.n}</span>
-                  <div>
-                    <h3 className="text-foreground text-xl font-semibold mb-3">{s.t}</h3>
-                    <p className="text-muted text-base leading-relaxed">{s.d}</p>
+      {/* Step indicator */}
+      <div className="border-b border-border sticky top-0 bg-white z-30">
+        <div className="max-w-[1100px] mx-auto px-5 sm:px-10">
+          <div className="flex">
+            {STEPS.map((s, i) => (
+              <button
+                key={s.key}
+                onClick={() => goToStep(s.key)}
+                className={`py-4 px-4 sm:px-8 text-sm tracking-wide transition-colors relative cursor-pointer ${
+                  i === stepIndex
+                    ? "text-foreground font-semibold"
+                    : i < stepIndex
+                    ? "text-accent hover:text-accent-hover"
+                    : "text-muted/40 cursor-default"
+                }`}
+                disabled={i > stepIndex}
+              >
+                {s.label}
+                {i === stepIndex && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <main className="flex-1 py-10 sm:py-14">
+        <div className="max-w-[1100px] mx-auto px-5 sm:px-10">
+          <div className="grid lg:grid-cols-[1fr,360px] gap-12 lg:gap-16">
+
+            {/* Left: Form */}
+            <div>
+              {/* STEP 1: Betrag */}
+              {step === "betrag" && (
+                <div>
+                  <h2 className="font-display text-3xl text-foreground mb-3">
+                    Wie viel soll der Gutschein wert sein?
+                  </h2>
+                  <p className="text-muted mb-8">
+                    Ohne Verfalldatum, einlösbar im Daniele Restaurant & Winebar, Luzern.
+                  </p>
+
+                  <div className="flex flex-wrap gap-3 mb-8">
+                    {AMOUNTS.map((a) => (
+                      <button
+                        key={a}
+                        onClick={() => selectPreset(a)}
+                        className={`px-6 py-3 rounded-md text-base font-medium transition-all cursor-pointer ${
+                          amount === a && !customAmount
+                            ? "bg-foreground text-white"
+                            : "bg-surface text-foreground hover:bg-border"
+                        }`}
+                      >
+                        {a}
+                      </button>
+                    ))}
+                  </div>
+
+                  <label className="block text-sm text-muted mb-2">
+                    Oder eigener Betrag (CHF 20 bis 1000)
+                  </label>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="z.B. 75"
+                    value={customAmount}
+                    onChange={(e) => handleCustomAmount(e.target.value)}
+                    className="border border-border rounded-md px-4 py-3 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full max-w-[200px]"
+                  />
+
+                  <div className="mt-10">
+                    <button
+                      onClick={() => {
+                        if (displayAmount >= 20 && displayAmount <= 1000) setStep("motiv");
+                      }}
+                      disabled={displayAmount < 20 || displayAmount > 1000}
+                      className="bg-accent hover:bg-accent-hover text-white px-10 py-4 text-sm tracking-[0.12em] uppercase transition-colors cursor-pointer rounded-md disabled:opacity-40 disabled:cursor-default"
+                    >
+                      Weiter zum Motiv
+                    </button>
                   </div>
                 </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
+              )}
 
-      {/* ── STATEMENT with Kaiten Box ── */}
-      <section className="relative py-24 sm:py-36 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image src="/images/kaiten-box.jpg" alt="Kaiten Sushi Box" fill className="object-cover" />
-          <div className="absolute inset-0 bg-black/55" />
-        </div>
-        <FadeIn className="relative max-w-[1400px] mx-auto px-5 sm:px-10">
-          <h2 className="font-display text-4xl sm:text-6xl md:text-7xl text-white leading-tight text-center">
-            Über <span className="text-accent">500 Events.</span><br />
-            Drei Standorte.<br />
-            <span className="italic text-white/50">Zwanzig Jahre Erfahrung.</span>
-          </h2>
-        </FadeIn>
-      </section>
-
-      {/* ── REFERENZEN ── */}
-      <section id="referenzen" className="py-24 sm:py-32">
-        <div className="max-w-[1100px] mx-auto px-5 sm:px-10">
-          <p className="text-accent text-sm tracking-[0.3em] uppercase mb-14 font-medium">Stimmen</p>
-
-          <div className="space-y-20">
-            {[
-              { q: "Das Live-Catering war der Höhepunkt unserer Firmenfeier. Jeder Gast war begeistert.", who: "Sandra M., Eventmanagerin" },
-              { q: "Wir buchen seit drei Jahren für unsere Weihnachtsfeier. Jedes Mal perfekt.", who: "Thomas K., CEO TechStart Zürich" },
-              { q: "Der Workshop war das beste Teambuilding, das wir je organisiert haben.", who: "Lisa W., HR Lead" },
-            ].map((t, i) => (
-              <FadeIn key={t.who} delay={i * 0.1}>
-                <blockquote className="border-l-[3px] border-accent/30 pl-10">
-                  <p className="font-display text-2xl sm:text-3xl text-foreground/80 italic leading-relaxed mb-4">
-                    {t.q}
+              {/* STEP 2: Motiv */}
+              {step === "motiv" && (
+                <div>
+                  <h2 className="font-display text-3xl text-foreground mb-3">
+                    Zu welchem Anlass?
+                  </h2>
+                  <p className="text-muted mb-8">
+                    Das Motiv erscheint auf dem Gutschein und in der Geschenkmail.
                   </p>
-                  <cite className="text-muted text-sm not-italic tracking-wide">{t.who}</cite>
-                </blockquote>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ── ANFRAGE ── */}
-      <section id="anfrage" className="border-t border-border bg-surface py-24 sm:py-32">
-        <div className="max-w-[900px] mx-auto px-5 sm:px-10">
-          <FadeIn>
-            <div className="mb-14">
-              <p className="text-accent text-sm tracking-[0.3em] uppercase mb-5 font-medium">Anfrage</p>
-              <h2 className="font-display text-5xl sm:text-6xl text-foreground mb-4 leading-tight">
-                Ihr Event, unser Sushi.
-              </h2>
-              <p className="text-muted text-lg">
-                Unverbindlich — wir melden uns innert 24 Stunden.
-              </p>
-            </div>
-          </FadeIn>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {MOTIFS.map((m) => (
+                      <button
+                        key={m.id}
+                        onClick={() => setSelectedMotif(m.id)}
+                        className={`rounded-lg overflow-hidden text-left transition-all cursor-pointer ${
+                          selectedMotif === m.id
+                            ? "ring-2 ring-accent ring-offset-2"
+                            : "hover:ring-1 hover:ring-border"
+                        }`}
+                      >
+                        <div
+                          className="aspect-[1.5/1] flex items-center justify-center relative"
+                          style={{ background: m.bg }}
+                        >
+                          <span className="text-[10px] tracking-[0.3em] uppercase text-white/70">{m.id === "elegant" ? "GUTSCHEIN" : m.label.toUpperCase()}</span>
+                        </div>
+                        <div className="p-3 bg-surface">
+                          <p className="text-sm font-medium text-foreground">{m.label}</p>
+                          <p className="text-xs text-muted">{m.sub}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
 
-          {sent ? (
-            <FadeIn>
-              <div className="py-24 text-center">
-                <p className="font-display text-4xl text-foreground mb-4">Merci!</p>
-                <p className="text-muted text-lg">Wir melden uns bei Ihnen.</p>
-              </div>
-            </FadeIn>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="grid sm:grid-cols-2 gap-8">
-                <input required type="text" placeholder="Name *"
-                  value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="bg-white border-b-2 border-border px-0 py-4 text-foreground text-base focus:outline-none focus:border-accent transition-colors placeholder:text-muted/50 w-full" />
-                <input required type="email" placeholder="E-Mail *"
-                  value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="bg-white border-b-2 border-border px-0 py-4 text-foreground text-base focus:outline-none focus:border-accent transition-colors placeholder:text-muted/50 w-full" />
-                <input type="tel" placeholder="Telefon"
-                  value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="bg-white border-b-2 border-border px-0 py-4 text-foreground text-base focus:outline-none focus:border-accent transition-colors placeholder:text-muted/50 w-full" />
-                <input type="text" placeholder="Datum (z.B. 15. März 2025)"
-                  value={formData.date} onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                  className="bg-white border-b-2 border-border px-0 py-4 text-foreground text-base focus:outline-none focus:border-accent transition-colors placeholder:text-muted/50 w-full" />
-                <input type="text" placeholder="Anzahl Gäste"
-                  value={formData.guests} onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                  className="bg-white border-b-2 border-border px-0 py-4 text-foreground text-base focus:outline-none focus:border-accent transition-colors placeholder:text-muted/50 w-full" />
-                <div className="relative">
-                <select value={formData.typ} onChange={(e) => setFormData({ ...formData, typ: e.target.value })}
-                  className="bg-white border-b-2 border-border px-0 py-4 pr-8 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full appearance-none cursor-pointer">
-                  <option value="live">Live Catering (mit Koch)</option>
-                  <option value="catering">Catering (ohne Koch)</option>
-                  <option value="platte">Sushi Platten (ohne Koch)</option>
-                  <option value="workshop">Sushi Workshop</option>
-                  <option value="beratung">Weiss noch nicht — beraten Sie mich</option>
-                </select>
-                <svg className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  <div className="mt-10 flex gap-4">
+                    <button
+                      onClick={() => setStep("betrag")}
+                      className="px-8 py-4 text-sm text-muted hover:text-foreground transition-colors cursor-pointer"
+                    >
+                      Zurück
+                    </button>
+                    <button
+                      onClick={() => setStep("widmung")}
+                      className="bg-accent hover:bg-accent-hover text-white px-10 py-4 text-sm tracking-[0.12em] uppercase transition-colors cursor-pointer rounded-md"
+                    >
+                      Weiter
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <textarea rows={4} placeholder="Was dürfen wir wissen?"
-                value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="bg-white border-b-2 border-border px-0 py-4 text-foreground text-base focus:outline-none focus:border-accent transition-colors placeholder:text-muted/50 w-full resize-none" />
-              {error && <p className="text-accent text-sm">{error}</p>}
-              <button type="submit" disabled={sending}
-                className="mt-6 bg-accent hover:bg-accent-hover text-white px-12 py-5 text-sm tracking-[0.18em] uppercase transition-colors cursor-pointer rounded-sm disabled:opacity-60">
-                {sending ? "Wird gesendet..." : "Anfrage senden"}
-              </button>
-            </form>
-          )}
-        </div>
-      </section>
+              )}
 
-      {/* ── FOOTER ── */}
-      <footer className="border-t border-border py-16">
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-10">
-          <div className="flex flex-col sm:flex-row justify-between items-start gap-10 mb-10">
-            <div>
-              <Image src="/images/logo-black.png" alt="Kaiten by Yorokobi" width={240} height={53} className="h-10 w-auto mb-4" />
-              <p className="text-sm text-muted">
-                Sushi Catering von{" "}
-                <a href="https://www.kaiten.ch" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">
-                  kaiten.ch
-                </a>
-              </p>
+              {/* STEP 3: Widmung */}
+              {step === "widmung" && (
+                <div>
+                  <h2 className="font-display text-3xl text-foreground mb-3">
+                    Persönliche Widmung
+                  </h2>
+                  <p className="text-muted mb-8">
+                    Alles freiwillig, aber es macht das Geschenk viel schöner.
+                  </p>
+
+                  <div className="space-y-6">
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm text-muted mb-2">Für</label>
+                        <input
+                          type="text"
+                          placeholder="Name der beschenkten Person"
+                          value={widmung.fuer}
+                          onChange={(e) => setWidmung({ ...widmung, fuer: e.target.value })}
+                          className="border border-border rounded-md px-4 py-3 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-muted mb-2">Von</label>
+                        <input
+                          type="text"
+                          placeholder="Dein Name"
+                          value={widmung.von}
+                          onChange={(e) => setWidmung({ ...widmung, von: e.target.value })}
+                          className="border border-border rounded-md px-4 py-3 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm text-muted mb-2">Nachricht</label>
+                      <textarea
+                        rows={3}
+                        placeholder="z.B. Alles Gute zum Geburtstag, lass es dir schmecken!"
+                        value={widmung.nachricht}
+                        onChange={(e) => setWidmung({ ...widmung, nachricht: e.target.value })}
+                        className="border border-border rounded-md px-4 py-3 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full resize-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm text-muted mb-4">Zustellung</label>
+                      <div className="flex flex-col gap-3">
+                        <label className={`flex items-center gap-3 p-4 rounded-md border cursor-pointer transition-colors ${widmung.zustellung === "selbst" ? "border-accent bg-accent/5" : "border-border hover:border-muted"}`}>
+                          <input
+                            type="radio"
+                            name="zustellung"
+                            checked={widmung.zustellung === "selbst"}
+                            onChange={() => setWidmung({ ...widmung, zustellung: "selbst", empfaengerEmail: "" })}
+                            className="accent-accent"
+                          />
+                          <div>
+                            <p className="text-sm font-medium text-foreground">An mich senden</p>
+                            <p className="text-xs text-muted">Du erhältst den Gutschein und gibst ihn selbst weiter.</p>
+                          </div>
+                        </label>
+                        <label className={`flex items-center gap-3 p-4 rounded-md border cursor-pointer transition-colors ${widmung.zustellung === "direkt" ? "border-accent bg-accent/5" : "border-border hover:border-muted"}`}>
+                          <input
+                            type="radio"
+                            name="zustellung"
+                            checked={widmung.zustellung === "direkt"}
+                            onChange={() => setWidmung({ ...widmung, zustellung: "direkt" })}
+                            className="accent-accent"
+                          />
+                          <div>
+                            <p className="text-sm font-medium text-foreground">Direkt an die beschenkte Person</p>
+                            <p className="text-xs text-muted">Der Gutschein wird direkt per Mail zugestellt.</p>
+                          </div>
+                        </label>
+                      </div>
+                      {widmung.zustellung === "direkt" && (
+                        <input
+                          type="email"
+                          placeholder="E-Mail der beschenkten Person"
+                          value={widmung.empfaengerEmail}
+                          onChange={(e) => setWidmung({ ...widmung, empfaengerEmail: e.target.value })}
+                          className="mt-4 border border-border rounded-md px-4 py-3 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full"
+                        />
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="mt-10 flex gap-4">
+                    <button
+                      onClick={() => setStep("motiv")}
+                      className="px-8 py-4 text-sm text-muted hover:text-foreground transition-colors cursor-pointer"
+                    >
+                      Zurück
+                    </button>
+                    <button
+                      onClick={() => setStep("bezahlen")}
+                      className="bg-accent hover:bg-accent-hover text-white px-10 py-4 text-sm tracking-[0.12em] uppercase transition-colors cursor-pointer rounded-md"
+                    >
+                      Weiter zur Bezahlung
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* STEP 4: Bezahlen */}
+              {step === "bezahlen" && (
+                <div>
+                  <h2 className="font-display text-3xl text-foreground mb-3">
+                    Deine Angaben
+                  </h2>
+                  <p className="text-muted mb-8">
+                    Noch schnell deine Daten, dann gehts zur Bezahlung.
+                  </p>
+
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm text-muted mb-2">Dein Name *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Vor- und Nachname"
+                        value={kaeufer.name}
+                        onChange={(e) => setKaeufer({ ...kaeufer, name: e.target.value })}
+                        className="border border-border rounded-md px-4 py-3 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-muted mb-2">Deine E-Mail *</label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="deine@email.ch"
+                        value={kaeufer.email}
+                        onChange={(e) => setKaeufer({ ...kaeufer, email: e.target.value })}
+                        className="border border-border rounded-md px-4 py-3 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full"
+                      />
+                    </div>
+
+                    <div className="bg-surface rounded-lg p-5 space-y-3">
+                      <h3 className="text-sm font-semibold text-foreground">Zusammenfassung</h3>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted">Gutscheinwert</span>
+                        <span className="text-foreground font-medium">CHF {displayAmount.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted">Motiv</span>
+                        <span className="text-foreground">{currentMotif.label}</span>
+                      </div>
+                      {widmung.fuer && (
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted">Für</span>
+                          <span className="text-foreground">{widmung.fuer}</span>
+                        </div>
+                      )}
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted">Zustellung</span>
+                        <span className="text-foreground">{widmung.zustellung === "selbst" ? "An mich" : "Direkt"}</span>
+                      </div>
+                      <div className="border-t border-border pt-3 flex justify-between">
+                        <span className="font-semibold text-foreground">Total</span>
+                        <span className="font-semibold text-foreground text-lg">CHF {displayAmount.toFixed(2)}</span>
+                      </div>
+                    </div>
+
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={kaeufer.agb}
+                        onChange={(e) => setKaeufer({ ...kaeufer, agb: e.target.checked })}
+                        className="mt-1 accent-accent"
+                      />
+                      <span className="text-sm text-muted">
+                        Ich akzeptiere die{" "}
+                        <Link href="/agb" className="underline text-foreground hover:text-accent">AGB</Link>{" "}
+                        und die{" "}
+                        <Link href="/datenschutz" className="underline text-foreground hover:text-accent">Datenschutzerklärung</Link>.
+                      </span>
+                    </label>
+
+                    {error && (
+                      <p className="text-error text-sm bg-error/5 p-3 rounded-md">{error}</p>
+                    )}
+                  </div>
+
+                  <div className="mt-10 flex gap-4">
+                    <button
+                      onClick={() => setStep("widmung")}
+                      className="px-8 py-4 text-sm text-muted hover:text-foreground transition-colors cursor-pointer"
+                    >
+                      Zurück
+                    </button>
+                    <button
+                      onClick={handleSubmit}
+                      disabled={sending}
+                      className="bg-accent hover:bg-accent-hover text-white px-10 py-4 text-sm tracking-[0.12em] uppercase transition-colors cursor-pointer rounded-md disabled:opacity-60 disabled:cursor-default"
+                    >
+                      {sending ? "Wird verarbeitet..." : "Jetzt bezahlen"}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="text-sm text-muted space-y-2 sm:text-right">
-              <p>info@yorokobi.ch · <a href="tel:+41412449999" className="hover:text-foreground transition-colors">041 244 99 99</a></p>
-              <p>Luzern · Kriens · Sursee</p>
-            </div>
-          </div>
-          <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted/50">
-            <p>© {new Date().getFullYear()} Yorokobi AG · <span className="text-muted/30">v1.4.2</span></p>
-            <div className="flex gap-6">
-              <Link href="/impressum" className="hover:text-foreground transition-colors">Impressum</Link>
-              <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>
+
+            {/* Right: Preview card */}
+            <div className="hidden lg:block">
+              <div className="sticky top-20">
+                <MotifCard motif={currentMotif} amount={displayAmount} />
+                <ul className="mt-6 space-y-3 text-sm text-muted">
+                  <li className="flex gap-2">
+                    <svg className="w-4 h-4 text-accent shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    Sofort per Mail, als PDF zum Ausdrucken
+                  </li>
+                  <li className="flex gap-2">
+                    <svg className="w-4 h-4 text-accent shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    Ohne Verfalldatum
+                  </li>
+                  <li className="flex gap-2">
+                    <svg className="w-4 h-4 text-accent shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    Teilbeträge möglich, Restguthaben bleibt
+                  </li>
+                  <li className="flex gap-2">
+                    <svg className="w-4 h-4 text-accent shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    Einlösbar im Daniele Restaurant & Winebar
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </footer>
+      </main>
+
+      {/* Mobile preview (below form on small screens) */}
+      <div className="lg:hidden border-t border-border py-8 bg-surface">
+        <div className="max-w-[400px] mx-auto px-5">
+          <MotifCard motif={currentMotif} amount={displayAmount} />
+        </div>
+      </div>
+
+      <Footer />
     </div>
+  );
+}
+
+function Nav() {
+  return (
+    <nav className="fixed top-0 inset-x-0 z-50 bg-foreground">
+      <div className="max-w-[1100px] mx-auto px-5 sm:px-10 h-14 flex items-center justify-between">
+        <a href="/" className="flex items-center">
+          <Image src="/images/daniele-logo-schwarz.png" alt="Daniele" width={140} height={43} className="h-7 w-auto invert" />
+        </a>
+        <div className="flex items-center gap-6 text-sm text-white/60">
+          <a href="https://daniele.swiss" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors hidden sm:block">
+            daniele.swiss
+          </a>
+          <a href="tel:+41412102020" className="hover:text-white transition-colors hidden sm:block">
+            041 210 20 20
+          </a>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="border-t border-border py-10">
+      <div className="max-w-[1100px] mx-auto px-5 sm:px-10">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-6 mb-6">
+          <div>
+            <Image src="/images/daniele-logo-schwarz.png" alt="Daniele" width={120} height={37} className="h-6 w-auto mb-3" />
+            <p className="text-sm text-muted">
+              Gutscheine von{" "}
+              <a href="https://daniele.swiss" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">
+                Daniele Restaurant & Winebar
+              </a>
+            </p>
+          </div>
+          <div className="text-sm text-muted space-y-1 sm:text-right">
+            <p>Kauffmannweg 16, 6003 Luzern</p>
+            <p><a href="tel:+41412102020" className="hover:text-foreground transition-colors">041 210 20 20</a></p>
+          </div>
+        </div>
+        <div className="border-t border-border pt-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-muted/50">
+          <p>© {new Date().getFullYear()} Daniele Winebar · Restaurant · Lounge · <span className="text-muted/30">v1.0.0</span></p>
+          <div className="flex gap-6">
+            <Link href="/impressum" className="hover:text-foreground transition-colors">Impressum</Link>
+            <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>
+            <Link href="/agb" className="hover:text-foreground transition-colors">AGB</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }

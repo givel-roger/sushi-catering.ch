@@ -9,40 +9,30 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: "Sushi Catering Schweiz — Frisch gerollt, direkt zu Ihnen",
-    template: "%s | Sushi Catering Schweiz",
+    default: "Gutschein schenken — Daniele Restaurant & Winebar, Luzern",
+    template: "%s | Gutschein schenken",
   },
   description:
-    "Premium Sushi Catering für Events, Firmenanlässe und private Feiern in der ganzen Schweiz. Mit oder ohne Koch. Frisch zubereitet von Kaiten Sushi.",
+    "Gutschein kaufen und verschenken für das Daniele Restaurant & Winebar in Luzern. In wenigen Minuten gekauft, sofort per Mail, ohne Verfalldatum.",
   keywords: [
-    "sushi catering",
-    "sushi catering schweiz",
-    "sushi event",
-    "sushi party",
-    "sushi koch mieten",
-    "sushi platte bestellen",
-    "catering luzern",
-    "sushi workshop",
-    "firmen catering schweiz",
+    "gutschein",
+    "restaurant gutschein",
+    "daniele luzern",
+    "geschenk",
+    "gutschein kaufen",
+    "restaurant geschenk",
+    "winebar gutschein",
   ],
-  authors: [{ name: "Kaiten by Yorokobi" }],
-  metadataBase: new URL("https://www.sushi-catering.ch"),
+  authors: [{ name: "Daniele Restaurant & Winebar" }],
+  metadataBase: new URL("https://www.gutschein-schenken.ch"),
   openGraph: {
     type: "website",
     locale: "de_CH",
-    url: "https://www.sushi-catering.ch",
-    siteName: "Sushi Catering Schweiz",
-    title: "Sushi Catering Schweiz — Frisch gerollt, direkt zu Ihnen",
+    url: "https://www.gutschein-schenken.ch",
+    siteName: "Gutschein schenken — Daniele",
+    title: "Gutschein schenken — Daniele Restaurant & Winebar, Luzern",
     description:
-      "Premium Sushi Catering für Events, Firmenanlässe und private Feiern. Live-Koch, Sushi Platten oder Workshop. Ab 8 Personen.",
-    images: [
-      {
-        url: "/images/hero-sushi.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Sushi Catering Platte von Kaiten",
-      },
-    ],
+      "Kulinarische Genussmomente verschenken. In wenigen Minuten gekauft, sofort per Mail, ohne Verfalldatum.",
   },
   robots: {
     index: true,
@@ -63,24 +53,20 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "FoodService",
-              name: "Sushi Catering Schweiz by Kaiten",
+              "@type": "Restaurant",
+              name: "Daniele Restaurant & Winebar",
               description:
-                "Premium Sushi Catering für Events, Firmenanlässe und private Feiern in der ganzen Schweiz.",
-              url: "https://www.sushi-catering.ch",
-              telephone: "+41412449999",
-              email: "info@yorokobi.ch",
+                "Italienisches Restaurant & Winebar in Luzern. Gutscheine online kaufen und verschenken.",
+              url: "https://www.gutschein-schenken.ch",
+              telephone: "+41412102020",
+              email: "info@daniele.swiss",
               address: {
                 "@type": "PostalAddress",
+                streetAddress: "Kauffmannweg 16",
                 addressLocality: "Luzern",
+                postalCode: "6003",
                 addressCountry: "CH",
               },
-              areaServed: {
-                "@type": "Country",
-                name: "Schweiz",
-              },
-              priceRange: "ab CHF 12 pro Person",
-              sameAs: ["https://www.kaiten.ch"],
             }),
           }}
         />

@@ -2,13 +2,16 @@
 
 @theme inline {
   --color-background: #ffffff;
-  --color-foreground: #111111;
-  --color-accent: #c41e2a;
-  --color-accent-hover: #a8171f;
-  --color-warm: #faf7f4;
-  --color-muted: #666;
-  --color-surface: #f7f5f2;
-  --color-border: #e8e5e0;
+  --color-foreground: #1a1a1a;
+  --color-accent: #c8962e;
+  --color-accent-hover: #b0831f;
+  --color-accent-light: #f5e6c8;
+  --color-warm: #faf8f4;
+  --color-muted: #777;
+  --color-surface: #f9f7f3;
+  --color-border: #e8e3d8;
+  --color-success: #2d8a4e;
+  --color-error: #c41e2a;
   --font-sans: var(--font-geist-sans);
 }
 
@@ -37,9 +40,4 @@ body {
 
 .font-display {
   font-family: 'Playfair Display', Georgia, serif;
-}
-
-.text-outline {
-  -webkit-text-stroke: 1.5px #1a1a1a;
-  color: transparent;
 }
