@@ -19,3 +19,9 @@
 2026-11-06 11:14 | v2.5.0 | weihnachtsmarkt-luzern.com | Server 8 (65.108.4.141) | Docker OK, Health Check 200, Startseite: Marktfoto + Slider zuerst, Plakat weiter unten, /rahmenprogramm leitet auf /#programm (308)
 2026-11-06 11:20 | v2.5.1 | weihnachtsmarkt-luzern.com | Server 8 (65.108.4.141) | Docker OK, Health Check 200, Ein Slider im Plakat-Format: Bilder und Plakat Marc Pircher im Wechsel
 2026-11-06 11:59 | v2.5.2 | weihnachtsmarkt-luzern.com | Server 8 (65.108.4.141) | Docker OK, Health Check 200, Hero-Slider ohne Bilder mit Gesichtern (Rentier, Geschenke, Engel, Plakat)
+2026-11-06 18:48:53  v2.6.0 auf Server 1 (65.108.4.141, /opt/weihnachtsmarkt-luzern, Docker Port 3082)
+  next 16.2.1 -> 16.4.5; damit auch postcss, sharp, nanoid, source-map-js, baseline-browser-mapping geflickt
+  npm audit --omit=dev: vorher 6 Luecken (1 kritisch, 4 hoch, 1 mittel), nachher 0
+  .env.production und .env.local von 644 auf 600, Besitzer root, Inhalt unveraendert (Brevo-Schluessel)
+  Gebaut waehrend die alte Seite lief, erst danach getauscht; kein Ausfall
+  Pruefung: http://127.0.0.1:3082/ 200, https://weihnachtsmarkt-luzern.com/ 200, Fassung v2.6.0 auf der Seite sichtbar
