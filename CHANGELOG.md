@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.5.1
+- Startseite: nur noch ein Fenster im Plakat-Format (Desktop 16:9, Mobile quadratisch)
+- Slider darin: zuerst Bilder, dann Plakat Marc Pircher, wieder Bilder, Plakat, von vorne
+
 ## v2.5.0
 - Startseite: zuerst Foto vom Franziskanerplatz, darunter der Foto-Slider
 - Plakat mit Marc Pircher nach unten verschoben (nach "Nächste Veranstaltungen")

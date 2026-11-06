@@ -321,26 +321,39 @@ function Snow() {
 /* ── Hero Slider ── */
 function HeroSlider() {
   const [current, setCurrent] = useState(0);
-  const images = [
+  const plakat = { plakat: true, alt: "Plakat: Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26, 18:00 Uhr" };
+  const slides = [
+    { src: "/images/galerie-12.jpg", alt: "Lozärner Wiehnachtsmärt auf dem Franziskanerplatz am Abend" },
     { src: "/images/galerie-7.jpg", alt: "Weihnachtsschmuck und Rentier-Dekoration" },
     { src: "/images/galerie-3.jpg", alt: "Geschenke und Dekoration am Märt" },
+    plakat,
     { src: "/images/hero-markt.jpg", alt: "Besucher und Samichlaus-Figur am Lozärner Wiehnachtsmärt" },
+    { src: "/images/galerie-8.jpg", alt: "Besucher am beleuchteten Brunnen auf dem Franziskanerplatz" },
+    { src: "/images/galerie-1.jpg", alt: "Engel-Dekoration am Wiehnachtsmärt" },
+    plakat,
   ];
 
   useEffect(() => {
-    const timer = setInterval(() => setCurrent((c) => (c + 1) % images.length), 6000);
+    const timer = setInterval(() => setCurrent((c) => (c + 1) % slides.length), 6000);
     return () => clearInterval(timer);
-  }, [images.length]);
+  }, [slides.length]);
 
   return (
     <>
-      {images.map((img, i) => (
+      {slides.map((slide, i) => (
         <div
-          key={img.src}
-          className="absolute inset-0 transition-opacity duration-[2000ms] slider-img"
+          key={i}
+          className="absolute inset-0 transition-opacity duration-[1500ms] slider-img"
           style={{ opacity: i === current ? 1 : 0 }}
         >
-          <Image src={img.src} alt={img.alt} fill sizes="100vw" className="object-cover" />
+          {"plakat" in slide ? (
+            <picture>
+              <source media="(min-width: 640px)" srcSet="/images/hero-banner-desktop.jpg?v=2" />
+              <img src="/images/hero-banner-mobile.jpg?v=2" alt={slide.alt} className="w-full h-full object-cover" />
+            </picture>
+          ) : (
+            <Image src={slide.src} alt={slide.alt} fill sizes="100vw" className="object-cover" priority={i === 0} />
+          )}
         </div>
       ))}
     </>
@@ -562,23 +575,11 @@ export default function Home() {
         </div>
       )}
 
-      {/* ── Hero-Foto ── */}
-      <section className="pt-16">
-        <div className="relative w-full aspect-[3/2] max-h-[calc(100svh-4rem)] overflow-hidden">
-          <Image
-            src="/images/galerie-12.jpg"
-            alt="Lozärner Wiehnachtsmärt auf dem Franziskanerplatz am Abend"
-            fill
-            sizes="100vw"
-            className="object-cover object-bottom"
-            priority
-          />
+      {/* ── Hero-Slider im Plakat-Format ── */}
+      <section className="pt-16" aria-label="Impressionen vom Wiehnachtsmärt">
+        <div className="relative w-full aspect-square sm:aspect-video overflow-hidden">
+          <HeroSlider />
         </div>
-      </section>
-
-      {/* ── Foto-Slider ── */}
-      <section className="relative w-full aspect-[3/2] max-h-[85svh] overflow-hidden" aria-label="Impressionen vom Wiehnachtsmärt">
-        <HeroSlider />
       </section>
 
       {/* ── Datum-Leiste ── */}
@@ -602,22 +603,6 @@ export default function Home() {
       </section>
 
       <TodayProgram />
-
-      {/* ── Plakat ── */}
-      <section className="bg-wine py-10 sm:py-14">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <img
-            src="/images/hero-banner-desktop.jpg?v=2"
-            alt="Plakat: Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26, 18:00 Uhr"
-            className="hidden sm:block w-full h-auto rounded-xl shadow-lg"
-          />
-          <img
-            src="/images/hero-banner-mobile.jpg?v=2"
-            alt="Plakat: Lozärner Wiehnachtsmärt auf dem Franziskanerplatz – 03.–21. Dezember 2026 – Marc Pircher 16.12.26, 18:00 Uhr"
-            className="block sm:hidden w-full h-auto rounded-xl shadow-lg"
-          />
-        </div>
-      </section>
 
       {/* ── Video ── */}
       <section className="bg-wine-dark py-0">
@@ -1110,7 +1095,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <p className="text-center text-white/25 text-[10px] mt-8">v2.5.0</p>
+          <p className="text-center text-white/25 text-[10px] mt-8">v2.5.1</p>
         </div>
       </footer>
     </div>
