@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.4.3 (2026-11-06)
+### Sicherheit
+- **next von 16.2.1 auf 16.4.5 angehoben.** 16.2.1 war kritisch gemeldet, darunter eine ohne Anmeldung ausnutzbare Codeausfuehrung in der Bildoptimierung und mehrere Umgehungen der Middleware. Kein Hauptversionswechsel.
+- Damit sind auch postcss, sharp, nanoid, source-map-js und baseline-browser-mapping geflickt, die ueber next hereinkamen.
+- Gemessen: vorher 6 Luecken (1 kritisch, 4 hoch, 1 mittel), nachher 0.
+- Typpruefung 0 Fehler, Bau gruen, keine Code-Anpassung noetig.
+
 ## v1.4.2
 - Überall "Yorokobi AG" korrekt geschrieben (Impressum, Datenschutz, Footer)
 - Datenschutz-Seite: Adresse und E-Mail aktualisiert
