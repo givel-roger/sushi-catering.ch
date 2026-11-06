@@ -17,3 +17,4 @@
 2026-11-06 00:10 | v2.4.2 | weihnachtsmarkt-luzern.com | Server 8 (65.108.4.141) | Docker OK, Health Check 200, pt-16 Banner nicht mehr von Nav abgeschnitten, Cache-Busting
 2026-11-06 00:30 | v2.4.3 | weihnachtsmarkt-luzern.com | Server 8 (65.108.4.141) | Docker OK, Health Check 200, Standplan 2026 aktualisiert
 2026-11-06 11:14 | v2.5.0 | weihnachtsmarkt-luzern.com | Server 8 (65.108.4.141) | Docker OK, Health Check 200, Startseite: Marktfoto + Slider zuerst, Plakat weiter unten, /rahmenprogramm leitet auf /#programm (308)
+2026-11-06 11:20 | v2.5.1 | weihnachtsmarkt-luzern.com | Server 8 (65.108.4.141) | Docker OK, Health Check 200, Ein Slider im Plakat-Format: Bilder und Plakat Marc Pircher im Wechsel
