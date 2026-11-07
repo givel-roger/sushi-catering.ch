@@ -81,6 +81,7 @@ export const sessions = sqliteTable("sessions", {
 export type TenantBranding = {
   logoUrl?: string;
   logoDarkUrl?: string;
+  heroImageUrl?: string;
   primaryColor: string;
   primaryHoverColor: string;
   backgroundColor: string;

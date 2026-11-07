@@ -95,7 +95,8 @@ function seedDanieleTenant(db: InstanceType<typeof Database>) {
   const tenantId = randomBytes(16).toString("hex");
 
   const branding = JSON.stringify({
-    logoUrl: "/images/daniele-logo.svg",
+    logoUrl: "/images/daniele-logo.png",
+    heroImageUrl: "/images/daniele-hero.jpg",
     primaryColor: "#c8962e",
     primaryHoverColor: "#b0831f",
     backgroundColor: "#ffffff",
@@ -207,6 +208,18 @@ function migrateJsonData(db: InstanceType<typeof Database>, tenantId: string) {
   return count;
 }
 
+function updateDanieleBranding(db: InstanceType<typeof Database>) {
+  const tenant = db.prepare("SELECT branding FROM tenants WHERE slug = 'daniele'").get() as { branding: string } | undefined;
+  if (!tenant) return;
+  const branding = JSON.parse(tenant.branding);
+  if (branding.logoUrl === "/images/daniele-logo.svg" || !branding.heroImageUrl) {
+    branding.logoUrl = "/images/daniele-logo.png";
+    branding.heroImageUrl = "/images/daniele-hero.jpg";
+    db.prepare("UPDATE tenants SET branding = ? WHERE slug = 'daniele'").run(JSON.stringify(branding));
+    console.log("[DB] Daniele Branding aktualisiert (Logo PNG + Hero Image).");
+  }
+}
+
 function seedSuperAdmin(db: InstanceType<typeof Database>) {
   const existing = db.prepare("SELECT id FROM admins WHERE role = 'superadmin'").get();
   if (existing) return;
@@ -290,6 +303,7 @@ export function initDatabase() {
     console.log("[DB] Datenbank bereits initialisiert.");
   }
 
+  updateDanieleBranding(db);
   seedSuperAdmin(db);
   seedKroneBlatten(db);
 
