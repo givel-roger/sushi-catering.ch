@@ -43,7 +43,7 @@ export default function ScanPage() {
       if (res.ok) {
         const data = await res.json();
         setLoggedIn(true);
-        setTenantName(data.tenantName || "");
+        setTenantName(data.user?.tenantName || data.user?.name || "");
       }
     } catch {}
     setChecking(false);

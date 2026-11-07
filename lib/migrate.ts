@@ -207,6 +207,68 @@ function migrateJsonData(db: InstanceType<typeof Database>, tenantId: string) {
   return count;
 }
 
+function seedSuperAdmin(db: InstanceType<typeof Database>) {
+  const existing = db.prepare("SELECT id FROM admins WHERE role = 'superadmin'").get();
+  if (existing) return;
+
+  const superAdminPassword = process.env.SUPERADMIN_PASSWORD || process.env.ADMIN_SECRET || "change-me-immediately";
+  const superAdminEmail = process.env.SUPERADMIN_EMAIL || "admin@gutschein-schenken.ch";
+  const adminId = randomBytes(16).toString("hex");
+  const passwordHash = hashSync(superAdminPassword, 10);
+
+  db.prepare(`
+    INSERT INTO admins (id, tenant_id, email, password_hash, name, role)
+    VALUES (?, NULL, ?, ?, 'Super Admin', 'superadmin')
+  `).run(adminId, superAdminEmail, passwordHash);
+
+  console.log(`[DB] Super-Admin angelegt: ${superAdminEmail}`);
+}
+
+function seedKroneBlatten(db: InstanceType<typeof Database>) {
+  const existing = db.prepare("SELECT id FROM tenants WHERE slug = ?").get("krone-blatten");
+  if (existing) return;
+
+  const tenantId = randomBytes(16).toString("hex");
+
+  const branding = JSON.stringify({
+    primaryColor: "#8B4513",
+    primaryHoverColor: "#723810",
+    backgroundColor: "#ffffff",
+    foregroundColor: "#2d2d2d",
+    surfaceColor: "#faf8f5",
+    borderColor: "#e5ddd0",
+    displayFont: "Playfair Display",
+    heroTitle: "Genuss verschenken.",
+    heroSubtitle: "Walliser Gastfreundschaft und traditionelle Küche – jetzt als Gutschein.",
+    featureList: [
+      "Sofort per Mail zugestellt",
+      "Ohne Verfalldatum",
+      "Für alle Angebote einlösbar",
+      "Auch als Geschenk versendbar",
+    ],
+  });
+
+  const amountPresets = JSON.stringify([50, 100, 150, 200, 250, 300]);
+
+  db.prepare(`
+    INSERT INTO tenants (id, slug, name, code_prefix, website, phone, email,
+      address_street, address_city, address_zip, branding, amount_presets)
+    VALUES (?, 'krone-blatten', 'Restaurant Krone Blatten', 'KR',
+      'https://krone-blatten.ch', '+41 27 923 65 56', 'info@krone-blatten.ch',
+      'Dorfstrasse 1', 'Blatten', '3919', ?, ?)
+  `).run(tenantId, branding, amountPresets);
+
+  const adminPassword = process.env.KRONE_ADMIN_PASSWORD || process.env.ADMIN_SECRET || "change-me-immediately";
+  const adminId = randomBytes(16).toString("hex");
+  const passwordHash = hashSync(adminPassword, 10);
+  db.prepare(`
+    INSERT INTO admins (id, tenant_id, email, password_hash, name, role)
+    VALUES (?, ?, 'admin@krone-blatten.ch', ?, 'Krone Admin', 'admin')
+  `).run(adminId, tenantId, passwordHash);
+
+  console.log("[DB] Krone Blatten Tenant + Admin angelegt.");
+}
+
 export function initDatabase() {
   mkdirSync(join(process.cwd(), "data"), { recursive: true });
 
@@ -227,6 +289,9 @@ export function initDatabase() {
     tenantId = tenant.id;
     console.log("[DB] Datenbank bereits initialisiert.");
   }
+
+  seedSuperAdmin(db);
+  seedKroneBlatten(db);
 
   db.close();
   return tenantId;
