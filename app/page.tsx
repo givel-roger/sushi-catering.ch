@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getDb } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
 import { tenants } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import type { TenantBranding } from "@/lib/schema";
