@@ -23,7 +23,10 @@ function MotifCard({ motif, amount, tenantName }: { motif: MotifDisplay; amount:
           <p className="text-white/60 text-[9px] tracking-[0.3em] uppercase">{tenantName.split(" ")[0]}</p>
           <p className="text-white/40 text-[7px] tracking-[0.15em]">{tenantName}</p>
         </div>
-        <p className="text-white/30 text-[8px] tracking-[0.2em] uppercase">Gutschein</p>
+        <div className="text-right">
+          {motif.icon && <span className="text-lg opacity-60">{motif.icon}</span>}
+          <p className="text-white/30 text-[8px] tracking-[0.2em] uppercase">Gutschein</p>
+        </div>
       </div>
       <div>
         <p className="text-white/50 text-[8px] tracking-[0.2em] uppercase mb-0.5">Guthaben</p>
@@ -229,26 +232,29 @@ export default function PurchaseWizard({ tenant, embedded }: { tenant: TenantCon
                     Das Motiv erscheint auf dem Gutschein und in der Geschenkmail.
                   </p>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     {tenant.motifs.map((m) => (
                       <button
                         key={m.id}
                         onClick={() => setSelectedMotif(m.id)}
                         className={`rounded-lg overflow-hidden text-left transition-all cursor-pointer ${
                           selectedMotif === m.id
-                            ? "ring-2 ring-accent ring-offset-2"
-                            : "hover:ring-1 hover:ring-border"
+                            ? "ring-2 ring-accent ring-offset-2 scale-[1.02]"
+                            : "hover:ring-1 hover:ring-border hover:scale-[1.01]"
                         }`}
                       >
                         <div
-                          className="aspect-[1.5/1] flex items-center justify-center relative"
+                          className="aspect-[1.4/1] flex flex-col items-center justify-center relative"
                           style={{ background: m.bg }}
                         >
-                          <span className="text-[10px] tracking-[0.3em] uppercase text-white/70">
-                            {m.id === "elegant" ? "GUTSCHEIN" : m.label.toUpperCase()}
+                          {m.icon && (
+                            <span className="text-3xl mb-1.5 drop-shadow-lg">{m.icon}</span>
+                          )}
+                          <span className="text-[9px] tracking-[0.25em] uppercase text-white/60 font-medium">
+                            {m.label.toUpperCase()}
                           </span>
                         </div>
-                        <div className="p-3 bg-surface">
+                        <div className="px-3 py-2 bg-surface">
                           <p className="text-sm font-medium text-foreground">{m.label}</p>
                           <p className="text-xs text-muted">{m.sub}</p>
                         </div>

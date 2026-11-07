@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.0.3 — Motiv-Karten mit Gradienten und Icons
+
+- Motive mit CSS-Gradienten statt einfarbigen Hintergründen
+- Thematische Emojis: 🎂 Geburtstag, 🎄 Weihnachten, 💚 Danke, 💕 Valentinstag, 🍷 Genuss, 🎉 Gratulation, ✦ Edel
+- Hover/Select-Animation (scale) auf Motiv-Karten
+- Icon auch in Gutschein-Vorschau sichtbar
+
 ## v3.0.2 — Kompakteres Layout + Sidebar-Fix
 
 - Hero-Bereich verkleinert (weniger Padding, kleinere Texte)
