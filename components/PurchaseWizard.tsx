@@ -35,7 +35,7 @@ function MotifCard({ motif, amount, tenantName }: { motif: MotifDisplay; amount:
   );
 }
 
-export default function PurchaseWizard({ tenant }: { tenant: TenantConfig }) {
+export default function PurchaseWizard({ tenant, embedded }: { tenant: TenantConfig; embedded?: boolean }) {
   const [step, setStep] = useState<Step>("betrag");
   const [amount, setAmount] = useState(tenant.amountPresets[1] ?? 100);
   const [customAmount, setCustomAmount] = useState("");
@@ -100,7 +100,16 @@ export default function PurchaseWizard({ tenant }: { tenant: TenantConfig }) {
 
       const data = await res.json();
       if (data.checkoutUrl) {
-        window.location.href = data.checkoutUrl;
+        if (embedded) {
+          // In iframe: open Stripe in new tab
+          window.open(data.checkoutUrl, "_blank");
+        } else {
+          window.location.href = data.checkoutUrl;
+        }
+      } else if (embedded) {
+        // In iframe: notify parent and show success inline
+        window.parent.postMessage({ type: "gutschein-success", id: data.id, code: data.code }, "*");
+        setSent(true);
       } else {
         window.location.href = `/r/${tenant.slug}/erfolg?id=${data.id}`;
       }
