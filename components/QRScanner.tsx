@@ -88,23 +88,8 @@ export default function QRScanner({ onScan, scanning }: Props) {
         // BarcodeDetector not available — fallback below
       }
 
-      // Fallback: use html5-qrcode
-      try {
-        const { Html5Qrcode } = await import("html5-qrcode");
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const blob = await new Promise<Blob>((resolve) => {
-          canvas.toBlob((b) => resolve(b!), "image/png");
-        });
-        const file = new File([blob], "frame.png", { type: "image/png" });
-        const result = await Html5Qrcode.scanFile(file, false);
-        const code = extractCode(result);
-        if (code) {
-          stopCamera();
-          onScan(code);
-        }
-      } catch {
-        // No QR found in this frame
-      }
+      // BarcodeDetector covers Chrome, Edge, Android WebView, Safari 17.2+
+      // For older browsers, manual code entry is available as fallback
     }, 500);
   }
 
