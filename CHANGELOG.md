@@ -1,5 +1,14 @@
 # Changelog
 
+## v3.0.7 — Consumer-Frontseite + Mitmachen-Seite
+
+- Frontseite komplett neu als Consumer-Marketplace: zeigt aktive Gutschein-Shops aus der Datenbank
+- Hero "Gutscheine schenken", Trust-Bar, 3-Schritte-Erklärung, Motiv-Vorschau
+- Tenant-Karten mit Branding, Logo, Standort und "Gutschein schenken →" CTA
+- Neue /mitmachen Seite für Betriebe: 5% Provision, optionaler Marketing-Pool, Features, Kontakt
+- Navigation: "Für Betriebe" oben rechts, "Gutschein kaufen" als primärer CTA
+- "Bald verfügbar"-Platzhalter für zukünftige Betriebe
+
 ## v3.0.6 — Adobe Stock Premium-Fotos
 
 - 7 lizenzierte Adobe Stock Fotos ersetzen Unsplash-Bilder
