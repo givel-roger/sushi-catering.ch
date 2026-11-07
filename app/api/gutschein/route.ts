@@ -50,6 +50,8 @@ export async function POST(req: NextRequest) {
     const id = randomBytes(16).toString("hex");
     const now = new Date().toISOString();
 
+    const hasStripe = !!process.env.STRIPE_SECRET_KEY;
+
     db.insert(schema.gutscheine).values({
       id,
       tenantId: tenant.id,
@@ -64,10 +66,39 @@ export async function POST(req: NextRequest) {
       empfaengerEmail: widmung?.empfaengerEmail || "",
       kaeuferName: kaeufer.name,
       kaeuferEmail: kaeufer.email,
-      status: "paid",
+      status: hasStripe ? "pending" : "paid",
       createdAt: now,
-      paidAt: now,
+      paidAt: hasStripe ? null : now,
     }).run();
+
+    if (hasStripe) {
+      const { getStripe, getStripeConnectAccount, createCheckoutParams } = await import("@/lib/stripe");
+      const stripe = getStripe();
+      const connectedAccountId = getStripeConnectAccount(tenant.id);
+      const baseUrl = req.headers.get("origin") || `https://${req.headers.get("host")}`;
+
+      const checkoutParams = createCheckoutParams({
+        gutscheinId: id,
+        amount,
+        tenantSlug: slug,
+        tenantName: tenant.name,
+        kaeuferEmail: kaeufer.email,
+        connectedAccountId,
+        platformFeePercent: tenant.platformFeePercent ?? 5,
+        baseUrl,
+      });
+
+      const session = connectedAccountId
+        ? await stripe.checkout.sessions.create(checkoutParams, { stripeAccount: connectedAccountId })
+        : await stripe.checkout.sessions.create(checkoutParams);
+
+      db.update(schema.gutscheine)
+        .set({ stripeSessionId: session.id })
+        .where(eq(schema.gutscheine.id, id))
+        .run();
+
+      return NextResponse.json({ success: true, code, id, checkoutUrl: session.url });
+    }
 
     return NextResponse.json({ success: true, code, id });
   } catch (err) {
