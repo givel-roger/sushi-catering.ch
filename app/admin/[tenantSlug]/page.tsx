@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 
 interface Transaction {
@@ -32,14 +32,23 @@ interface Gutschein {
   transactions: Transaction[];
 }
 
+interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+}
+
 export default function TenantAdminPage() {
   const params = useParams<{ tenantSlug: string }>();
   const tenantSlug = params.tenantSlug;
 
-  const [secret, setSecret] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [gutscheine, setGutscheine] = useState<Gutschein[]>([]);
   const [loading, setLoading] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
   const [searchCode, setSearchCode] = useState("");
   const [selectedGutschein, setSelectedGutschein] = useState<Gutschein | null>(null);
   const [redeemAmount, setRedeemAmount] = useState("");
@@ -47,25 +56,66 @@ export default function TenantAdminPage() {
   const [message, setMessage] = useState("");
   const [tab, setTab] = useState<"list" | "check">("list");
 
-  async function loadGutscheine() {
-    setLoading(true);
+  const loadGutscheine = useCallback(async () => {
     try {
-      const res = await fetch(`/api/gutschein?secret=${encodeURIComponent(secret)}&tenant=${encodeURIComponent(tenantSlug)}`);
-      if (!res.ok) throw new Error("Auth failed");
+      const res = await fetch(`/api/gutschein?tenant=${encodeURIComponent(tenantSlug)}`);
+      if (!res.ok) throw new Error("Failed");
       const data = await res.json();
       setGutscheine(data);
-      setAuthenticated(true);
     } catch {
-      setMessage("Zugang verweigert.");
+      setMessage("Fehler beim Laden der Gutscheine.");
+    }
+  }, [tenantSlug]);
+
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.user) {
+          setUser(data.user);
+        }
+      })
+      .finally(() => setCheckingAuth(false));
+  }, []);
+
+  useEffect(() => {
+    if (user) loadGutscheine();
+  }, [user, loadGutscheine]);
+
+  async function handleLogin() {
+    setLoading(true);
+    setMessage("");
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, tenantSlug }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMessage(data.error || "Login fehlgeschlagen.");
+        return;
+      }
+      setUser(data.user);
+      setPassword("");
+    } catch {
+      setMessage("Verbindungsfehler.");
     } finally {
       setLoading(false);
     }
   }
 
+  async function handleLogout() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    setUser(null);
+    setGutscheine([]);
+    setSelectedGutschein(null);
+  }
+
   async function searchGutschein() {
     if (!searchCode.trim()) return;
     try {
-      const res = await fetch(`/api/gutschein?code=${encodeURIComponent(searchCode.trim())}&secret=${encodeURIComponent(secret)}&tenant=${encodeURIComponent(tenantSlug)}`);
+      const res = await fetch(`/api/gutschein?code=${encodeURIComponent(searchCode.trim())}&tenant=${encodeURIComponent(tenantSlug)}`);
       if (!res.ok) {
         setMessage("Gutschein nicht gefunden.");
         setSelectedGutschein(null);
@@ -91,12 +141,7 @@ export default function TenantAdminPage() {
       const res = await fetch("/api/gutschein/einloesen", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          code: selectedGutschein.code,
-          amount,
-          note: redeemNote,
-          secret,
-        }),
+        body: JSON.stringify({ code: selectedGutschein.code, amount, note: redeemNote }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -113,34 +158,39 @@ export default function TenantAdminPage() {
     }
   }
 
-  useEffect(() => {
-    const stored = typeof window !== "undefined" ? sessionStorage.getItem(`admin_secret_${tenantSlug}`) : null;
-    if (stored) {
-      setSecret(stored);
-    }
-  }, [tenantSlug]);
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen bg-surface flex items-center justify-center">
+        <p className="text-muted">Laden...</p>
+      </div>
+    );
+  }
 
-  if (!authenticated) {
+  if (!user) {
     return (
       <div className="min-h-screen bg-surface flex items-center justify-center px-5">
         <div className="bg-white rounded-lg shadow-sm border border-border p-8 w-full max-w-sm">
           <h1 className="font-display text-2xl text-foreground mb-2">Admin-Zugang</h1>
           <p className="text-muted text-sm mb-6">{tenantSlug}</p>
           <input
+            type="email"
+            placeholder="E-Mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && document.getElementById("pw")?.focus()}
+            className="border border-border rounded-md px-4 py-3 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full mb-3"
+          />
+          <input
+            id="pw"
             type="password"
-            placeholder="Admin-Passwort"
-            value={secret}
-            onChange={(e) => setSecret(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && loadGutscheine()}
+            placeholder="Passwort"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleLogin()}
             className="border border-border rounded-md px-4 py-3 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full mb-4"
           />
           <button
-            onClick={() => {
-              if (secret) {
-                sessionStorage.setItem(`admin_secret_${tenantSlug}`, secret);
-                loadGutscheine();
-              }
-            }}
+            onClick={handleLogin}
             disabled={loading}
             className="bg-foreground text-white px-6 py-3 text-sm w-full rounded-md cursor-pointer hover:bg-foreground/80 transition-colors"
           >
@@ -160,21 +210,32 @@ export default function TenantAdminPage() {
             <h1 className="text-lg font-semibold">Gutschein-Verwaltung</h1>
             <span className="text-xs text-white/40 bg-white/10 px-2 py-0.5 rounded">{tenantSlug}</span>
           </div>
-          <span className="text-sm text-white/50">{gutscheine.length} Gutscheine</span>
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-white/50">{user.name}</span>
+            <button
+              onClick={handleLogout}
+              className="text-xs text-white/40 hover:text-white transition-colors cursor-pointer"
+            >
+              Abmelden
+            </button>
+          </div>
         </div>
       </div>
 
       <div className="max-w-[1100px] mx-auto px-5 sm:px-10 py-6">
-        <div className="flex gap-1 mb-6 bg-white rounded-lg p-1 border border-border w-fit">
-          {([["list", "Übersicht"], ["check", "Prüfen / Einlösen"]] as const).map(([key, label]) => (
-            <button
-              key={key}
-              onClick={() => { setTab(key); setMessage(""); }}
-              className={`px-5 py-2 text-sm rounded-md cursor-pointer transition-colors ${tab === key ? "bg-foreground text-white" : "text-muted hover:text-foreground"}`}
-            >
-              {label}
-            </button>
-          ))}
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex gap-1 bg-white rounded-lg p-1 border border-border w-fit">
+            {([["list", "Übersicht"], ["check", "Prüfen / Einlösen"]] as const).map(([key, label]) => (
+              <button
+                key={key}
+                onClick={() => { setTab(key); setMessage(""); }}
+                className={`px-5 py-2 text-sm rounded-md cursor-pointer transition-colors ${tab === key ? "bg-foreground text-white" : "text-muted hover:text-foreground"}`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <span className="text-sm text-muted">{gutscheine.length} Gutscheine</span>
         </div>
 
         {tab === "list" && (

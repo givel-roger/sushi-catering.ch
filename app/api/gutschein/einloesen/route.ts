@@ -7,7 +7,12 @@ export async function POST(req: NextRequest) {
   try {
     const { code, amount, note, secret } = await req.json();
 
-    if (secret !== process.env.ADMIN_SECRET) {
+    // Auth: JWT cookie OR legacy ADMIN_SECRET
+    const { getAuthUser } = await import("@/lib/auth");
+    const authUser = await getAuthUser();
+    const legacyOk = secret && secret === process.env.ADMIN_SECRET;
+
+    if (!authUser && !legacyOk) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

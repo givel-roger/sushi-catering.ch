@@ -83,12 +83,23 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
   const secret = searchParams.get("secret");
+  const tenantFilter = searchParams.get("tenant");
 
-  if (secret !== process.env.ADMIN_SECRET) {
+  // Auth: JWT cookie OR legacy ADMIN_SECRET
+  const { getAuthUser } = await import("@/lib/auth");
+  const authUser = await getAuthUser();
+  const legacyOk = secret && secret === process.env.ADMIN_SECRET;
+
+  if (!authUser && !legacyOk) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const db = getDb();
+
+  // Determine tenant scope
+  const tenantSlug = tenantFilter || (authUser?.tenantId
+    ? db.select({ slug: schema.tenants.slug }).from(schema.tenants).where(eq(schema.tenants.id, authUser.tenantId)).get()?.slug
+    : null);
 
   if (code) {
     const gutschein = db.select().from(schema.gutscheine).where(eq(schema.gutscheine.code, code)).get();
@@ -118,7 +129,18 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const allGutscheine = db.select().from(schema.gutscheine).all();
+  // Filter by tenant if user is bound to one
+  let tenantId: string | null = null;
+  if (tenantSlug) {
+    const t = db.select({ id: schema.tenants.id }).from(schema.tenants).where(eq(schema.tenants.slug, tenantSlug)).get();
+    tenantId = t?.id || null;
+  } else if (authUser?.tenantId) {
+    tenantId = authUser.tenantId;
+  }
+
+  const allGutscheine = tenantId
+    ? db.select().from(schema.gutscheine).where(eq(schema.gutscheine.tenantId, tenantId)).all()
+    : db.select().from(schema.gutscheine).all();
   const allTxns = db.select().from(schema.transactions).all();
 
   return NextResponse.json(
