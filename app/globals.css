@@ -18,8 +18,8 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: #ffffff;
-  color: #1a1a1a;
+  background: var(--color-background);
+  color: var(--color-foreground);
 }
 
 @font-face {
@@ -39,5 +39,5 @@ body {
 }
 
 .font-display {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-display, 'Playfair Display'), Georgia, serif;
 }

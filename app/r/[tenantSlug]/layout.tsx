@@ -36,10 +36,33 @@ export default async function TenantLayout({ params, children }: Props) {
     "--color-foreground": branding.foregroundColor,
     "--color-surface": branding.surfaceColor,
     "--color-border": branding.borderColor,
+    "--font-display": branding.displayFont,
+  };
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    name: config.name,
+    description: `Gutscheine online kaufen und verschenken für ${config.name}.`,
+    ...(config.website && { url: config.website }),
+    ...(config.phone && { telephone: config.phone.replace(/\s/g, "") }),
+    ...(config.addressStreet && {
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: config.addressStreet,
+        addressLocality: config.addressCity,
+        postalCode: config.addressZip,
+        addressCountry: "CH",
+      },
+    }),
   };
 
   return (
     <div style={themeVars as React.CSSProperties}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {children}
     </div>
   );
