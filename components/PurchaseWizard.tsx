@@ -102,7 +102,7 @@ export default function PurchaseWizard({ tenant }: { tenant: TenantConfig }) {
       if (data.checkoutUrl) {
         window.location.href = data.checkoutUrl;
       } else {
-        setSent(true);
+        window.location.href = `/r/${tenant.slug}/erfolg?id=${data.id}`;
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Etwas ist schiefgelaufen.");

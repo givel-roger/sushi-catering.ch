@@ -43,16 +43,23 @@ export async function POST(req: NextRequest) {
       }
 
       if (gutschein.status === "pending") {
+        const { getGutscheinUrl } = await import("@/lib/qr");
+        const tenant = db.select().from(schema.tenants).where(eq(schema.tenants.id, gutschein.tenantId)).get();
+        const tenantSlug = session.metadata?.tenantSlug || "daniele";
+        const qrUrl = getGutscheinUrl(tenantSlug, gutschein.code);
+
         db.update(schema.gutscheine)
           .set({
             status: "paid",
             paidAt: new Date().toISOString(),
             stripePaymentIntentId: session.payment_intent as string || null,
+            qrData: qrUrl,
+            pdfUrl: `/api/gutschein/${gutscheinId}/pdf`,
           })
           .where(eq(schema.gutscheine.id, gutscheinId))
           .run();
 
-        console.log(`[Webhook] Gutschein ${gutschein.code} bezahlt (CHF ${gutschein.amount})`);
+        console.log(`[Webhook] Gutschein ${gutschein.code} bezahlt (CHF ${gutschein.amount}), PDF: /api/gutschein/${gutscheinId}/pdf`);
       }
     }
 

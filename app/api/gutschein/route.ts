@@ -69,6 +69,8 @@ export async function POST(req: NextRequest) {
       status: hasStripe ? "pending" : "paid",
       createdAt: now,
       paidAt: hasStripe ? null : now,
+      qrData: hasStripe ? null : `${req.headers.get("origin") || "https://www.gutschein-schenken.ch"}/r/${slug}/einloesen?code=${encodeURIComponent(code)}`,
+      pdfUrl: hasStripe ? null : `/api/gutschein/${id}/pdf`,
     }).run();
 
     if (hasStripe) {
