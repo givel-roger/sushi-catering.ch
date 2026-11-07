@@ -165,22 +165,22 @@ export default function PurchaseWizard({ tenant, embedded }: { tenant: TenantCon
       </div>
 
       {/* Content */}
-      <main className="flex-1 py-10 sm:py-14">
+      <main className="flex-1 py-6 sm:py-8">
         <div className="max-w-[1100px] mx-auto px-5 sm:px-10">
-          <div className="grid lg:grid-cols-[1fr,360px] gap-12 lg:gap-16">
+          <div className="grid lg:grid-cols-[1fr,320px] gap-8 lg:gap-12">
 
             {/* Left: Form */}
             <div>
               {step === "betrag" && (
                 <div>
-                  <h2 className="font-display text-3xl text-foreground mb-3">
+                  <h2 className="font-display text-2xl text-foreground mb-2">
                     Wie viel soll der Gutschein wert sein?
                   </h2>
-                  <p className="text-muted mb-8">
+                  <p className="text-muted mb-5">
                     Ohne Verfalldatum, einlösbar bei {tenant.name}{tenant.addressCity ? `, ${tenant.addressCity}` : ""}.
                   </p>
 
-                  <div className="flex flex-wrap gap-3 mb-8">
+                  <div className="flex flex-wrap gap-3 mb-5">
                     {tenant.amountPresets.map((a) => (
                       <button
                         key={a}
@@ -208,11 +208,11 @@ export default function PurchaseWizard({ tenant, embedded }: { tenant: TenantCon
                     className="border border-border rounded-md px-4 py-3 text-foreground text-base focus:outline-none focus:border-accent transition-colors w-full max-w-[200px]"
                   />
 
-                  <div className="mt-10">
+                  <div className="mt-6">
                     <button
                       onClick={() => { if (displayAmount >= tenant.minAmount && displayAmount <= tenant.maxAmount) setStep("motiv"); }}
                       disabled={displayAmount < tenant.minAmount || displayAmount > tenant.maxAmount}
-                      className="bg-accent hover:bg-accent-hover text-white px-10 py-4 text-sm tracking-[0.12em] uppercase transition-colors cursor-pointer rounded-md disabled:opacity-40 disabled:cursor-default"
+                      className="bg-accent hover:bg-accent-hover text-white px-8 py-3 text-sm tracking-[0.12em] uppercase transition-colors cursor-pointer rounded-md disabled:opacity-40 disabled:cursor-default"
                     >
                       Weiter zum Motiv
                     </button>
@@ -413,8 +413,8 @@ export default function PurchaseWizard({ tenant, embedded }: { tenant: TenantCon
       </main>
 
       {/* Mobile preview */}
-      <div className="lg:hidden border-t border-border py-8 bg-surface">
-        <div className="max-w-[400px] mx-auto px-5">
+      <div className="lg:hidden border-t border-border py-5 bg-surface">
+        <div className="max-w-[320px] mx-auto px-5">
           <MotifCard motif={currentMotif} amount={displayAmount} tenantName={tenant.name} />
         </div>
       </div>

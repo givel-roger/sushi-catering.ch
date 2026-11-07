@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.0.1 — Kompakteres Layout
+
+- Hero-Bereich verkleinert (weniger Padding, kleinere Texte)
+- Doppelte Steps-Anzeige entfernt (nur noch Tab-Bar im Wizard)
+- Logo nur noch in Navbar (nicht doppelt im Hero)
+- Wizard-Content enger: weniger Abstände, kleinere Buttons
+- Mobile Gutschein-Vorschau kleiner (max-w-320px)
+
 ## v3.0.0 — Multi-Tenant SaaS Platform
 
 ### Multi-Tenant Architektur
