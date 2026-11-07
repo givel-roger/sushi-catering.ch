@@ -248,9 +248,9 @@ export default function PurchaseWizard({ tenant, embedded }: { tenant: TenantCon
                           style={{ background: m.bg }}
                         >
                           {m.icon && (
-                            <span className="text-3xl mb-1.5 drop-shadow-lg">{m.icon}</span>
+                            <span className="text-4xl mb-1.5 drop-shadow-lg" style={{ color: m.accent, filter: "brightness(1.3)" }}>{m.icon}</span>
                           )}
-                          <span className="text-[9px] tracking-[0.25em] uppercase text-white/60 font-medium">
+                          <span className="text-[9px] tracking-[0.25em] uppercase text-white/80 font-medium">
                             {m.label.toUpperCase()}
                           </span>
                         </div>

@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.0.4 — Motiv-Icons besser sichtbar
+
+- Icons grösser (text-4xl) und in Akzentfarbe statt unsichtbar dunkel
+- Text-Labels heller (white/80 statt white/60)
+
 ## v3.0.3 — Motiv-Karten mit Gradienten und Icons
 
 - Motive mit CSS-Gradienten statt einfarbigen Hintergründen
