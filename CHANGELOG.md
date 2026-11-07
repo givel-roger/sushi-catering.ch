@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.0.8 — Premium-Redesign Frontseite
+
+- Fullscreen-Hero mit cineastischem Foto und grosser Playfair-Typografie
+- Editorial-Layout: 01/02/03 Schritte statt nummerierte Kreise
+- Gutschein-Shops als grosse Bild-Karten (16:10) mit Hover-Zoom und Pfeil-Button
+- Motiv-Galerie als horizontaler Scroller im Dark-Modus mit 3:4 Karten
+- Trust-Sektion: 4 Features mit Playfair-Titeln
+- CTA für Betriebe als gerundete Dark-Box mit Hintergrundbild
+- Transparente Nav über dem Hero, "Für Betriebe" im Footer
+- Minimaler, edler Footer
+
 ## v3.0.7 — Consumer-Frontseite + Mitmachen-Seite
 
 - Frontseite komplett neu als Consumer-Marketplace: zeigt aktive Gutschein-Shops aus der Datenbank
