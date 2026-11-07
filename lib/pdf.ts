@@ -49,14 +49,12 @@ export async function generateGutscheinPdf(data: GutscheinPdfData): Promise<Uint
   // Tenant name in header
   page.drawText(data.tenantName.toUpperCase(), {
     x: 40, y: height - 35,
-    size: 10, font: helvetica, color: rgb(1, 1, 1, ),
-    letterSpacing: 3,
+    size: 10, font: helvetica, color: rgb(1, 1, 1),
   });
 
   page.drawText("GUTSCHEIN", {
     x: 40, y: height - 55,
     size: 9, font: helvetica, color: rgb(1, 1, 1),
-    letterSpacing: 4,
   });
 
   // Code in header right
