@@ -1,5 +1,17 @@
 # Changelog
 
+## v3.0.6 — Adobe Stock Premium-Fotos
+
+- 7 lizenzierte Adobe Stock Fotos ersetzen Unsplash-Bilder
+- Elegant: Festliche Tafel mit Kerzen (andrey, #331122477)
+- Geburtstag: Pastelltorte mit Sparkler (Ruth Black, #635614848)
+- Weihnachten: Geschmückter Christbaum (Aditya, #2175716006)
+- Danke: Herbstblumen in Glasvasen (annanahabed, #288575973)
+- Valentinstag: Rote Rosen in stimmungsvollem Licht (#2223437628)
+- Genussmoment: Lachs-Filet vom Chef (Hihitetlin, #1860074298)
+- Gratulation: Champagner-Toast (asife, #293552025)
+- Alle Fotos auf 1200px resized für schnelles Laden (90-337KB)
+
 ## v3.0.5 — Echte Stock-Fotos für Motiv-Karten
 
 - 7 hochwertige Unsplash-Fotos als Hintergründe für Motiv-Auswahl und Gutschein-Vorschau
