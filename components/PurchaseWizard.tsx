@@ -15,19 +15,19 @@ const STEPS: { key: Step; label: string }[] = [
 function MotifCard({ motif, amount, tenantName }: { motif: MotifDisplay; amount: number; tenantName: string }) {
   return (
     <div
-      className="rounded-lg overflow-hidden shadow-lg aspect-[1.6/1] relative flex flex-col justify-between p-5"
+      className="rounded-lg overflow-hidden shadow-md aspect-[1.8/1] relative flex flex-col justify-between p-4"
       style={{ background: motif.bg }}
     >
       <div className="flex justify-between items-start">
         <div>
-          <p className="text-white/60 text-[10px] tracking-[0.3em] uppercase">{tenantName.split(" ")[0]}</p>
-          <p className="text-white/40 text-[8px] tracking-[0.15em]">{tenantName}</p>
+          <p className="text-white/60 text-[9px] tracking-[0.3em] uppercase">{tenantName.split(" ")[0]}</p>
+          <p className="text-white/40 text-[7px] tracking-[0.15em]">{tenantName}</p>
         </div>
-        <p className="text-white/30 text-[9px] tracking-[0.2em] uppercase">Gutschein</p>
+        <p className="text-white/30 text-[8px] tracking-[0.2em] uppercase">Gutschein</p>
       </div>
       <div>
-        <p className="text-white/50 text-[9px] tracking-[0.2em] uppercase mb-1">Guthaben</p>
-        <p className="text-white text-2xl font-display" style={{ color: motif.accent }}>
+        <p className="text-white/50 text-[8px] tracking-[0.2em] uppercase mb-0.5">Guthaben</p>
+        <p className="text-white text-xl font-display" style={{ color: motif.accent }}>
           CHF {amount.toFixed(2)}
         </p>
       </div>
@@ -167,7 +167,7 @@ export default function PurchaseWizard({ tenant, embedded }: { tenant: TenantCon
       {/* Content */}
       <main className="flex-1 py-6 sm:py-8">
         <div className="max-w-[1100px] mx-auto px-5 sm:px-10">
-          <div className="grid lg:grid-cols-[1fr,320px] gap-8 lg:gap-12">
+          <div className="grid md:grid-cols-[1fr_280px] gap-8 md:gap-10">
 
             {/* Left: Form */}
             <div>
@@ -385,7 +385,7 @@ export default function PurchaseWizard({ tenant, embedded }: { tenant: TenantCon
             </div>
 
             {/* Right: Preview card */}
-            <div className="hidden lg:block">
+            <div className="hidden md:block">
               <div className="sticky top-28">
                 <MotifCard motif={currentMotif} amount={displayAmount} tenantName={tenant.name} />
                 <ul className="mt-6 space-y-3 text-sm text-muted">
@@ -412,9 +412,10 @@ export default function PurchaseWizard({ tenant, embedded }: { tenant: TenantCon
         </div>
       </main>
 
-      {/* Mobile preview */}
-      <div className="lg:hidden border-t border-border py-5 bg-surface">
-        <div className="max-w-[320px] mx-auto px-5">
+      {/* Mobile preview — compact */}
+      <div className="md:hidden border-t border-border py-4 bg-surface">
+        <div className="max-w-[260px] mx-auto px-5">
+          <p className="text-xs text-muted text-center mb-2">Vorschau</p>
           <MotifCard motif={currentMotif} amount={displayAmount} tenantName={tenant.name} />
         </div>
       </div>

@@ -1,12 +1,14 @@
 # Changelog
 
-## v3.0.1 — Kompakteres Layout
+## v3.0.2 — Kompakteres Layout + Sidebar-Fix
 
 - Hero-Bereich verkleinert (weniger Padding, kleinere Texte)
 - Doppelte Steps-Anzeige entfernt (nur noch Tab-Bar im Wizard)
 - Logo nur noch in Navbar (nicht doppelt im Hero)
-- Wizard-Content enger: weniger Abstände, kleinere Buttons
-- Mobile Gutschein-Vorschau kleiner (max-w-320px)
+- Gutschein-Vorschau als Sidebar rechts neben dem Formular (ab md Breakpoint)
+- Grid-Syntax-Fix: Tailwind `grid-cols-[1fr_280px]` statt fehlerhaftem Komma-Separator
+- MotifCard kompakter (aspect-[1.8/1], kleinere Schrift)
+- Mobile Gutschein-Vorschau kleiner (max-w-260px)
 
 ## v3.0.0 — Multi-Tenant SaaS Platform
 
