@@ -1,5 +1,60 @@
 # Changelog
 
+## v3.0.0 — Multi-Tenant SaaS Platform
+
+### Multi-Tenant Architektur
+- Drizzle ORM + better-sqlite3 (ersetzt JSON-Datei und Prisma)
+- 5 DB-Tabellen: tenants, admins, gutscheine, transactions, sessions
+- Slug-basiertes Tenant-Routing: `/r/[tenantSlug]`
+- Pro-Tenant Branding (Farben, Fonts, Texte) via CSS Custom Properties
+- Pro-Tenant Legal-Seiten (AGB, Impressum, Datenschutz)
+- JSON-LD Schema.org pro Tenant
+
+### Auth (Phase 4)
+- JWT-basierte Authentifizierung (jose + bcryptjs)
+- HttpOnly Cookies (7 Tage)
+- Rollen: superadmin, admin, staff
+- Abwärtskompatibles ADMIN_SECRET Fallback
+
+### Stripe Connect (Phase 5)
+- Stripe Checkout Sessions mit Connect-Vorbereitung
+- Destination Charges mit application_fee_amount
+- Graceful Degradation ohne STRIPE_SECRET_KEY
+- Webhook-Handler (checkout.session.completed)
+
+### QR-Code + PDF (Phase 6)
+- PDF-Gutschein (A5 Landscape) mit pdf-lib
+- QR-Code mit Einlöse-URL pro Tenant
+- PDF-Download-Endpoint: `/api/gutschein/[id]/pdf`
+- Erfolgs-Seite mit PDF-Download-Button
+
+### PWA Scan-App (Phase 7)
+- `/scan/[tenantSlug]`: Kamera-QR-Scanner für Restaurant-Staff
+- BarcodeDetector + html5-qrcode Fallback
+- Login, Gutschein-Details, Einlösen mit Betrag + Notiz
+- Dynamisches manifest.json + Icon pro Tenant (Add-to-Home)
+
+### iframe Embed (Phase 7)
+- `/embed/[tenantSlug]`: Kauf-Wizard ohne Nav/Footer
+- PostMessage Height-Resize (MutationObserver + ResizeObserver)
+- CORS/Frame-Headers (frame-ancestors * für /embed/*)
+- "Powered by gutschein-schenken.ch" Branding
+
+### Einlöse-Seite (Phase 7)
+- `/r/[tenantSlug]/einloesen?code=...`: QR-Code Landing
+- Zeigt Guthaben, Status, Widmung mit Tenant-Branding
+
+### Super-Admin (Phase 8)
+- `/super-admin`: Dashboard mit Stats (Tenants, Gutscheine, Umsatz)
+- Tenant-Liste mit Shop/Admin/Deaktivieren-Links
+- Neuen Tenant erstellen (mit Admin-Benutzer + Branding)
+- API: CRUD für Tenants
+
+### Zweiter Tenant: Krone Blatten
+- Restaurant Krone Blatten (slug: krone-blatten, prefix: KR)
+- Eigenes Branding (braun), Walliser Texte
+- Eigener Admin: admin@krone-blatten.ch
+
 ## v1.0.0
 
 ### Gutschein-Tool
