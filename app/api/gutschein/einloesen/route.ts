@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readFile, writeFile } from "fs/promises";
-import { join } from "path";
-
-const GUTSCHEINE_FILE = join(process.cwd(), "data", "gutscheine.json");
+import { randomBytes } from "crypto";
+import { eq } from "drizzle-orm";
+import { getDb, schema } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,15 +15,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Code und Betrag sind erforderlich." }, { status: 400 });
     }
 
-    const data = await readFile(GUTSCHEINE_FILE, "utf-8");
-    const gutscheine = JSON.parse(data);
-    const idx = gutscheine.findIndex((g: { code: string }) => g.code === code);
+    const db = getDb();
 
-    if (idx === -1) {
+    const gutschein = db.select().from(schema.gutscheine).where(eq(schema.gutscheine.code, code)).get();
+    if (!gutschein) {
       return NextResponse.json({ error: "Gutschein nicht gefunden." }, { status: 404 });
     }
-
-    const gutschein = gutscheine[idx];
 
     if (gutschein.status === "redeemed") {
       return NextResponse.json({ error: "Gutschein bereits vollständig eingelöst." }, { status: 400 });
@@ -37,26 +33,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    gutschein.remainingAmount -= amount;
-    gutschein.transactions.push({
-      date: new Date().toISOString(),
+    const newRemaining = gutschein.remainingAmount - amount;
+    const newStatus = newRemaining <= 0 ? "redeemed" : "partial";
+
+    db.update(schema.gutscheine)
+      .set({ remainingAmount: newRemaining, status: newStatus })
+      .where(eq(schema.gutscheine.id, gutschein.id))
+      .run();
+
+    db.insert(schema.transactions).values({
+      id: randomBytes(16).toString("hex"),
+      gutscheinId: gutschein.id,
+      tenantId: gutschein.tenantId,
       amount,
       note: note || "",
-    });
-
-    if (gutschein.remainingAmount <= 0) {
-      gutschein.status = "redeemed";
-    } else {
-      gutschein.status = "partial";
-    }
-
-    gutscheine[idx] = gutschein;
-    await writeFile(GUTSCHEINE_FILE, JSON.stringify(gutscheine, null, 2));
+    }).run();
 
     return NextResponse.json({
       success: true,
-      remainingAmount: gutschein.remainingAmount,
-      status: gutschein.status,
+      remainingAmount: newRemaining,
+      status: newStatus,
     });
   } catch (err) {
     console.error("Einlösen error:", err);
