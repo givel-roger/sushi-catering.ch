@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.0.5 — Echte Stock-Fotos für Motiv-Karten
+
+- 7 hochwertige Unsplash-Fotos als Hintergründe für Motiv-Auswahl und Gutschein-Vorschau
+- Elegant (Dinner-Tisch), Geburtstag (Torte), Weihnachten (Christbaum), Danke (Blumen), Valentinstag (Rosen), Genuss (Gourmet), Gratulation (Champagner)
+- Fotos als Next.js Image mit Overlay für Lesbarkeit
+- Motiv-Auswahl: Label als Pill mit Backdrop-Blur über dem Foto
+- Gutschein-Vorschau: Foto mit 40% Deckkraft hinter dem Gradient
+
 ## v3.0.4 — Motiv-Icons besser sichtbar
 
 - Icons grösser (text-4xl) und in Akzentfarbe statt unsichtbar dunkel

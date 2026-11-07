@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import type { TenantConfig, MotifDisplay } from "@/lib/types";
 
@@ -18,19 +19,21 @@ function MotifCard({ motif, amount, tenantName }: { motif: MotifDisplay; amount:
       className="rounded-lg overflow-hidden shadow-md aspect-[1.8/1] relative flex flex-col justify-between p-4"
       style={{ background: motif.bg }}
     >
-      <div className="flex justify-between items-start">
+      {motif.imageUrl && (
+        <Image src={motif.imageUrl} alt="" fill className="object-cover opacity-40" sizes="280px" />
+      )}
+      <div className="relative z-10 flex justify-between items-start">
         <div>
-          <p className="text-white/60 text-[9px] tracking-[0.3em] uppercase">{tenantName.split(" ")[0]}</p>
-          <p className="text-white/40 text-[7px] tracking-[0.15em]">{tenantName}</p>
+          <p className="text-white/80 text-[9px] tracking-[0.3em] uppercase drop-shadow-sm">{tenantName.split(" ")[0]}</p>
+          <p className="text-white/60 text-[7px] tracking-[0.15em] drop-shadow-sm">{tenantName}</p>
         </div>
         <div className="text-right">
-          {motif.icon && <span className="text-lg opacity-60">{motif.icon}</span>}
-          <p className="text-white/30 text-[8px] tracking-[0.2em] uppercase">Gutschein</p>
+          <p className="text-white/50 text-[8px] tracking-[0.2em] uppercase drop-shadow-sm">Gutschein</p>
         </div>
       </div>
-      <div>
-        <p className="text-white/50 text-[8px] tracking-[0.2em] uppercase mb-0.5">Guthaben</p>
-        <p className="text-white text-xl font-display" style={{ color: motif.accent }}>
+      <div className="relative z-10">
+        <p className="text-white/70 text-[8px] tracking-[0.2em] uppercase mb-0.5 drop-shadow-sm">Guthaben</p>
+        <p className="text-white text-xl font-display drop-shadow-md" style={{ color: motif.accent }}>
           CHF {amount.toFixed(2)}
         </p>
       </div>
@@ -244,13 +247,13 @@ export default function PurchaseWizard({ tenant, embedded }: { tenant: TenantCon
                         }`}
                       >
                         <div
-                          className="aspect-[1.4/1] flex flex-col items-center justify-center relative"
+                          className="aspect-[1.4/1] flex flex-col items-center justify-end relative overflow-hidden"
                           style={{ background: m.bg }}
                         >
-                          {m.icon && (
-                            <span className="text-4xl mb-1.5 drop-shadow-lg" style={{ color: m.accent, filter: "brightness(1.3)" }}>{m.icon}</span>
+                          {m.imageUrl && (
+                            <Image src={m.imageUrl} alt={m.label} fill className="object-cover opacity-60" sizes="(max-width: 640px) 50vw, 200px" />
                           )}
-                          <span className="text-[9px] tracking-[0.25em] uppercase text-white/80 font-medium">
+                          <span className="relative z-10 text-[10px] tracking-[0.25em] uppercase text-white font-semibold mb-3 drop-shadow-lg px-3 py-1 rounded-full bg-black/30 backdrop-blur-sm">
                             {m.label.toUpperCase()}
                           </span>
                         </div>
