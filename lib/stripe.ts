@@ -37,7 +37,6 @@ export function createCheckoutParams(opts: {
 
   const params: Stripe.Checkout.SessionCreateParams = {
     mode: "payment",
-    payment_method_types: ["card"],
     customer_email: opts.kaeuferEmail,
     line_items: [
       {
