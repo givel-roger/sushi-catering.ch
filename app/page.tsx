@@ -266,7 +266,7 @@ export default async function LandingPage() {
               <Link href="/agb" className="hover:text-[#555] transition-colors">AGB</Link>
               <Link href="/mitmachen" className="hover:text-[#555] transition-colors">Für Betriebe</Link>
             </div>
-            <p className="text-[#ddd] text-[11px]">v3.3.1</p>
+            <p className="text-[#ddd] text-[11px]">v3.4.0</p>
           </div>
         </div>
       </footer>

@@ -1,5 +1,18 @@
 # Changelog
 
+## v3.4.0 — Interaktives Onboarding-Formular
+
+- Onboarding-Seite komplett als interaktives Formular umgebaut
+- Echte Eingabefelder: Text, E-Mail, Telefon, URL, Dropdowns, Textareas
+- Checkbox-Bestätigungen für Stripe-Konto und Ausweis
+- Datei-Upload-Felder für Logo und Hero-Bild
+- Live-Fortschrittsbalken: zeigt ausgefüllte Pflichtfelder in Prozent (sticky oben)
+- «Per E-Mail senden» — öffnet Mail-Programm mit ausgefüllter Zusammenfassung
+- «Zusammenfassung herunterladen» — generiert Textdatei mit allen Angaben
+- Dropdowns für Rechtsform (Einzelfirma, GmbH, AG, etc.) und MwSt-Satz
+- Bestätigungs-Screen nach dem Absenden mit Anweisungen für Dateianhänge
+- 7 Kategorien: Betriebsdaten, Recht & Steuern, Zahlungen, Branding, Gutschein-Einstellungen, Texte, Admin
+
 ## v3.3.1 — Onboarding: Stripe, Recht & Steuern, vollständige Checkliste
 
 - Neue Kategorie «Recht & Steuern»: UID-Nummer, MwSt-Nummer, MwSt-Satz
