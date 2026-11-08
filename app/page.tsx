@@ -25,21 +25,21 @@ export default async function LandingPage() {
     <div className="min-h-screen bg-[#faf8f5] text-[#1a1a1a]">
 
       {/* ─── Nav ─── */}
-      <nav className="absolute top-0 left-0 right-0 z-50">
-        <div className="max-w-[1400px] mx-auto px-6 sm:px-16 h-24 flex items-center justify-between">
-          <Link href="/" className="font-display text-[22px] text-white tracking-[0.02em]">
+      <nav className="border-b border-[#e0dbd2]">
+        <div className="max-w-[1400px] mx-auto px-6 sm:px-16 h-20 flex items-center justify-between">
+          <Link href="/" className="font-display text-[20px] text-[#1a1a1a] tracking-[0.02em]">
             gutschein-schenken
           </Link>
           <div className="flex items-center gap-8">
             <Link
               href="/mitmachen"
-              className="text-white/50 text-[13px] tracking-[0.15em] uppercase hover:text-white/80 transition-colors hidden sm:block"
+              className="text-[#999] text-[12px] tracking-[0.15em] uppercase hover:text-[#555] transition-colors hidden sm:block"
             >
               Für Betriebe
             </Link>
             <a
               href="#gutscheine"
-              className="text-[13px] tracking-[0.1em] uppercase border border-white/25 text-white/90 px-6 py-2.5 hover:bg-white/10 transition-all"
+              className="text-[12px] tracking-[0.1em] uppercase border border-[#1a1a1a] text-[#1a1a1a] px-5 py-2 hover:bg-[#1a1a1a] hover:text-white transition-all"
             >
               Schenken
             </a>
@@ -47,54 +47,52 @@ export default async function LandingPage() {
         </div>
       </nav>
 
-      {/* ─── Hero ─── */}
-      <section className="relative h-[100svh] min-h-[700px] flex items-end">
-        <Image
-          src="/images/motifs/elegant.jpg"
-          alt=""
-          fill
-          className="object-cover"
-          priority
-          quality={90}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/40" />
-
-        {/* decorative line */}
-        <div className="absolute top-24 left-6 sm:left-16 w-px h-16 bg-white/20" />
-
-        <div className="relative w-full max-w-[1400px] mx-auto px-6 sm:px-16 pb-20 sm:pb-28">
-          <div className="fade-up">
-            <p className="text-[13px] tracking-[0.25em] uppercase text-accent mb-8">
+      {/* ─── Hero — Split ─── */}
+      <section className="grid lg:grid-cols-2 min-h-[540px]">
+        {/* Left: Text */}
+        <div className="flex flex-col justify-center px-6 sm:px-16 py-16 lg:py-24 lg:pr-16">
+          <div>
+            <div className="w-10 h-px bg-accent mb-8" />
+            <p className="text-[12px] tracking-[0.25em] uppercase text-[#999] mb-6">
               Für Restaurants &middot; Hotels &middot; Erlebnisse
             </p>
           </div>
-          <h1 className="fade-up fade-up-d1">
-            <span className="block font-display text-[clamp(3rem,8vw,7.5rem)] text-white leading-[0.92] tracking-[-0.02em]">
+          <h1 className="mb-8">
+            <span className="block font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1] tracking-[-0.02em]">
               Gutscheine
             </span>
-            <span className="block font-display italic text-[clamp(3rem,8vw,7.5rem)] text-accent leading-[0.92] tracking-[-0.02em]">
+            <span className="block font-display italic text-[clamp(2.5rem,5vw,4.5rem)] text-accent leading-[1] tracking-[-0.02em]">
               schenken.
             </span>
           </h1>
-          <div className="mt-10 flex flex-col sm:flex-row sm:items-end gap-8 sm:gap-16 fade-up fade-up-d2">
-            <p className="text-white/45 max-w-[340px] text-[15px] leading-[1.7]">
-              Online kaufen, sofort per Mail erhalten.
-              Persönlich gestaltet, ohne Verfalldatum.
-            </p>
-            <a
-              href="#gutscheine"
-              className="group inline-flex items-center gap-4"
-            >
-              <span className="w-14 h-14 rounded-full border border-accent/40 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-300">
-                <svg className="w-5 h-5 text-accent group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </svg>
-              </span>
-              <span className="text-white/40 text-[13px] tracking-[0.15em] uppercase group-hover:text-white/70 transition-colors">
-                Entdecken
-              </span>
-            </a>
-          </div>
+          <p className="text-[#888] max-w-[340px] text-[15px] leading-[1.8] mb-10">
+            Online kaufen, sofort per Mail erhalten.
+            Persönlich gestaltet, ohne Verfalldatum.
+          </p>
+          <a
+            href="#gutscheine"
+            className="group inline-flex items-center gap-4"
+          >
+            <span className="w-12 h-12 border border-accent/30 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-300">
+              <svg className="w-4 h-4 text-accent group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </span>
+            <span className="text-[#999] text-[12px] tracking-[0.15em] uppercase group-hover:text-[#555] transition-colors">
+              Entdecken
+            </span>
+          </a>
+        </div>
+        {/* Right: Photo */}
+        <div className="relative min-h-[360px] lg:min-h-0">
+          <Image
+            src="/images/motifs/elegant.jpg"
+            alt="Festlich gedeckter Tisch mit Kerzen"
+            fill
+            className="object-cover"
+            priority
+            quality={85}
+          />
         </div>
       </section>
 
@@ -310,7 +308,7 @@ export default async function LandingPage() {
               <Link href="/agb" className="hover:text-[#555] transition-colors">AGB</Link>
               <Link href="/mitmachen" className="hover:text-[#555] transition-colors">Für Betriebe</Link>
             </div>
-            <p className="text-[#ccc] text-[11px]">v3.0.9</p>
+            <p className="text-[#ccc] text-[11px]">v3.1.0</p>
           </div>
         </div>
       </footer>

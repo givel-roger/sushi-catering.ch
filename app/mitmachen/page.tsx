@@ -220,7 +220,7 @@ export default function MitmachenPage() {
               <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>
               <Link href="/agb" className="hover:text-foreground transition-colors">AGB</Link>
             </div>
-            <p className="text-muted/40 text-xs">v3.0.9</p>
+            <p className="text-muted/40 text-xs">v3.1.0</p>
           </div>
         </div>
       </footer>

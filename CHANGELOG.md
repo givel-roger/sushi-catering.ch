@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.1.0 — Split-Hero: eleganter, weniger wuchtig
+
+- Hero neu als Split-Layout: Text links auf Beige, Foto rechts (statt Fullscreen)
+- Navigation von transparent zu solid (dunkler Text auf Beige mit Border)
+- fade-up Animationen im Hero entfernt (Sichtbarkeits-Bug behoben)
+- Weniger überwältigend, edler Gesamteindruck
+
 ## v3.0.9 — Luxus-Redesign: Editorial-Magazin-Stil
 
 - Fullscreen-Hero mit Film-Gradient und fade-up Animationen
