@@ -10,12 +10,31 @@ const CHECKLIST = [
   {
     category: "Betriebsdaten",
     items: [
-      { label: "Betriebsname", hint: "Offizieller Name wie er auf dem Gutschein erscheinen soll", required: true },
+      { label: "Betriebsname (offiziell)", hint: "Wie im Handelsregister eingetragen, z.B. «Ristorante Daniele GmbH»", required: true },
+      { label: "Rechtsform", hint: "Einzelfirma, GmbH, AG, Verein, etc.", required: true },
+      { label: "Name Geschäftsführer/in oder Inhaber/in", hint: "Erscheint im Impressum Ihres Shops", required: true },
       { label: "Strasse + Nr.", hint: "", required: true },
       { label: "PLZ + Ort", hint: "", required: true },
       { label: "Telefon", hint: "Wird auf der Shop-Seite angezeigt", required: false },
-      { label: "E-Mail", hint: "Für Kundenanfragen zum Gutschein", required: true },
+      { label: "E-Mail (Betrieb)", hint: "Für Kundenanfragen zum Gutschein", required: true },
       { label: "Website", hint: "Falls vorhanden — wird verlinkt", required: false },
+    ],
+  },
+  {
+    category: "Recht & Steuern",
+    items: [
+      { label: "UID-Nummer", hint: "Unternehmens-Identifikationsnummer, z.B. CHE-123.456.789 — aus dem Handelsregister", required: true },
+      { label: "MwSt-Nummer", hint: "Falls MwSt-pflichtig (ab CHF 100'000 Umsatz). Format: CHE-123.456.789 MWST", required: false },
+      { label: "MwSt-Satz auf Gutscheinen", hint: "In der Regel 8.1% (Normalsatz) oder 3.8% (Gastgewerbe, Beherbergung). Gutscheine sind Mehrzweckgutscheine — MwSt fällt erst bei Einlösung an.", required: true },
+    ],
+  },
+  {
+    category: "Zahlungen (Stripe)",
+    description: "Für die Online-Bezahlung nutzen wir Stripe. Sie benötigen ein eigenes Stripe-Konto. Wir senden Ihnen einen Einladungs-Link, über den Sie sich in wenigen Minuten registrieren können.",
+    items: [
+      { label: "Stripe-Konto eröffnen", hint: "Sie erhalten von uns einen Einladungs-Link. Stripe prüft Ihre Identität und Bankverbindung direkt.", required: true },
+      { label: "IBAN (Bankkonto für Auszahlungen)", hint: "Wird bei der Stripe-Registrierung hinterlegt. Auszahlung erfolgt automatisch.", required: true },
+      { label: "Ausweisdokument", hint: "Stripe verlangt eine Identitätsprüfung (Pass oder ID) des Kontoinhabers / Zeichnungsberechtigten.", required: true },
     ],
   },
   {
@@ -34,6 +53,8 @@ const CHECKLIST = [
       { label: "Mindestbetrag", hint: "Standard: 20 CHF", required: false },
       { label: "Maximalbetrag", hint: "Standard: 1'000 CHF", required: false },
       { label: "Gutschein-Kürzel", hint: "2-3 Buchstaben für den Code, z.B. DN → DN-A3K2-B8M1", required: true },
+      { label: "Gültigkeit", hint: "Standard: unbeschränkt (kein Verfalldatum). Falls Sie eine Frist wollen, z.B. 2 Jahre.", required: false },
+      { label: "Einlösebedingungen", hint: "Falls besondere Regeln gelten, z.B. «Nicht einlösbar auf Takeaway» oder «Nur im Restaurant»", required: false },
     ],
   },
   {
@@ -47,8 +68,8 @@ const CHECKLIST = [
   {
     category: "Admin-Zugang",
     items: [
-      { label: "Admin E-Mail", hint: "Login für das Verwaltungs-Panel — dort sehen Sie verkaufte Gutscheine", required: true },
-      { label: "Name der Kontaktperson", hint: "", required: true },
+      { label: "Admin E-Mail", hint: "Login für das Verwaltungs-Panel — dort sehen Sie verkaufte Gutscheine und lösen sie ein", required: true },
+      { label: "Name der Kontaktperson", hint: "Ansprechperson für technische Fragen zum Shop", required: true },
     ],
   },
 ];
@@ -107,9 +128,12 @@ export default function OnboardingPage() {
         <div className="space-y-12">
           {CHECKLIST.map((group) => (
             <div key={group.category}>
-              <h3 className="text-[13px] font-medium uppercase tracking-[0.1em] text-[#999] mb-5">
+              <h3 className="text-[13px] font-medium uppercase tracking-[0.1em] text-[#999] mb-3">
                 {group.category}
               </h3>
+              {"description" in group && group.description && (
+                <p className="text-[#999] text-[14px] leading-[1.6] mb-5">{group.description}</p>
+              )}
               <div className="space-y-0 border-t border-[#e8e3d8]">
                 {group.items.map((item) => (
                   <div
@@ -137,12 +161,30 @@ export default function OnboardingPage() {
 
         {/* Dateien-Hinweis */}
         <div className="mt-16 bg-[#f3f0ea] p-8">
-          <h3 className="font-medium text-[16px] mb-3">Dateien-Formate</h3>
+          <h3 className="font-medium text-[16px] mb-3">Dateien &amp; Formate</h3>
           <ul className="text-[#777] text-[14px] leading-[1.8] space-y-1">
             <li><strong>Logo:</strong> PNG mit transparentem Hintergrund oder SVG. Mindestens 400px breit.</li>
             <li><strong>Hero-Bild:</strong> JPG oder PNG, Querformat, mindestens 1200 &times; 800 Pixel.</li>
             <li><strong>Farbe:</strong> Hex-Code (z.B. #c8962e). Fragen Sie Ihren Grafiker oder nutzen Sie ein Tool wie <span className="text-[#1a1a1a]">coolors.co</span>.</li>
+            <li><strong>UID-Nummer:</strong> Finden Sie unter <span className="text-[#1a1a1a]">zefix.ch</span> (Handelsregister) oder auf Ihrer MwSt-Abrechnung.</li>
           </ul>
+        </div>
+
+        {/* Stripe-Info */}
+        <div className="mt-6 bg-[#f3f0ea] p-8">
+          <h3 className="font-medium text-[16px] mb-3">Wie funktioniert die Bezahlung?</h3>
+          <div className="text-[#777] text-[14px] leading-[1.8] space-y-3">
+            <p>
+              Käufer bezahlen online mit Kreditkarte, Twint oder anderen Zahlungsmitteln via <strong className="text-[#1a1a1a]">Stripe</strong>.
+              Das Geld fliesst direkt auf Ihr Bankkonto — abzüglich 5% Plattform-Provision und der Stripe-Gebühren
+              (ca. 2.9% + CHF 0.30 pro Transaktion).
+            </p>
+            <p>
+              Sie benötigen ein eigenes Stripe-Konto. <strong className="text-[#1a1a1a]">Wir senden Ihnen einen persönlichen Einladungs-Link</strong>,
+              über den Sie sich in wenigen Minuten registrieren können. Stripe prüft Ihre Identität und Bankverbindung direkt —
+              halten Sie dafür Ihren Ausweis (Pass oder ID) und Ihre IBAN bereit.
+            </p>
+          </div>
         </div>
 
         {/* Was Sie bekommen */}
@@ -151,10 +193,12 @@ export default function OnboardingPage() {
           <ul className="text-[#777] text-[14px] leading-[1.8] space-y-1">
             <li>&#10003; Eigene Shop-Seite mit Ihrem Branding</li>
             <li>&#10003; Admin-Panel zum Verwalten und Einlösen der Gutscheine</li>
-            <li>&#10003; QR-Code Scanner-App für Ihr Personal</li>
+            <li>&#10003; QR-Code Scanner-App für Ihr Personal (installierbar aufs Handy)</li>
             <li>&#10003; iframe-Code zum Einbetten auf Ihrer Website</li>
             <li>&#10003; PDF-Gutscheine mit Ihrem Logo, automatisch per Mail versandt</li>
             <li>&#10003; Online-Bezahlung via Stripe (Geld direkt auf Ihr Konto)</li>
+            <li>&#10003; Eigenes Impressum und AGB für Ihren Shop</li>
+            <li>&#10003; Support bei der Einrichtung und im laufenden Betrieb</li>
           </ul>
         </div>
 

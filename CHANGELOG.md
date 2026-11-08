@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.3.1 — Onboarding: Stripe, Recht & Steuern, vollständige Checkliste
+
+- Neue Kategorie «Recht & Steuern»: UID-Nummer, MwSt-Nummer, MwSt-Satz
+- Neue Kategorie «Zahlungen (Stripe)»: Stripe-Konto, IBAN, Ausweisdokument
+- Betriebsdaten erweitert: Rechtsform, Geschäftsführer/Inhaber
+- Gutschein-Einstellungen erweitert: Gültigkeit, Einlösebedingungen
+- Erklärung wie Stripe-Bezahlung funktioniert (Connect-Onboarding, Gebühren)
+- Hinweis wo UID-Nummer zu finden ist (zefix.ch)
+- «Was Sie bekommen» erweitert: eigenes Impressum/AGB, Support
+
 ## v3.3.0 — Onboarding-Seite für neue Betriebe
 
 - Neue /onboarding Seite: Checkliste was Betriebe liefern müssen
