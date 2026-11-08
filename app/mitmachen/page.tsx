@@ -201,12 +201,20 @@ export default function MitmachenPage() {
             Wir richten Ihren Gutschein-Shop innerhalb von 24 Stunden ein.
             Schreiben Sie uns eine E-Mail mit Ihrem Betriebsnamen und Logo.
           </p>
-          <a
-            href="mailto:info@marktindex.ch?subject=Gutschein-Shop%20einrichten"
-            className="inline-block bg-accent text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-accent-hover transition-colors"
-          >
-            info@marktindex.ch
-          </a>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="mailto:info@marktindex.ch?subject=Gutschein-Shop%20einrichten"
+              className="inline-block bg-accent text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-accent-hover transition-colors"
+            >
+              info@marktindex.ch
+            </a>
+            <Link
+              href="/onboarding"
+              className="inline-block border border-white/30 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white/10 transition-colors"
+            >
+              Onboarding-Checkliste
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -220,7 +228,7 @@ export default function MitmachenPage() {
               <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>
               <Link href="/agb" className="hover:text-foreground transition-colors">AGB</Link>
             </div>
-            <p className="text-muted/40 text-xs">v3.2.2</p>
+            <p className="text-muted/40 text-xs">v3.3.0</p>
           </div>
         </div>
       </footer>

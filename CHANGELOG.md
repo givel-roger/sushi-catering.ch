@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.3.0 — Onboarding-Seite für neue Betriebe
+
+- Neue /onboarding Seite: Checkliste was Betriebe liefern müssen
+- 5 Kategorien: Betriebsdaten, Branding, Gutschein-Einstellungen, Texte, Admin-Zugang
+- Pflicht-Markierungen und Hinweise pro Feld
+- 1-2-3 Prozess-Erklärung (Liefern → Einrichten → Verkaufen)
+- Dateien-Formate Info (Logo PNG/SVG, Hero JPG min 1200×800)
+- "Was Sie bekommen" Übersicht
+- Link von /mitmachen zur Onboarding-Checkliste
+
 ## v3.2.2 — Vermittler-Rolle + E-Mail-Korrektur
 
 - AGB: Neuer Abschnitt "Rolle der Marktindex AG" — Plattform ist nur Vermittler, haftet nicht für Leistungen der Betriebe
