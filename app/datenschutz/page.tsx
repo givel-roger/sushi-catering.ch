@@ -22,8 +22,8 @@ export default function Datenschutz() {
               Cheerstrasse 13b<br />
               6014 Luzern<br />
               E-Mail:{" "}
-              <a href="mailto:info@gutschein-schenken.ch" className="underline hover:text-[#1a1a1a]">
-                info@gutschein-schenken.ch
+              <a href="mailto:info@marktindex.ch" className="underline hover:text-[#1a1a1a]">
+                info@marktindex.ch
               </a>
             </p>
           </section>
@@ -68,8 +68,8 @@ export default function Datenschutz() {
             <p>
               Sie haben jederzeit das Recht auf Auskunft, Berichtigung und Löschung
               Ihrer personenbezogenen Daten. Kontaktieren Sie uns unter{" "}
-              <a href="mailto:info@gutschein-schenken.ch" className="underline hover:text-[#1a1a1a]">
-                info@gutschein-schenken.ch
+              <a href="mailto:info@marktindex.ch" className="underline hover:text-[#1a1a1a]">
+                info@marktindex.ch
               </a>.
             </p>
           </section>

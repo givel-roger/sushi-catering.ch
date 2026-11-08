@@ -24,7 +24,19 @@ export default function AGB() {
           </section>
 
           <section>
-            <h2 className="text-[#1a1a1a] text-lg font-semibold mb-3">2. Gutscheine</h2>
+            <h2 className="text-[#1a1a1a] text-lg font-semibold mb-3">2. Rolle der Marktindex AG</h2>
+            <p>
+              Die Marktindex AG betreibt gutschein-schenken.ch als Vermittlungsplattform.
+              Sie vermittelt den Kauf von Gutscheinen zwischen Käufern und den anbietenden
+              Betrieben. Die Marktindex AG ist nicht selbst Anbieterin der Leistungen, die
+              mit den Gutscheinen eingelöst werden, und haftet nicht für deren Erbringung.
+              Der Vertrag über die Gutscheinleistung kommt direkt zwischen dem Käufer und
+              dem jeweiligen anbietenden Betrieb zustande.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[#1a1a1a] text-lg font-semibold mb-3">3. Gutscheine</h2>
             <p>
               Die Gutscheine sind beim jeweiligen anbietenden Betrieb einlösbar, der auf
               dem Gutschein angegeben ist. Gutscheine haben kein Verfalldatum. Teilbeträge
@@ -34,7 +46,7 @@ export default function AGB() {
           </section>
 
           <section>
-            <h2 className="text-[#1a1a1a] text-lg font-semibold mb-3">3. Bezahlung</h2>
+            <h2 className="text-[#1a1a1a] text-lg font-semibold mb-3">4. Bezahlung</h2>
             <p>
               Die Bezahlung erfolgt online zum Zeitpunkt des Kaufs. Der Gutschein wird
               nach erfolgter Zahlung per E-Mail als PDF zugestellt.
@@ -42,7 +54,7 @@ export default function AGB() {
           </section>
 
           <section>
-            <h2 className="text-[#1a1a1a] text-lg font-semibold mb-3">4. Stornierung</h2>
+            <h2 className="text-[#1a1a1a] text-lg font-semibold mb-3">5. Stornierung</h2>
             <p>
               Eine Stornierung oder Rückerstattung nach dem Kauf ist nicht möglich,
               es sei denn, es liegt ein technischer Fehler vor.
@@ -50,15 +62,18 @@ export default function AGB() {
           </section>
 
           <section>
-            <h2 className="text-[#1a1a1a] text-lg font-semibold mb-3">5. Haftung</h2>
+            <h2 className="text-[#1a1a1a] text-lg font-semibold mb-3">6. Haftung</h2>
             <p>
-              Die Haftung beschränkt sich auf den Wert des Gutscheins. Für den Verlust
-              des Gutscheins (PDF/Ausdruck) übernehmen wir keine Haftung.
+              Die Marktindex AG haftet ausschliesslich für den technischen Betrieb der
+              Plattform. Für die Einlösung der Gutscheine, die Qualität der Leistungen
+              und sonstige Ansprüche gegenüber dem anbietenden Betrieb übernimmt die
+              Marktindex AG keine Haftung. Für den Verlust des Gutscheins (PDF/Ausdruck)
+              wird keine Haftung übernommen.
             </p>
           </section>
 
           <section>
-            <h2 className="text-[#1a1a1a] text-lg font-semibold mb-3">6. Gerichtsstand</h2>
+            <h2 className="text-[#1a1a1a] text-lg font-semibold mb-3">7. Gerichtsstand</h2>
             <p>Es gilt Schweizer Recht. Gerichtsstand ist Luzern.</p>
           </section>
         </div>

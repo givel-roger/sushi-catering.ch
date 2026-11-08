@@ -17,6 +17,8 @@ export default function Impressum() {
         <div className="text-[#777] space-y-4 text-[15px] leading-[1.7]">
           <p>
             gutschein-schenken.ch ist ein Angebot der Marktindex AG in Luzern.
+            Die Marktindex AG betreibt diese Plattform als Vermittlerin von
+            Gutscheinen und ist nicht selbst Anbieterin der damit verbundenen Leistungen.
           </p>
 
           <h2 className="text-[#1a1a1a] text-lg font-semibold pt-6">Betreiberin</h2>
@@ -27,8 +29,8 @@ export default function Impressum() {
           </p>
           <p>
             E-Mail:{" "}
-            <a href="mailto:info@gutschein-schenken.ch" className="underline hover:text-[#1a1a1a]">
-              info@gutschein-schenken.ch
+            <a href="mailto:info@marktindex.ch" className="underline hover:text-[#1a1a1a]">
+              info@marktindex.ch
             </a>
           </p>
 

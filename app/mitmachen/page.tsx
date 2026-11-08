@@ -202,10 +202,10 @@ export default function MitmachenPage() {
             Schreiben Sie uns eine E-Mail mit Ihrem Betriebsnamen und Logo.
           </p>
           <a
-            href="mailto:info@gutschein-schenken.ch?subject=Gutschein-Shop%20einrichten"
+            href="mailto:info@marktindex.ch?subject=Gutschein-Shop%20einrichten"
             className="inline-block bg-accent text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-accent-hover transition-colors"
           >
-            info@gutschein-schenken.ch
+            info@marktindex.ch
           </a>
         </div>
       </section>
@@ -220,7 +220,7 @@ export default function MitmachenPage() {
               <Link href="/datenschutz" className="hover:text-foreground transition-colors">Datenschutz</Link>
               <Link href="/agb" className="hover:text-foreground transition-colors">AGB</Link>
             </div>
-            <p className="text-muted/40 text-xs">v3.2.1</p>
+            <p className="text-muted/40 text-xs">v3.2.2</p>
           </div>
         </div>
       </footer>

@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.2.2 — Vermittler-Rolle + E-Mail-Korrektur
+
+- AGB: Neuer Abschnitt "Rolle der Marktindex AG" — Plattform ist nur Vermittler, haftet nicht für Leistungen der Betriebe
+- AGB: Haftung klar auf technischen Plattform-Betrieb beschränkt
+- Impressum: Hinweis dass Marktindex AG Vermittlerin ist, nicht Anbieterin
+- Alle Kontakt-E-Mails von info@gutschein-schenken.ch auf info@marktindex.ch geändert
+
 ## v3.2.1 — Betreiber Marktindex AG
 
 - Impressum: Betreiber neu Marktindex AG, Cheerstrasse 13b, 6014 Luzern
