@@ -1,5 +1,17 @@
 # Changelog
 
+## v3.2.0 — Modernes Redesign: clean, selbstbewusst
+
+- Komplett neues Frontseiten-Design: weniger dekorativ, mehr modern
+- Fixed Nav mit Backdrop-Blur statt Border-Nav
+- Schwarze CTA-Buttons statt Gold-Outline — selbstbewusster
+- Alle dekorativen Gold-Linien entfernt
+- Steps-Sektion auf schwarzem Hintergrund statt Beige
+- Motiv-Galerie auf hellem Hintergrund statt Dark-Section
+- Betriebe-CTA vereinfacht (kein dekorativer Rahmen)
+- Weniger Uppercase-Tracking, natürlichere Typografie
+- Arrow-Icon auf Karten nur bei Hover (oben rechts statt unten)
+
 ## v3.1.0 — Split-Hero: eleganter, weniger wuchtig
 
 - Hero neu als Split-Layout: Text links auf Beige, Foto rechts (statt Fullscreen)
