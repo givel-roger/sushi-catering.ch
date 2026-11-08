@@ -1,5 +1,18 @@
 # Changelog
 
+## v3.0.9 — Luxus-Redesign: Editorial-Magazin-Stil
+
+- Fullscreen-Hero mit Film-Gradient und fade-up Animationen
+- Dekorative Gold-Linien und vertikale Akzente
+- Eckige Karten statt runde Ecken — moderner, weniger Template
+- Asymmetrisches 2-Spalten-Layout für Section-Headers
+- 3-Spalten-Grid mit feinen Trennlinien für Schritte-Sektion
+- Uppercase-Tracking für Subtext und Navigation
+- Warme Beige-Töne (#faf8f5, #f3f0ea) statt reinem Weiss
+- Dark-Section (#141211) für Motiv-Galerie
+- Betriebe-CTA mit innerem dekorativem Rahmen
+- CSS fade-up Animation + scrollbar-hide Utility
+
 ## v3.0.8 — Premium-Redesign Frontseite
 
 - Fullscreen-Hero mit cineastischem Foto und grosser Playfair-Typografie
