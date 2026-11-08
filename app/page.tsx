@@ -259,14 +259,14 @@ export default async function LandingPage() {
       <footer className="border-t border-[#e8e3d8] py-8">
         <div className="max-w-[1200px] mx-auto px-6 sm:px-10">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[13px] text-[#bbb]">
-            <p className="text-[#777]">gutschein-schenken.ch</p>
+            <p className="text-[#777]">Ein Angebot der Marktindex AG, Luzern</p>
             <div className="flex gap-6">
               <Link href="/impressum" className="hover:text-[#555] transition-colors">Impressum</Link>
               <Link href="/datenschutz" className="hover:text-[#555] transition-colors">Datenschutz</Link>
               <Link href="/agb" className="hover:text-[#555] transition-colors">AGB</Link>
               <Link href="/mitmachen" className="hover:text-[#555] transition-colors">Für Betriebe</Link>
             </div>
-            <p className="text-[#ddd] text-[11px]">v3.2.0</p>
+            <p className="text-[#ddd] text-[11px]">v3.2.1</p>
           </div>
         </div>
       </footer>

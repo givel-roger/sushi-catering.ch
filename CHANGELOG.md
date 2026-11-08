@@ -1,5 +1,14 @@
 # Changelog
 
+## v3.2.1 — Betreiber Marktindex AG
+
+- Impressum: Betreiber neu Marktindex AG, Cheerstrasse 13b, 6014 Luzern
+- Datenschutz: Verantwortliche Stelle auf Marktindex AG geändert
+- AGB: Geltungsbereich auf Marktindex AG, Gutscheine beim jeweiligen Betrieb einlösbar
+- Footer Frontseite: "Ein Angebot der Marktindex AG, Luzern"
+- Legal-Seiten optisch an Frontseiten-Design angepasst (Beige statt Weiss)
+- Kontakt-E-Mail überall auf info@gutschein-schenken.ch
+
 ## v3.2.0 — Modernes Redesign: clean, selbstbewusst
 
 - Komplett neues Frontseiten-Design: weniger dekorativ, mehr modern
