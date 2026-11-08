@@ -39,7 +39,7 @@ export default function TenantFooter({ tenant }: { tenant: TenantConfig }) {
           </div>
         </div>
         <div className="border-t border-border pt-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-muted/50">
-          <p>© {new Date().getFullYear()} {tenant.name} · <span className="text-muted/30">v3.4.0</span></p>
+          <p>© {new Date().getFullYear()} {tenant.name} · <span className="text-muted/30">v3.5.0</span></p>
           <div className="flex gap-6">
             <Link href={`${basePath}/impressum`} className="hover:text-foreground transition-colors">Impressum</Link>
             <Link href={`${basePath}/datenschutz`} className="hover:text-foreground transition-colors">Datenschutz</Link>

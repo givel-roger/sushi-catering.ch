@@ -1,5 +1,18 @@
 # Changelog
 
+## v3.5.0 — Mitmachen-Seite: Professionelles Redesign im e-guma-Stil
+
+- /mitmachen komplett neu gestaltet im Stil von e-guma.ch
+- Fullscreen-Hero (85vh) mit Hintergrundbild, Gradient-Overlay und grosser Headline
+- Vorteile-Sektion: 2-Spalten-Layout mit Checkmark-Icons in Akzentfarbe
+- Pain Points: "Kennen Sie das?" — 5 Probleme mit (!) Icons, beige Hintergrund
+- Produkte-Sektion: 4 Feature-Karten (Gutschein-Shop, QR-Scanner, iframe, Admin-Panel)
+- Dark Section mit Foto links + 3-Schritte-Prozess (01/02/03) rechts
+- Pricing: Feature-Liste + grosse 5%-Karte, Marketing-Pool-Option
+- Dark CTA-Sektion mit E-Mail und Onboarding-Formular Buttons
+- Dunkle Fixed-Nav mit weissem CTA-Button
+- Responsive Design für Mobile und Desktop
+
 ## v3.4.0 — Interaktives Onboarding-Formular
 
 - Onboarding-Seite komplett als interaktives Formular umgebaut
