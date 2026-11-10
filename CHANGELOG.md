@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.5.3
+- Programm: Serenade Avenue (Harfe) am Samstag 5.12. um 13:30 gestrichen (übrige Termine bleiben)
+
 ## v2.5.2
 - Hero-Slider: Bilder mit Gesichtern entfernt (jetzt Rentier, Geschenke, Engel-Figur und Plakat)
 

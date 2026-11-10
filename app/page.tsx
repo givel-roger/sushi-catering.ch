@@ -83,7 +83,6 @@ const PROGRAMM: { datum: number; tag: string; events: { z: string; w: string; o?
     { z: "11:00", w: "Männerchor Quartett-Vereinigung Luzern" },
     { z: "12:30", w: "Musikalische Meditation — Valentin Lupp (Trompete), Daniel Baker (Orgel)", o: "Kirche" },
     { z: "13:30", w: "Lara Zoe" },
-    { z: "13:30", w: "Serenade Avenue (Harfe)" },
     { z: "14:30", w: "Lara Zoe" },
     { z: "15:00", w: "Gunvor" },
     { z: "16:00", w: "Gottesdienst", o: "Kirche" },
@@ -1090,7 +1089,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <p className="text-center text-white/25 text-[10px] mt-8">v2.5.2</p>
+          <p className="text-center text-white/25 text-[10px] mt-8">v2.5.3</p>
         </div>
       </footer>
     </div>
