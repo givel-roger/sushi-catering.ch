@@ -25,3 +25,8 @@
   .env.production und .env.local von 644 auf 600, Besitzer root, Inhalt unveraendert (Brevo-Schluessel)
   Gebaut waehrend die alte Seite lief, erst danach getauscht; kein Ausfall
   Pruefung: http://127.0.0.1:3082/ 200, https://weihnachtsmarkt-luzern.com/ 200, Fassung v2.6.0 auf der Seite sichtbar
+2026-11-10 09:12 | v2.6.1 | weihnachtsmarkt-luzern.com | Server 8 (65.108.4.141) | Docker OK, Health Check 200, next 16.4.5 im Container bestaetigt
+  Programm: Serenade Avenue (Harfe) 5.12. 13:30 gestrichen.
+  Vorfall: v2.5.3 wurde per rsync auf den Server kopiert, obwohl der Push abgelehnt war (v2.6.0 einer anderen Sitzung fehlte lokal).
+  Dabei lagen kurz package.json/package-lock.json mit next 16.2.1 auf dem Server; NICHT gebaut, Live-Seite blieb v2.6.0.
+  Behoben durch Merge mit v2.6.0, danach GitHub zuerst, dann rsync; Server-Lockfile = GitHub geprueft.
