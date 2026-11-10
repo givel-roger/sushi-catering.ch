@@ -1,7 +1,17 @@
 # Changelog
 
-## v2.5.3
+## v2.6.1
 - Programm: Serenade Avenue (Harfe) am Samstag 5.12. um 13:30 gestrichen (übrige Termine bleiben)
+
+## v2.6.0
+### Sicherheit
+- **next von 16.2.1 auf 16.4.5 angehoben.** 16.2.1 war von einer kritischen Meldung betroffen, darunter eine ohne Anmeldung ausnutzbare Codeausfuehrung in der Bildoptimierung sowie mehrere Umgehungen der Middleware. Kein Hauptversionswechsel, nur ein Flicken-Sprung innerhalb von 16.
+- Damit sind auch postcss, sharp, nanoid, source-map-js und baseline-browser-mapping geflickt, die alle ueber next hereinkamen.
+- **Von 6 gemeldeten Luecken (1 kritisch, 4 hoch, 1 mittel) sind jetzt 0 uebrig**, gemessen mit `npm audit --omit=dev`.
+- Die Dateien `.env.production` und `.env.local` standen auf 644 und waren damit fuer jeden Benutzer auf dem Server lesbar. Sie enthalten den Brevo-Schluessel fuer den Mailversand. Auf dem Server auf 600 gesetzt, Besitzer root, Inhalt unveraendert.
+
+### Geprueft
+- Typpruefung 0 Fehler, Bau gruen, 19 Seiten.
 
 ## v2.5.2
 - Hero-Slider: Bilder mit Gesichtern entfernt (jetzt Rentier, Geschenke, Engel-Figur und Plakat)
