@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function Kontakt() {
@@ -17,8 +17,24 @@ export default function Kontakt() {
   const [gestartet, setGestartet] = useState(() => Date.now());
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [captcha, setCaptcha] = useState<{ frage: string; token: string } | null>(null);
+  const [captchaAntwort, setCaptchaAntwort] = useState("");
 
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+  const neueSicherheitsfrage = useCallback(async () => {
+    setCaptchaAntwort("");
+    try {
+      const res = await fetch("/api/kontakt", { cache: "no-store" });
+      setCaptcha(await res.json());
+    } catch {
+      setCaptcha(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    neueSicherheitsfrage();
+  }, [neueSicherheitsfrage]);
+
+  const set =(k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [k]: e.target.value });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,7 +46,7 @@ export default function Kontakt() {
       const res = await fetch("/api/kontakt", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...form, website, t: gestartet }),
+        body: JSON.stringify({ ...form, website, t: gestartet, captchaToken: captcha?.token, captchaAntwort }),
       });
 
       if (!res.ok) {
@@ -44,6 +60,8 @@ export default function Kontakt() {
     } catch (err) {
       setStatus("error");
       setErrorMsg(err instanceof Error ? err.message : "Unbekannter Fehler");
+    } finally {
+      neueSicherheitsfrage();
     }
   };
 
@@ -128,6 +146,24 @@ export default function Kontakt() {
                 />
               </div>
 
+              <div>
+                <label htmlFor="sicherheitsfrage" className={labelClass}>
+                  Sicherheitsfrage: {captcha ? captcha.frage : "wird geladen …"} <span className="text-burgundy">*</span>
+                </label>
+                <input
+                  id="sicherheitsfrage"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  required
+                  autoComplete="off"
+                  value={captchaAntwort}
+                  onChange={(e) => setCaptchaAntwort(e.target.value)}
+                  placeholder="Ergebnis als Zahl"
+                  className={`${inputClass} max-w-[200px]`}
+                />
+              </div>
+
               {status === "success" && (
                 <div className="bg-green-50 border border-green-600/30 rounded-lg p-4 text-green-800 text-sm">
                   Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.
@@ -142,7 +178,7 @@ export default function Kontakt() {
 
               <button
                 type="submit"
-                disabled={status === "sending"}
+                disabled={status === "sending" || !captcha}
                 className="bg-burgundy text-white px-8 py-3 rounded-lg font-medium text-sm hover:bg-ruby transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {status === "sending" ? "Wird gesendet..." : "Nachricht senden"}

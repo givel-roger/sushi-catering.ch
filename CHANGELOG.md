@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.7.1
+- Kontaktformular: Captcha als Sicherheitsfrage (kleine Rechenaufgabe), vom Server geprüft, jede Frage nur einmal gültig.
+  Ohne Drittanbieter, keine Daten an Google/Cloudflare.
+
 ## v2.7.0
 - Anmeldung: Hinweis "Alle Stände sind ausverkauft", Formular ausgeblendet, Server lehnt Anmeldungen ab (410).
   Wieder öffnen: `ANMELDUNG_OFFEN` in lib/anmeldung.ts auf true setzen.

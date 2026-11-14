@@ -1,4 +1,39 @@
+import { createHmac, randomBytes, randomInt, timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
+
+// Neu bei jedem Serverstart; offene Rechenaufgaben werden dann ungültig und das Formular holt eine neue.
+const CAPTCHA_GEHEIMNIS = randomBytes(32);
+const CAPTCHA_GUELTIG_MS = 30 * 60 * 1000;
+const benutzteCaptchas = new Map<string, number>();
+
+function captchaSignatur(ablauf: number, antwort: number): Buffer {
+  return createHmac("sha256", CAPTCHA_GEHEIMNIS).update(`${ablauf}:${antwort}`).digest();
+}
+
+function captchaPruefen(token: unknown, antwort: unknown): boolean {
+  if (typeof token !== "string") return false;
+  const [ablaufText, sigText] = token.split(".");
+  const ablauf = Number(ablaufText);
+  const zahl = Number(String(antwort ?? "").trim());
+  const jetzt = Date.now();
+  if (!Number.isInteger(ablauf) || ablauf < jetzt || !Number.isInteger(zahl) || !sigText) return false;
+  if (benutzteCaptchas.has(token)) return false;
+  benutzteCaptchas.set(token, ablauf);
+  for (const [t, a] of benutzteCaptchas) if (a < jetzt) benutzteCaptchas.delete(t);
+  const erwartet = captchaSignatur(ablauf, zahl);
+  const erhalten = Buffer.from(sigText, "base64url");
+  return erhalten.length === erwartet.length && timingSafeEqual(erhalten, erwartet);
+}
+
+export async function GET() {
+  const a = randomInt(1, 10);
+  const b = randomInt(1, 10);
+  const ablauf = Date.now() + CAPTCHA_GUELTIG_MS;
+  const token = `${ablauf}.${captchaSignatur(ablauf, a + b).toString("base64url")}`;
+  return NextResponse.json({ frage: `Wie viel ist ${a} + ${b}?`, token }, { headers: { "cache-control": "no-store" } });
+}
 
 const MIN_AUSFUELLZEIT_MS = 3_000;
 const MAX_FORMULARALTER_MS = 24 * 60 * 60 * 1000;
@@ -44,6 +79,13 @@ export async function POST(req: Request) {
     const dauer = Date.now() - gestartet;
     if (!Number.isFinite(gestartet) || dauer < MIN_AUSFUELLZEIT_MS || dauer > MAX_FORMULARALTER_MS) {
       return stillVerwerfen(`Ausfüllzeit ${dauer} ms`);
+    }
+
+    if (!captchaPruefen(data.captchaToken, data.captchaAntwort)) {
+      return NextResponse.json(
+        { error: "Die Antwort auf die Sicherheitsfrage stimmt nicht. Bitte beantworten Sie die neue Frage.", captcha: true },
+        { status: 400 },
+      );
     }
 
     const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "unbekannt";
