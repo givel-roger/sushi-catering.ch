@@ -33,3 +33,5 @@
 2026-11-14 05:48 | v2.7.0 | weihnachtsmarkt-luzern.com | Server 8 (65.108.4.141) | Docker OK, Health Check 200, next 16.4.5
   Anmeldung geschlossen (Hinweis ausverkauft, API 410). Kontaktformular Spamschutz; live geprueft mit Fangfeld-Anfrage -> verworfen, keine Mail.
   Echter Mailversand live NICHT getestet (keine Testmail ans Sekretariat ausgeloest).
+2026-11-14 05:59 | v2.7.1 | weihnachtsmarkt-luzern.com | Server 8 (65.108.4.141) | Docker OK, Health Check 200, Captcha (Rechenaufgabe) im Kontaktformular
+  Live geprueft: neue Frage pro Abruf, no-store, falsche Antwort -> 400. Richtige Antwort live nicht gesendet (keine Testmail ans Sekretariat).
