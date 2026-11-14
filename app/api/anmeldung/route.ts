@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
+import { ANMELDUNG_OFFEN } from "@/lib/anmeldung";
 
 export async function POST(req: Request) {
+  if (!ANMELDUNG_OFFEN) {
+    return NextResponse.json(
+      { error: "Alle Stände sind ausverkauft. Es werden keine Anmeldungen mehr angenommen." },
+      { status: 410 },
+    );
+  }
   try {
     const data = await req.json();
     const { firmenname, name, vorname, strasse, postfach, plzOrt, telefon, mobile, email, webseite, sortiment, angebot, bemerkungen } = data;

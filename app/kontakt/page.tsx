@@ -13,6 +13,8 @@ export default function Kontakt() {
     telefon: "",
     bemerkungen: "",
   });
+  const [website, setWebsite] = useState("");
+  const [gestartet, setGestartet] = useState(() => Date.now());
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -28,7 +30,7 @@ export default function Kontakt() {
       const res = await fetch("/api/kontakt", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, website, t: gestartet }),
       });
 
       if (!res.ok) {
@@ -38,6 +40,7 @@ export default function Kontakt() {
 
       setStatus("success");
       setForm({ firma: "", nameVorname: "", adresse: "", plzOrt: "", email: "", telefon: "", bemerkungen: "" });
+      setGestartet(Date.now());
     } catch (err) {
       setStatus("error");
       setErrorMsg(err instanceof Error ? err.message : "Unbekannter Fehler");
@@ -76,7 +79,14 @@ export default function Kontakt() {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-6">Kontaktformular</h2>
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="relative space-y-5">
+              <div aria-hidden="true" className="absolute -left-[9999px] top-0 h-px w-px overflow-hidden">
+                <label>
+                  Bitte leer lassen
+                  <input type="text" name="kontakt_pruefung" tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
+                </label>
+              </div>
+
               <div>
                 <label className={labelClass}>Firma</label>
                 <input type="text" value={form.firma} onChange={set("firma")} placeholder="Firma" className={inputClass} />
@@ -165,12 +175,8 @@ export default function Kontakt() {
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">Anmeldung / Standvergabe</h2>
             <p>
-              Interessierte Marktfahrer können sich über unser{" "}
-              <Link href="/anmeldung" className="text-burgundy underline decoration-burgundy/30 hover:decoration-burgundy/60">
-                Anmeldeformular
-              </Link>{" "}
-              bewerben. Bitte beachten Sie, dass die Standplätze limitiert sind und eine frühzeitige
-              Anmeldung empfohlen wird.
+              Alle Stände für den Wiehnachtsmärt 2026 sind ausverkauft. Wir nehmen keine weiteren
+              Anmeldungen mehr an.
             </p>
           </section>
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.7.0
+- Anmeldung: Hinweis "Alle Stände sind ausverkauft", Formular ausgeblendet, Server lehnt Anmeldungen ab (410).
+  Wieder öffnen: `ANMELDUNG_OFFEN` in lib/anmeldung.ts auf true setzen.
+- Kontaktseite: Hinweis zur Standvergabe auf "ausverkauft" angepasst
+- Kontaktformular Spamschutz: verstecktes Fangfeld, Mindest-Ausfüllzeit 3 s, max. 3 Anfragen pro IP in 10 Min.,
+  Nachrichten mit mehr als 2 Links werden verworfen, E-Mail-Format und Feldlängen werden geprüft
+
 ## v2.6.1
 - Programm: Serenade Avenue (Harfe) am Samstag 5.12. um 13:30 gestrichen (übrige Termine bleiben)
 

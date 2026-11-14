@@ -1,12 +1,78 @@
 import { NextResponse } from "next/server";
 
+const MIN_AUSFUELLZEIT_MS = 3_000;
+const MAX_FORMULARALTER_MS = 24 * 60 * 60 * 1000;
+const LIMIT_PRO_IP = 3;
+const LIMIT_FENSTER_MS = 10 * 60 * 1000;
+const MAX_LINKS = 2;
+
+const anfragenProIp = new Map<string, number[]>();
+
+function limitErreicht(ip: string): boolean {
+  const jetzt = Date.now();
+  const frisch = (anfragenProIp.get(ip) ?? []).filter((t) => jetzt - t < LIMIT_FENSTER_MS);
+  if (frisch.length >= LIMIT_PRO_IP) {
+    anfragenProIp.set(ip, frisch);
+    return true;
+  }
+  frisch.push(jetzt);
+  anfragenProIp.set(ip, frisch);
+  if (anfragenProIp.size > 5_000) {
+    for (const [k, v] of anfragenProIp) {
+      if (v.every((t) => jetzt - t >= LIMIT_FENSTER_MS)) anfragenProIp.delete(k);
+    }
+  }
+  return false;
+}
+
+function text(v: unknown, max: number): string {
+  return typeof v === "string" ? v.trim().slice(0, max) : "";
+}
+
+// Spam bekommt dieselbe Erfolgsantwort wie echte Anfragen, damit Bots nicht lernen, was sie verrät.
+function stillVerwerfen(grund: string) {
+  console.warn("[kontakt] Spam verworfen:", grund);
+  return NextResponse.json({ success: true });
+}
+
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const { firma, nameVorname, adresse, plzOrt, email, telefon, bemerkungen } = data;
+
+    if (text(data.website, 200)) return stillVerwerfen("Fangfeld ausgefüllt");
+    const gestartet = Number(data.t);
+    const dauer = Date.now() - gestartet;
+    if (!Number.isFinite(gestartet) || dauer < MIN_AUSFUELLZEIT_MS || dauer > MAX_FORMULARALTER_MS) {
+      return stillVerwerfen(`Ausfüllzeit ${dauer} ms`);
+    }
+
+    const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "unbekannt";
+    if (limitErreicht(ip)) {
+      return NextResponse.json(
+        { error: "Zu viele Anfragen. Bitte versuchen Sie es in einigen Minuten erneut." },
+        { status: 429 },
+      );
+    }
+
+    const firma = text(data.firma, 150);
+    const nameVorname = text(data.nameVorname, 150).replace(/[\r\n]+/g, " ");
+    const adresse = text(data.adresse, 200);
+    const plzOrt = text(data.plzOrt, 100);
+    const email = text(data.email, 200);
+    const telefon = text(data.telefon, 50);
+    const bemerkungen = text(data.bemerkungen, 5_000);
 
     if (!nameVorname || !email) {
       return NextResponse.json({ error: "Name und E-Mail sind Pflichtfelder." }, { status: 400 });
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json({ error: "Bitte geben Sie eine gültige E-Mail-Adresse an." }, { status: 400 });
+    }
+
+    const alles = [firma, nameVorname, adresse, plzOrt, telefon, bemerkungen].join(" ");
+    const links = (alles.match(/https?:\/\/|www\./gi) ?? []).length;
+    if (links > MAX_LINKS || /https?:\/\/|www\./i.test(nameVorname)) {
+      return stillVerwerfen(`${links} Links`);
     }
 
     const apiKey = process.env.BREVO_API_KEY;

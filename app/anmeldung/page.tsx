@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ANMELDUNG_OFFEN } from "@/lib/anmeldung";
 import Link from "next/link";
 
 export default function Anmeldung() {
@@ -78,6 +79,16 @@ export default function Anmeldung() {
           Vom 3. Dezember 2026 bis 21. Dezember 2026
         </p>
 
+        {!ANMELDUNG_OFFEN ? (
+          <div className="bg-burgundy text-white rounded-xl p-6 sm:p-8">
+            <p className="font-display font-bold text-2xl sm:text-3xl mb-3">Alle Stände sind ausverkauft</p>
+            <p className="text-white/85 text-base leading-relaxed">
+              Für den Lozärner Wiehnachtsmärt 2026 sind sämtliche Standplätze vergeben.
+              Wir nehmen keine weiteren Anmeldungen mehr an. Vielen Dank für Ihr Interesse!
+            </p>
+          </div>
+        ) : (
+        <>
         <div className="bg-burgundy/8 border border-burgundy/20 rounded-xl p-6 mb-10">
           <p className="text-burgundy font-semibold text-base mb-2">Hinweis</p>
           <p className="text-foreground/60 text-sm">
@@ -240,6 +251,8 @@ export default function Anmeldung() {
             </div>
           )}
         </form>
+        </>
+        )}
 
         <div className="mt-16 pt-8 border-t border-foreground/10 space-y-6 text-sm text-foreground/40">
           <p>
