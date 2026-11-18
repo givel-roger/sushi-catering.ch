@@ -1,11 +1,11 @@
 export default function Impressum() {
   return (
-    <div className="min-h-screen py-20 px-5" style={{ background: "#f4f8fc", fontFamily: "'Inter', system-ui, sans-serif", color: "#1a1a2e" }}>
+    <div className="min-h-screen py-20 px-5" style={{ background: "#f4f8fc", fontFamily: "'Nunito', system-ui, sans-serif", color: "#1a1a2e" }}>
       <div className="max-w-[700px] mx-auto">
-        <a href="/" className="inline-flex items-center gap-2 text-[14px] font-semibold mb-8 no-underline" style={{ color: "#8B1A1A" }}>
+        <a href="/" className="inline-flex items-center gap-2 text-[14px] font-semibold mb-8 no-underline" style={{ color: "#351A00" }}>
           &larr; Zurück zur Stelle
         </a>
-        <h1 className="text-3xl font-bold mb-8" style={{ fontFamily: "'Space Grotesk', system-ui" }}>Impressum</h1>
+        <h1 className="text-3xl font-bold mb-8" style={{ fontFamily: "'Abril Fatface', serif" }}>Impressum</h1>
 
         <div className="space-y-6 text-[15px] leading-relaxed" style={{ color: "#31465b" }}>
           <div>
@@ -29,8 +29,8 @@ export default function Impressum() {
             <h2 className="font-bold text-lg mb-2" style={{ color: "#1a1a2e" }}>Kontakt HR</h2>
             <p>
               Sejla Jusic, HR Leiterin<br />
-              Telefon: <a href="tel:+41772088188" className="underline" style={{ color: "#8B1A1A" }}>+41 77 208 81 88</a><br />
-              E-Mail: <a href="mailto:jobs@confiserie.ch" className="underline" style={{ color: "#8B1A1A" }}>jobs@confiserie.ch</a>
+              Telefon: <a href="tel:+41772088188" className="underline" style={{ color: "#351A00" }}>+41 77 208 81 88</a><br />
+              E-Mail: <a href="mailto:jobs@confiserie.ch" className="underline" style={{ color: "#351A00" }}>jobs@confiserie.ch</a>
             </p>
           </div>
           <div>

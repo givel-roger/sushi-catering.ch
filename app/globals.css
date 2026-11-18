@@ -2,33 +2,41 @@
 
 @theme inline {
   --color-background: #ffffff;
-  --color-foreground: #1a1a2e;
-  --color-accent: #8B1A1A;
-  --color-accent-hover: #6d1414;
+  --color-foreground: #1a1a1a;
+  --color-accent: #351A00;
+  --color-accent-hover: #2a1400;
   --color-warm: #faf7f4;
   --color-muted: #5b6b7c;
-  --color-surface: #f4f8fc;
-  --color-border: #e4ebf3;
-  --color-gold: #c8a44e;
-  --color-gold-light: rgba(200,164,78,.12);
+  --color-surface: #faf7f4;
+  --color-border: #e4e0db;
+  --color-pink: #F083B2;
+  --color-pink-light: rgba(240,131,178,.12);
   --font-sans: var(--font-geist-sans);
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  background: #f7f5f2;
-  color: #1a1a2e;
+  background: #faf7f4;
+  color: #1a1a1a;
 }
 
 @font-face {
-  font-family: 'Space Grotesk';
+  font-family: 'Nunito';
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 300 900;
   font-display: swap;
-  src: url('https://fonts.gstatic.com/s/spacegrotesk/v16/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2') format('woff2');
+  src: url('https://fonts.gstatic.com/s/nunito/v26/XRXI3I6Li01BKofiOc5wtlZ2di8HDIkhdTQ3j6zbXWjgevT5.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Abril Fatface';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/abrilfatface/v23/zOL64pLDlL1D99S8HAFadkMGJcKUHl-I.woff2') format('woff2');
 }
 
 .font-display {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Abril Fatface', serif;
 }

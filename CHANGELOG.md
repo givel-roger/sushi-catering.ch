@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.2
+- Restyling im Confiserie Bachmann CI: Braun (#351A00) + Rosa (#F083B2)
+- Offizielles Bachmann-Logo (SVG) in Navigation und Footer
+- Fonts: Nunito (Body) + Abril Fatface (Display-Überschriften)
+- Farben, Gradients und Akzente durchgehend angepasst
+
 ## v1.0.1
 - Versionsanzeige im Footer (unten links)
 
