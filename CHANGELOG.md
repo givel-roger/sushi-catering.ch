@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.0.1
+- Versionsanzeige im Footer (unten links)
+
 ## v1.0.0
 - Stellentrichter für Confiserie Bachmann "Teamleiter Operativer Einkauf (m/w/d)"
 - Komplette Landing Page mit Hero, Rollenübersicht, Benefits

@@ -682,7 +682,7 @@ export default function Home() {
         </div>
         <div className="max-w-[1120px] mx-auto px-5 flex flex-wrap justify-between gap-2.5 py-4 text-[13px]" style={{ borderTop: "1px solid rgba(255,255,255,.12)", color: "rgba(255,255,255,.5)" }}>
           <span>&copy; {new Date().getFullYear()} Confiserie Bachmann AG. Alle Rechte vorbehalten.</span>
-          <span>Teamleiter Operativer Einkauf (m/w/d)</span>
+          <span>v1.0.1</span>
         </div>
       </footer>
 
