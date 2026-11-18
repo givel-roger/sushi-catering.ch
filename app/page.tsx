@@ -214,12 +214,8 @@ export default function Home() {
       {/* ── NAV ── */}
       <header className="sticky top-0 z-50 border-b" style={{ background: "rgba(255,255,255,.88)", backdropFilter: "blur(12px)", borderColor: "#e4ebf3" }}>
         <div className="max-w-[1120px] mx-auto px-5 h-[68px] flex items-center justify-between">
-          <a href="#top" className="flex items-center gap-3 no-underline">
-            <img src="/images/bachmann_logo_braun.png" alt="Confiserie Bachmann" className="h-10" />
-            <span className="font-display font-semibold text-[17px]" style={{ color: "#351A00" }}>
-              Confiserie Bachmann
-              <small className="block text-[11px] font-medium tracking-[.14em] uppercase" style={{ color: "#5b6b7c" }}>Luzern · Seit 1897</small>
-            </span>
+          <a href="#top" className="block no-underline">
+            <img src="/images/bachmann_logo_braun.png" alt="Confiserie Bachmann" className="h-12 w-auto" />
           </a>
           <button onClick={scrollToFunnel} className="hidden sm:inline-flex items-center gap-2 border-none cursor-pointer font-semibold text-[14px] px-[18px] py-[10px] rounded-full transition-all" style={{ background: "#351A00", color: "#fff", boxShadow: "0 10px 24px -10px rgba(53,26,0,.5)" }}>
             Jetzt bewerben
@@ -656,12 +652,8 @@ export default function Home() {
       <footer style={{ background: "#1f0f00", color: "rgba(255,255,255,.78)" }}>
         <div className="max-w-[1120px] mx-auto px-5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr] gap-8 py-14 pb-8">
           <div>
-            <a href="#top" className="flex items-center gap-3 no-underline mb-3.5">
-              <img src="/images/bachmann_logo_pink.png" alt="Confiserie Bachmann" className="h-10" />
-              <span className="font-display font-semibold text-[17px] text-white">
-                Confiserie Bachmann
-                <small className="block text-[11px] font-medium tracking-[.14em] uppercase" style={{ color: "rgba(255,255,255,.5)" }}>AG · Luzern</small>
-              </span>
+            <a href="#top" className="block no-underline mb-3.5">
+              <img src="/images/bachmann_logo_pink.png" alt="Confiserie Bachmann" className="h-14 w-auto" style={{ imageRendering: "auto" }} />
             </a>
             <p className="text-[14px] max-w-[34ch] mt-3.5" style={{ color: "rgba(255,255,255,.6)" }}>
               Tradition trifft Innovation — seit 1897 eine der bekanntesten Confiserien der Schweiz.
@@ -683,7 +675,7 @@ export default function Home() {
         </div>
         <div className="max-w-[1120px] mx-auto px-5 flex flex-wrap justify-between gap-2.5 py-4 text-[13px]" style={{ borderTop: "1px solid rgba(255,255,255,.12)", color: "rgba(255,255,255,.5)" }}>
           <span>&copy; {new Date().getFullYear()} Confiserie Bachmann AG. Alle Rechte vorbehalten.</span>
-          <span>v1.0.5</span>
+          <span>v1.0.6</span>
         </div>
       </footer>
 

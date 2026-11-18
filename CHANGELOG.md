@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.6
+- Logos grösser und schärfer dargestellt (h-12 Nav, h-14 Footer)
+- Doppelten "Confiserie Bachmann"-Text neben Logos entfernt
+
 ## v1.0.5
 - Offizielle Bachmann-Logos (PNG) statt heruntergeladenem SVG
 - Nav: braunes Logo, Footer: pinkes Logo auf dunklem Hintergrund
