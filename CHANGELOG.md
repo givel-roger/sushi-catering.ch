@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.0.3
+- Telefonnummer im Footer und Impressum auf LeadHunter-Nummer geändert (+41 79 419 00 70)
+
 ## v1.0.2
 - Restyling im Confiserie Bachmann CI: Braun (#351A00) + Rosa (#F083B2)
 - Offizielles Bachmann-Logo (SVG) in Navigation und Footer

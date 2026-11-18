@@ -29,7 +29,7 @@ export default function Impressum() {
             <h2 className="font-bold text-lg mb-2" style={{ color: "#1a1a2e" }}>Kontakt HR</h2>
             <p>
               Sejla Jusic, HR Leiterin<br />
-              Telefon: <a href="tel:+41772088188" className="underline" style={{ color: "#351A00" }}>+41 77 208 81 88</a><br />
+              Telefon: <a href="tel:+41794190070" className="underline" style={{ color: "#351A00" }}>+41 79 419 00 70</a><br />
               E-Mail: <a href="mailto:jobs@confiserie.ch" className="underline" style={{ color: "#351A00" }}>jobs@confiserie.ch</a>
             </p>
           </div>
