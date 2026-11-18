@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.5
+- Offizielle Bachmann-Logos (PNG) statt heruntergeladenem SVG
+- Nav: braunes Logo, Footer: pinkes Logo auf dunklem Hintergrund
+
 ## v1.0.4
 - Footer: Kontakt auf LeadHunter umgestellt (Irma Eckermann, info@leadhunter.ch)
 - Impressum: Ansprechpartnerin statt HR-Kontakt Bachmann
