@@ -8,45 +8,42 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: "Sushi Catering Schweiz — Frisch gerollt, direkt zu Ihnen",
-    template: "%s | Sushi Catering Schweiz",
-  },
+  title: "Produktionsmitarbeiter/in Frühschicht (m/w/d) – Confiserie Bachmann, Luzern",
   description:
-    "Premium Sushi Catering für Events, Firmenanlässe und private Feiern in der ganzen Schweiz. Mit oder ohne Koch. Frisch zubereitet von Kaiten Sushi.",
+    "Werde Produktionsmitarbeiter/in in der Frühschicht bei der Confiserie Bachmann in Luzern. Handwerkliche Spezialitäten produzieren, ab 3:30 Uhr starten, ab 13 Uhr frei. Jetzt in 60 Sekunden bewerben.",
   keywords: [
-    "sushi catering",
-    "sushi catering schweiz",
-    "sushi event",
-    "sushi party",
-    "sushi koch mieten",
-    "sushi platte bestellen",
-    "catering luzern",
-    "sushi workshop",
-    "firmen catering schweiz",
+    "produktionsmitarbeiter",
+    "produktion frühschicht",
+    "confiserie bachmann",
+    "job luzern",
+    "lebensmittelproduktion",
+    "bäckerei produktion",
+    "frühschicht job",
   ],
-  authors: [{ name: "Kaiten by Yorokobi" }],
-  metadataBase: new URL("https://www.sushi-catering.ch"),
-  openGraph: {
-    type: "website",
-    locale: "de_CH",
-    url: "https://www.sushi-catering.ch",
-    siteName: "Sushi Catering Schweiz",
-    title: "Sushi Catering Schweiz — Frisch gerollt, direkt zu Ihnen",
-    description:
-      "Premium Sushi Catering für Events, Firmenanlässe und private Feiern. Live-Koch, Sushi Platten oder Workshop. Ab 8 Personen.",
-    images: [
-      {
-        url: "/images/hero-sushi.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Sushi Catering Platte von Kaiten",
-      },
-    ],
-  },
   robots: {
     index: true,
     follow: true,
+  },
+  openGraph: {
+    type: "website",
+    locale: "de_CH",
+    url: "https://www.produktionsmitarbeiter.ch",
+    siteName: "Confiserie Bachmann Karriere",
+    title: "Produktionsmitarbeiter/in Frühschicht (m/w/d) – Confiserie Bachmann",
+    description:
+      "Handwerkliche Spezialitäten produzieren bei der Confiserie Bachmann in Luzern. Frühschicht ab 3:30, Feierabend ab 13 Uhr. Festanstellung 100%.",
+  },
+  twitter: {
+    card: "summary",
+    title: "Produktionsmitarbeiter/in Frühschicht (m/w/d) – Confiserie Bachmann",
+    description:
+      "Handwerkliche Spezialitäten produzieren bei der Confiserie Bachmann in Luzern. Frühschicht ab 3:30, Feierabend ab 13 Uhr.",
+  },
+  metadataBase: new URL("https://www.produktionsmitarbeiter.ch"),
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "256x256", type: "image/x-icon" },
+    ],
   },
 };
 
@@ -63,24 +60,27 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "FoodService",
-              name: "Sushi Catering Schweiz by Kaiten",
+              "@type": "JobPosting",
+              title: "Produktionsmitarbeiter/in Frühschicht (m/w/d)",
               description:
-                "Premium Sushi Catering für Events, Firmenanlässe und private Feiern in der ganzen Schweiz.",
-              url: "https://www.sushi-catering.ch",
-              telephone: "+41412449999",
-              email: "info@yorokobi.ch",
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "Luzern",
-                addressCountry: "CH",
+                "Produziere handwerkliche Spezialitäten bei der Confiserie Bachmann in Luzern. Frühschicht Mo–Fr ab 3:30 bis ca. 13:00 Uhr.",
+              datePosted: "2026-11-18",
+              hiringOrganization: {
+                "@type": "Organization",
+                name: "Confiserie Bachmann",
+                sameAs: "https://www.confiserie.ch",
               },
-              areaServed: {
-                "@type": "Country",
-                name: "Schweiz",
+              jobLocation: {
+                "@type": "Place",
+                address: {
+                  "@type": "PostalAddress",
+                  streetAddress: "Werkhofstrasse 20",
+                  addressLocality: "Luzern",
+                  postalCode: "6005",
+                  addressCountry: "CH",
+                },
               },
-              priceRange: "ab CHF 12 pro Person",
-              sameAs: ["https://www.kaiten.ch"],
+              employmentType: "FULL_TIME",
             }),
           }}
         />
