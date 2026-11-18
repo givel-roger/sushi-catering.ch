@@ -668,10 +668,11 @@ export default function Home() {
             </p>
           </div>
           <div>
-            <h4 className="text-white font-display text-[15px] mb-3.5">Kontakt</h4>
+            <h4 className="text-white font-display text-[15px] mb-3.5">Deine Ansprechpartnerin</h4>
+            <span className="block py-1 text-[14.5px] font-semibold text-white">Irma Eckermann</span>
             <a href="tel:+41794190070" className="block py-1 text-[14.5px] no-underline hover:text-[#F083B2] transition-colors" style={{ color: "rgba(255,255,255,.78)" }}>+41 79 419 00 70</a>
-            <a href="mailto:jobs@confiserie.ch" className="block py-1 text-[14.5px] no-underline hover:text-[#F083B2] transition-colors" style={{ color: "rgba(255,255,255,.78)" }}>jobs@confiserie.ch</a>
-            <span className="block py-1 text-[14.5px]">Werkhofstrasse 20, 6005 Luzern</span>
+            <a href="mailto:info@leadhunter.ch" className="block py-1 text-[14.5px] no-underline hover:text-[#F083B2] transition-colors" style={{ color: "rgba(255,255,255,.78)" }}>info@leadhunter.ch</a>
+            <span className="block py-1 text-[14.5px]">LeadHunter · Luzern</span>
           </div>
           <div>
             <h4 className="text-white font-display text-[15px] mb-3.5">Stelle</h4>
@@ -682,7 +683,7 @@ export default function Home() {
         </div>
         <div className="max-w-[1120px] mx-auto px-5 flex flex-wrap justify-between gap-2.5 py-4 text-[13px]" style={{ borderTop: "1px solid rgba(255,255,255,.12)", color: "rgba(255,255,255,.5)" }}>
           <span>&copy; {new Date().getFullYear()} Confiserie Bachmann AG. Alle Rechte vorbehalten.</span>
-          <span>v1.0.3</span>
+          <span>v1.0.4</span>
         </div>
       </footer>
 

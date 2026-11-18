@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.4
+- Footer: Kontakt auf LeadHunter umgestellt (Irma Eckermann, info@leadhunter.ch)
+- Impressum: Ansprechpartnerin statt HR-Kontakt Bachmann
+
 ## v1.0.3
 - Telefonnummer im Footer und Impressum auf LeadHunter-Nummer geändert (+41 79 419 00 70)
 

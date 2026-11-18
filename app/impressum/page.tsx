@@ -26,11 +26,11 @@ export default function Impressum() {
             </p>
           </div>
           <div>
-            <h2 className="font-bold text-lg mb-2" style={{ color: "#1a1a2e" }}>Kontakt HR</h2>
+            <h2 className="font-bold text-lg mb-2" style={{ color: "#1a1a2e" }}>Ansprechpartnerin</h2>
             <p>
-              Sejla Jusic, HR Leiterin<br />
+              Irma Eckermann, LeadHunter<br />
               Telefon: <a href="tel:+41794190070" className="underline" style={{ color: "#351A00" }}>+41 79 419 00 70</a><br />
-              E-Mail: <a href="mailto:jobs@confiserie.ch" className="underline" style={{ color: "#351A00" }}>jobs@confiserie.ch</a>
+              E-Mail: <a href="mailto:info@leadhunter.ch" className="underline" style={{ color: "#351A00" }}>info@leadhunter.ch</a>
             </p>
           </div>
           <div>
