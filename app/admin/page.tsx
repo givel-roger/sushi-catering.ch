@@ -142,6 +142,11 @@ export default function AdminPage() {
             {loading ? "..." : "Anmelden"}
           </button>
           {message && <p className="text-error text-sm mt-4">{message}</p>}
+          <p className="text-center mt-4">
+            <a href="/passwort-vergessen" className="text-muted text-sm hover:text-foreground transition-colors">
+              Passwort vergessen?
+            </a>
+          </p>
         </div>
       </div>
     );

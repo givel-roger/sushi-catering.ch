@@ -85,6 +85,15 @@ function createTables(db: InstanceType<typeof Database>) {
       expires_at TEXT NOT NULL,
       created_at TEXT DEFAULT (datetime('now'))
     );
+
+    CREATE TABLE IF NOT EXISTS password_reset_tokens (
+      id TEXT PRIMARY KEY,
+      admin_id TEXT NOT NULL REFERENCES admins(id),
+      token TEXT NOT NULL UNIQUE,
+      expires_at TEXT NOT NULL,
+      used_at TEXT,
+      created_at TEXT DEFAULT (datetime('now'))
+    );
   `);
 }
 
@@ -128,10 +137,10 @@ function seedDanieleTenant(db: InstanceType<typeof Database>) {
 
   db.prepare(`
     INSERT INTO tenants (id, slug, name, code_prefix, website, phone, email,
-      address_street, address_city, address_zip, branding, motifs, amount_presets)
+      address_street, address_city, address_zip, platform_fee_percent, branding, motifs, amount_presets)
     VALUES (?, 'daniele', 'Daniele Restaurant & Winebar', 'DN',
-      'https://daniele.swiss', '+41 41 410 53 53', 'info@daniele.swiss',
-      'Löwengraben 7', 'Luzern', '6004', ?, ?, ?)
+      'https://daniele.swiss', '+41 79 662 35 73', 'daniele@daniele.swiss',
+      'Löwengraben 7', 'Luzern', '6004', 0.0, ?, ?, ?)
   `).run(tenantId, branding, motifs, amountPresets);
 
   // Admin password comes from ADMIN_PASSWORD env var or defaults for first setup
@@ -140,7 +149,7 @@ function seedDanieleTenant(db: InstanceType<typeof Database>) {
   const passwordHash = hashSync(adminPassword, 10);
   db.prepare(`
     INSERT INTO admins (id, tenant_id, email, password_hash, name, role)
-    VALUES (?, ?, 'admin@daniele.swiss', ?, 'Daniele Admin', 'admin')
+    VALUES (?, ?, 'daniele@daniele.swiss', ?, 'Daniele Admin', 'admin')
   `).run(adminId, tenantId, passwordHash);
 
   return tenantId;
@@ -304,11 +313,24 @@ export function initDatabase() {
   }
 
   updateDanieleBranding(db);
+  updateDanieleOnboarding(db);
   seedSuperAdmin(db);
   seedKroneBlatten(db);
 
   db.close();
   return tenantId;
+}
+
+function updateDanieleOnboarding(db: InstanceType<typeof Database>) {
+  const tenant = db.prepare("SELECT email, phone, platform_fee_percent FROM tenants WHERE slug = 'daniele'").get() as { email: string; phone: string; platform_fee_percent: number } | undefined;
+  if (!tenant) return;
+  if (tenant.email === "daniele@daniele.swiss" && tenant.platform_fee_percent === 0) return;
+  db.prepare("UPDATE tenants SET email = 'daniele@daniele.swiss', phone = '+41 79 662 35 73', platform_fee_percent = 0.0 WHERE slug = 'daniele'").run();
+  const admin = db.prepare("SELECT id FROM admins WHERE email = 'admin@daniele.swiss'").get() as { id: string } | undefined;
+  if (admin) {
+    db.prepare("UPDATE admins SET email = 'daniele@daniele.swiss' WHERE id = ?").run(admin.id);
+  }
+  console.log("[DB] Daniele Onboarding: E-Mail, Telefon, Provision 0% aktualisiert.");
 }
 
 if (require.main === module) {

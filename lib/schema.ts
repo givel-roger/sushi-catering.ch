@@ -78,6 +78,15 @@ export const sessions = sqliteTable("sessions", {
   createdAt: text("created_at").default(sql`(datetime('now'))`),
 });
 
+export const passwordResetTokens = sqliteTable("password_reset_tokens", {
+  id: text("id").primaryKey(),
+  adminId: text("admin_id").notNull().references(() => admins.id),
+  token: text("token").notNull().unique(),
+  expiresAt: text("expires_at").notNull(),
+  usedAt: text("used_at"),
+  createdAt: text("created_at").default(sql`(datetime('now'))`),
+});
+
 export type TenantBranding = {
   logoUrl?: string;
   logoDarkUrl?: string;

@@ -1,5 +1,17 @@
 # Changelog
 
+## v3.6.0 — Passwort-Reset + Daniele Onboarding
+
+- Passwort-Vergessen-Funktion: E-Mail mit Reset-Link via Brevo API
+- Neue Seiten: /passwort-vergessen und /passwort-reset
+- Reset-Token mit 1 Stunde Gültigkeit, Einmal-Verwendung
+- Login-Seite: "Passwort vergessen?" Link hinzugefügt
+- Neue DB-Tabelle: password_reset_tokens
+- E-Mail-Versand-Library (lib/email.ts) mit Brevo-Integration
+- Daniele Onboarding: E-Mail auf daniele@daniele.swiss, Telefon 079 662 35 73
+- Daniele Provision auf 0% gesetzt (kostenlos)
+- Admin-E-Mail von admin@daniele.swiss auf daniele@daniele.swiss geändert
+
 ## v3.5.0 — Mitmachen-Seite: Professionelles Redesign im e-guma-Stil
 
 - /mitmachen komplett neu gestaltet im Stil von e-guma.ch
