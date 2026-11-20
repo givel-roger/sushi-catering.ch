@@ -197,6 +197,12 @@ export default function TenantAdminPage() {
             {loading ? "..." : "Anmelden"}
           </button>
           {message && <p className="text-error text-sm mt-4">{message}</p>}
+          <a
+            href="/passwort-vergessen"
+            className="text-sm text-muted hover:text-foreground transition-colors mt-4 inline-block"
+          >
+            Passwort vergessen?
+          </a>
         </div>
       </div>
     );

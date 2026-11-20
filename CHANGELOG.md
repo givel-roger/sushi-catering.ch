@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.6.2 — Login-Fix + Anleitung korrigiert
+
+- "Passwort vergessen?" Link auf Tenant-Admin-Login (/admin/[tenantSlug]) hinzugefügt
+- Anleitung Daniele: Admin-URL von /admin auf /admin/daniele korrigiert
+- PDF-Anleitung neu generiert mit korrekter Admin-URL
+
 ## v3.6.1 — Daniele Stripe Connect
 
 - Daniele Stripe Account ID (acct_1UYjG6JxwcWCogNY) in Datenbank hinterlegt

@@ -1,0 +1,304 @@
+<title>Anleitung Daniele</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600&display=swap">
+<style>
+  /* Daniele onboarding guide — warm, professional, easy to scan on phone */
+  :root {
+    --bg: #faf8f5;
+    --fg: #1a1a1a;
+    --muted: #777;
+    --accent: #c8962e;
+    --accent-bg: #f5eed9;
+    --surface: #fff;
+    --border: #e8e3d8;
+    --code-bg: #f0ece4;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1a1816;
+      --fg: #e8e3d8;
+      --muted: #999;
+      --accent: #d4a84a;
+      --accent-bg: #2a2418;
+      --surface: #242018;
+      --border: #3a3528;
+      --code-bg: #2a2620;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1a1816;
+    --fg: #e8e3d8;
+    --muted: #999;
+    --accent: #d4a84a;
+    --accent-bg: #2a2418;
+    --surface: #242018;
+    --border: #3a3528;
+    --code-bg: #2a2620;
+    color-scheme: dark;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1.15;
+    margin: 2.5rem 0 0.5rem;
+    text-wrap: balance;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1.25;
+    margin: 2.5rem 0 1rem;
+    text-wrap: balance;
+  }
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    margin: 2rem 0 0.75rem;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+  .logo-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1.5rem 0 0.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+  }
+  .logo-bar .logo-text {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--accent);
+  }
+  .logo-bar .powered {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-left: auto;
+  }
+  .link-card {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    text-decoration: none;
+    color: var(--fg);
+    transition: border-color 0.2s;
+  }
+  .link-card:hover { border-color: var(--accent); }
+  .link-card .label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+  .link-card .url {
+    font-size: 0.85rem;
+    color: var(--muted);
+    word-break: break-all;
+  }
+  .link-card .desc {
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+  .info-box {
+    background: var(--accent-bg);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    font-size: 0.9rem;
+  }
+  .info-box strong { color: var(--accent); }
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .steps li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .step-nr {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .step-text { font-size: 0.9rem; }
+  code {
+    background: var(--code-bg);
+    padding: 0.15em 0.4em;
+    font-size: 0.85em;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .login-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.75rem 0;
+    font-size: 0.9rem;
+  }
+  .login-table td {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+  }
+  .login-table td:first-child {
+    font-weight: 600;
+    white-space: nowrap;
+    width: 100px;
+    color: var(--muted);
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    padding: 2rem 0 3rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2.5rem;
+  }
+</style>
+
+<div class="logo-bar">
+  <span class="logo-text">gutschein-schenken.ch</span>
+  <span class="powered">powered by Marktindex AG</span>
+</div>
+
+<h1>Willkommen bei gutschein-schenken.ch</h1>
+<p class="subtitle">Anleitung für Daniele Restaurant &amp; Winebar — alles, was ihr wissen müsst.</p>
+
+<h2>Eure Links</h2>
+<p style="font-size:0.9rem;color:var(--muted);">Diese drei Links braucht ihr. Am besten als Lesezeichen speichern.</p>
+
+<a class="link-card" href="https://gutschein-schenken.ch/r/daniele" target="_blank">
+  <div class="label">Gutschein-Shop</div>
+  <div class="desc">Hier kaufen eure Kunden Gutscheine. Diesen Link könnt ihr auf eure Website setzen oder teilen.</div>
+  <div class="url">gutschein-schenken.ch/r/daniele</div>
+</a>
+
+<a class="link-card" href="https://gutschein-schenken.ch/admin/daniele" target="_blank">
+  <div class="label">Admin-Panel</div>
+  <div class="desc">Übersicht über alle Gutscheine, Umsatz und Einlösungen. Gutscheine suchen und verwalten.</div>
+  <div class="url">gutschein-schenken.ch/admin/daniele</div>
+</a>
+
+<a class="link-card" href="https://gutschein-schenken.ch/scan/daniele" target="_blank">
+  <div class="label">QR-Scanner (für Angestellte)</div>
+  <div class="desc">Gutscheine einlösen im Restaurant. Öffnet die Kamera und scannt den QR-Code vom Gutschein.</div>
+  <div class="url">gutschein-schenken.ch/scan/daniele</div>
+</a>
+
+<hr class="divider">
+
+<h2>Login</h2>
+<table class="login-table">
+  <tr><td>E-Mail</td><td>daniele@daniele.swiss</td></tr>
+  <tr><td>Passwort</td><td>Wird separat mitgeteilt</td></tr>
+</table>
+
+<div class="info-box">
+  <strong>Passwort vergessen?</strong> Auf der Login-Seite gibt es den Link «Passwort vergessen?». Ihr bekommt einen Reset-Link per E-Mail an daniele@daniele.swiss.
+</div>
+
+<hr class="divider">
+
+<h2>Scanner auf dem Handy einrichten</h2>
+<p style="font-size:0.9rem;">Damit eure Angestellten Gutscheine direkt im Restaurant scannen und einlösen können:</p>
+
+<h3>iPhone (Safari)</h3>
+<ol class="steps">
+  <li><span class="step-nr">1</span><span class="step-text">Safari öffnen und <code>gutschein-schenken.ch/scan/daniele</code> eingeben</span></li>
+  <li><span class="step-nr">2</span><span class="step-text">Mit E-Mail und Passwort einloggen</span></li>
+  <li><span class="step-nr">3</span><span class="step-text">Unten auf das <strong>Teilen-Symbol</strong> tippen (Quadrat mit Pfeil nach oben)</span></li>
+  <li><span class="step-nr">4</span><span class="step-text"><strong>«Zum Home-Bildschirm»</strong> wählen → «Hinzufügen»</span></li>
+  <li><span class="step-nr">5</span><span class="step-text">Fertig! Die App erscheint auf dem Homescreen wie eine normale App</span></li>
+</ol>
+
+<h3>Android (Chrome)</h3>
+<ol class="steps">
+  <li><span class="step-nr">1</span><span class="step-text">Chrome öffnen und <code>gutschein-schenken.ch/scan/daniele</code> eingeben</span></li>
+  <li><span class="step-nr">2</span><span class="step-text">Mit E-Mail und Passwort einloggen</span></li>
+  <li><span class="step-nr">3</span><span class="step-text">Oben rechts auf die <strong>drei Punkte ⋮</strong> tippen</span></li>
+  <li><span class="step-nr">4</span><span class="step-text"><strong>«Zum Startbildschirm hinzufügen»</strong> wählen</span></li>
+  <li><span class="step-nr">5</span><span class="step-text">Fertig! Die App erscheint auf dem Homescreen</span></li>
+</ol>
+
+<div class="info-box">
+  <strong>Kamera-Berechtigung:</strong> Beim ersten Scan fragt das Handy nach der Kamera-Berechtigung. Einfach «Erlauben» tippen.
+</div>
+
+<hr class="divider">
+
+<h2>Gutschein einlösen</h2>
+<ol class="steps">
+  <li><span class="step-nr">1</span><span class="step-text">Scanner-App öffnen (oder Link im Browser)</span></li>
+  <li><span class="step-nr">2</span><span class="step-text">QR-Code auf dem Gutschein scannen</span></li>
+  <li><span class="step-nr">3</span><span class="step-text">Guthaben und Details werden angezeigt</span></li>
+  <li><span class="step-nr">4</span><span class="step-text">Betrag eingeben, den der Gast nutzen will (ganz oder teilweise)</span></li>
+  <li><span class="step-nr">5</span><span class="step-text"><strong>«Einlösen»</strong> tippen — fertig! Restbetrag wird automatisch aktualisiert</span></li>
+</ol>
+
+<div class="info-box">
+  <strong>Teileinlösung möglich:</strong> Ein Gutschein über CHF 200 kann z.B. zuerst mit CHF 120 und später mit CHF 80 eingelöst werden. Das Restguthaben ist immer sichtbar.
+</div>
+
+<hr class="divider">
+
+<h2>So funktioniert der Kaufprozess</h2>
+<p style="font-size:0.9rem;">Wenn ein Kunde auf <code>gutschein-schenken.ch/r/daniele</code> einen Gutschein kauft:</p>
+<ol class="steps">
+  <li><span class="step-nr">1</span><span class="step-text"><strong>Betrag wählen</strong> — 50 bis 300 CHF oder frei wählbar</span></li>
+  <li><span class="step-nr">2</span><span class="step-text"><strong>Motiv wählen</strong> — 7 Motive (Edel, Geburtstag, Weihnachten, etc.)</span></li>
+  <li><span class="step-nr">3</span><span class="step-text"><strong>Widmung schreiben</strong> — persönliche Nachricht an den Beschenkten</span></li>
+  <li><span class="step-nr">4</span><span class="step-text"><strong>Bezahlen</strong> — sicher via Stripe (Kreditkarte, Twint, etc.)</span></li>
+  <li><span class="step-nr">5</span><span class="step-text"><strong>Gutschein per E-Mail</strong> — sofort als PDF mit QR-Code</span></li>
+</ol>
+
+<hr class="divider">
+
+<h2>Kontakt &amp; Support</h2>
+<p style="font-size:0.9rem;">Bei Fragen oder Problemen:</p>
+<table class="login-table">
+  <tr><td>E-Mail</td><td>info@marktindex.ch</td></tr>
+  <tr><td>Betreiber</td><td>Marktindex AG, Cheerstrasse 13b, 6014 Luzern</td></tr>
+</table>
+
+<div class="footer">
+  gutschein-schenken.ch · Ein Angebot der Marktindex AG, Luzern
+</div>
