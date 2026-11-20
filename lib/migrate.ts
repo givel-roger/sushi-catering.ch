@@ -137,10 +137,10 @@ function seedDanieleTenant(db: InstanceType<typeof Database>) {
 
   db.prepare(`
     INSERT INTO tenants (id, slug, name, code_prefix, website, phone, email,
-      address_street, address_city, address_zip, platform_fee_percent, branding, motifs, amount_presets)
+      address_street, address_city, address_zip, platform_fee_percent, stripe_account_id, stripe_onboarded, branding, motifs, amount_presets)
     VALUES (?, 'daniele', 'Daniele Restaurant & Winebar', 'DN',
       'https://daniele.swiss', '+41 79 662 35 73', 'daniele@daniele.swiss',
-      'Löwengraben 7', 'Luzern', '6004', 0.0, ?, ?, ?)
+      'Löwengraben 7', 'Luzern', '6004', 0.0, 'acct_1UYjG6JxwcWCogNY', 1, ?, ?, ?)
   `).run(tenantId, branding, motifs, amountPresets);
 
   // Admin password comes from ADMIN_PASSWORD env var or defaults for first setup
@@ -322,15 +322,15 @@ export function initDatabase() {
 }
 
 function updateDanieleOnboarding(db: InstanceType<typeof Database>) {
-  const tenant = db.prepare("SELECT email, phone, platform_fee_percent FROM tenants WHERE slug = 'daniele'").get() as { email: string; phone: string; platform_fee_percent: number } | undefined;
+  const tenant = db.prepare("SELECT email, phone, platform_fee_percent, stripe_account_id FROM tenants WHERE slug = 'daniele'").get() as { email: string; phone: string; platform_fee_percent: number; stripe_account_id: string | null } | undefined;
   if (!tenant) return;
-  if (tenant.email === "daniele@daniele.swiss" && tenant.platform_fee_percent === 0) return;
-  db.prepare("UPDATE tenants SET email = 'daniele@daniele.swiss', phone = '+41 79 662 35 73', platform_fee_percent = 0.0 WHERE slug = 'daniele'").run();
+  if (tenant.email === "daniele@daniele.swiss" && tenant.platform_fee_percent === 0 && tenant.stripe_account_id === "acct_1UYjG6JxwcWCogNY") return;
+  db.prepare("UPDATE tenants SET email = 'daniele@daniele.swiss', phone = '+41 79 662 35 73', platform_fee_percent = 0.0, stripe_account_id = 'acct_1UYjG6JxwcWCogNY', stripe_onboarded = 1 WHERE slug = 'daniele'").run();
   const admin = db.prepare("SELECT id FROM admins WHERE email = 'admin@daniele.swiss'").get() as { id: string } | undefined;
   if (admin) {
     db.prepare("UPDATE admins SET email = 'daniele@daniele.swiss' WHERE id = ?").run(admin.id);
   }
-  console.log("[DB] Daniele Onboarding: E-Mail, Telefon, Provision 0% aktualisiert.");
+  console.log("[DB] Daniele Onboarding: E-Mail, Telefon, Provision 0%, Stripe acct_1UYjG6JxwcWCogNY.");
 }
 
 if (require.main === module) {

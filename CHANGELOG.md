@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.6.1 — Daniele Stripe Connect
+
+- Daniele Stripe Account ID (acct_1UYjG6JxwcWCogNY) in Datenbank hinterlegt
+- stripe_onboarded Flag auf true gesetzt
+- Migration aktualisiert: setzt Stripe-Daten automatisch bei Start
+
 ## v3.6.0 — Passwort-Reset + Daniele Onboarding
 
 - Passwort-Vergessen-Funktion: E-Mail mit Reset-Link via Brevo API
